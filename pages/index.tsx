@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import supabase from '../lib/supabaseClient';
 import getSupabaseAdmin from '../lib/supabaseAdmin';
 import { GetServerSideProps } from 'next';
+import { useTranslation } from '../lib/i18n';
 
 type Destination = {
   id: string;
@@ -13,6 +14,7 @@ type Destination = {
 
 export default function Home({ initialDestinations }: { initialDestinations?: Destination[] }) {
   const [destinations, setDestinations] = useState<Destination[]>(initialDestinations || []);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (initialDestinations && initialDestinations.length) {
@@ -37,13 +39,13 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
         <div className="inner">
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <img src="/dot-logo.png" alt="DOT logo" style={{ width: 48, height: 48, borderRadius: 6, background: '#fff' }} onError={(e)=>{(e.target as HTMLImageElement).style.display='none'}} />
-            <div style={{ fontWeight: 700 }}>Philippines Travelogue</div>
+            <div style={{ fontWeight: 700 }}>{t('siteTitle')}</div>
           </div>
           <nav>
-            <a href="/">Home</a>
-            <a href="#destinations">Tourism</a>
-            <a href="#destinations">Destinations</a>
-            <a href="/contact">Contact</a>
+            <a href="/">{t('home')}</a>
+            <a href="#destinations">{t('tourism')}</a>
+            <a href="#destinations">{t('destinations')}</a>
+            <a href="/contact">{t('contact')}</a>
           </nav>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <div style={{ display: 'flex', gap: 8 }}>
@@ -55,9 +57,9 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
 
       <div className="hero" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.15)), url('/hero.jpg')` }}>
         <div className="overlay">
-          <h1>Love the Philippines</h1>
-          <p>Explore beaches, mountains, history, and culture across 20 featured destinations.</p>
-          <a className="cta" href="#destinations">Learn more</a>
+          <h1>{t('homeHeroTitle')}</h1>
+          <p>{t('homeHeroDesc')}</p>
+          <a className="cta" href="#destinations">{t('learnMore')}</a>
         </div>
       </div>
 

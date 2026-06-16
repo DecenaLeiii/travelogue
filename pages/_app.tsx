@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import type { AppProps } from 'next/app';
 import '../styles/globals.css';
+import { I18nProvider, useTranslation, LANGS } from '../lib/i18n';
 
 function sendEngagement(eventType: string, payload: any) {
   return fetch('/api/engagements', {
@@ -66,25 +67,39 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  return (
-    <>
+  function Header() {
+    const { t, lang, setLang } = useTranslation();
+    return (
       <header style={{ background: '#fff', borderBottom: '1px solid #eee' }}>
         <div style={{ maxWidth: 960, margin: '0 auto', padding: '12px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <a href="/" style={{ fontWeight: 700, fontSize: 18, display: 'flex', alignItems: 'center', gap: 10 }}>
             <img src="/dot-logo.png" alt="DOT" style={{ width: 36, height: 36 }} onError={(e)=>{(e.target as HTMLImageElement).style.display='none'}} />
-            <span>Philippines Travelogue</span>
+            <span>{t('siteTitle')}</span>
           </a>
-          <nav>
-            <a href="/admin" style={{ marginLeft: 12 }}>Admin</a>
-            <a href="/admin/login" style={{ marginLeft: 12 }}>Login</a>
-          </nav>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <nav>
+              <a href="/admin" style={{ marginLeft: 12 }}>Admin</a>
+              <a href="/admin/login" style={{ marginLeft: 12 }}>Login</a>
+            </nav>
+            <select value={lang} onChange={(e) => setLang(e.target.value as any)} style={{ marginLeft: 12 }} aria-label="Language selector">
+              {LANGS.map((l) => (
+                <option key={l.code} value={l.code}>{l.label}</option>
+              ))}
+            </select>
+          </div>
         </div>
       </header>
+    );
+  }
+
+  return (
+    <I18nProvider>
+      <Header />
       <button id="back-to-top" className="back-to-top" style={{ display: 'none' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Top</button>
       <Component {...pageProps} />
       <footer style={{ marginTop: 48, borderTop: '1px solid #eee', padding: 16, textAlign: 'center' }}>
         Built with ❤️ — Travelogue
       </footer>
-    </>
+    </I18nProvider>
   );
 }
