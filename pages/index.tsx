@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import supabase from '../lib/supabaseClient';
-import supabaseAdmin from '../lib/supabaseAdmin';
+import getSupabaseAdmin from '../lib/supabaseAdmin';
 import { GetServerSideProps } from 'next';
 
 type Destination = {
@@ -102,6 +102,8 @@ function SearchableDestinations({ initial }: { initial: Destination[] }) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
+    const supabaseAdmin = getSupabaseAdmin();
+    if (!supabaseAdmin) return { props: { initialDestinations: [] } };
     const { data } = await supabaseAdmin.from('destinations').select('id,name,slug,short_description,images').order('featured', { ascending: false }).limit(50);
     return { props: { initialDestinations: data || [] } };
   } catch (err) {

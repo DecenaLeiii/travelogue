@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import supabaseAdmin from '../../../lib/supabaseAdmin';
+import getSupabaseAdmin from '../../../lib/supabaseAdmin';
 
 function toCSV(rows: any[]) {
   if (!rows || rows.length === 0) return '';
@@ -14,6 +14,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!cookie.includes('admin_token=1')) return res.status(401).end();
 
   try {
+    const supabaseAdmin = getSupabaseAdmin();
+    if (!supabaseAdmin) return res.status(500).json({ error: 'server misconfiguration' });
+
     const { data: scans } = await supabaseAdmin.from('scans').select('*').order('scanned_at', { ascending: false }).limit(1000);
     const { data: engagements } = await supabaseAdmin.from('engagements').select('*').order('created_at', { ascending: false }).limit(5000);
 

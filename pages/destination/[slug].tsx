@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import supabaseAdmin from '../../lib/supabaseAdmin';
+import getSupabaseAdmin from '../../lib/supabaseAdmin';
 
 type Props = {
   destination?: any;
@@ -36,6 +36,9 @@ export default function DestinationPage({ destination }: Props) {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const slug = Array.isArray(params?.slug) ? params?.slug[0] : params?.slug;
   if (!slug) return { notFound: true };
+
+  const supabaseAdmin = getSupabaseAdmin();
+  if (!supabaseAdmin) return { props: { destination: null } };
 
   const { data, error } = await supabaseAdmin.from('destinations').select('*').eq('slug', slug).limit(1);
   if (error) {

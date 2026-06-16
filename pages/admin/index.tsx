@@ -1,4 +1,4 @@
-import supabaseAdmin from '../../lib/supabaseAdmin';
+import getSupabaseAdmin from '../../lib/supabaseAdmin';
 import { GetServerSideProps } from 'next';
 
 type Props = {
@@ -94,9 +94,12 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   }
 
   // Fetch recent scans and totals
+  const supabaseAdmin = getSupabaseAdmin();
+  if (!supabaseAdmin) return { props: { scans: [], totals: { scans: 0, destinations: 0 } } };
+
   const { data: scansData } = await supabaseAdmin.from('scans').select('*').order('scanned_at', { ascending: false }).limit(50);
   const { data: destData } = await supabaseAdmin.from('destinations').select('id');
-  const { data: scanCount } = await supabaseAdmin.rpc ? await supabaseAdmin.from('scans').select('id') : { data: [] };
+  const { data: scanCount } = await supabaseAdmin.from('scans').select('id');
 
   const totals = { scans: (scansData || []).length, destinations: (destData || []).length };
 
