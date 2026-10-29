@@ -1,0 +1,32 @@
+{
+  "logo": "/logos/promo-1792923482883-ze853f.png",
+  "hero_video": "/TOURISM%20VIDEO.mp4",
+  "hero_description": "Explore beaches, mountains, history, and culture across featured destinations.",
+  "tourism_heading": "Tourism & Culture",
+  "tourism_description": "Discover what makes the Philippines a top travel destination for food, heritage, and natural beauty.",
+  "mission_heading": "Mission",
+  "mission_text": "To promote sustainable tourism and empower communities across the archipelago through responsible travel and cultural heritage.",
+  "key_programs_heading": "Key Programs",
+  "contact_heading": "Contact",
+  "contact_email": "dot-feedback@tourism.gov.ph",
+  "contact_phone": "+63 (2) 8459-5200",
+  "key_programs": [
+    "Tourism promotion and marketing",
+    "Community-based and sustainable tourism development",
+    "Capacity building for tourism stakeholders",
+    "Quality assurance and safety standards"
+  ],
+  "culture_hidden": [],
+  "culture_blocks": [
+    {
+      "id": "block-1792925505929",
+      "kind": "location",
+      "title": "The Department of Tourism (DOT)",
+      "body": "The Department of Tourism (DOT) is the executive department of the Philippine government responsible for planning, programming, coordinating, and regulating the country's tourism industry.",
+      "address": "351 Sen. Gil Puyat Ave., Makati City",
+      "phone": "",
+      "email": "",
+      "archived": true
+    }
+  ]
+}

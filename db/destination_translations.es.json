@@ -1,0 +1,326 @@
+{
+  "boracay": {
+    "name": "Boracay",
+    "short_description": "White-sand beaches and lively nightlife on one of the world's best islands.",
+    "content": "Boracay is one of the most iconic Philippines tourist destinations, consistently ranked among the best islands in the world. Its crown jewel is White Beach, a 4-kilometer stretch of powdery sand and crystal-clear waters. Beyond lounging on the shore, Boracay offers parasailing, kiteboarding, scuba diving, and sunset sailing on a paraw boat.",
+    "highlights": [
+      "White Beach",
+      "Puka Shell Beach",
+      "Paraw sunset sailing",
+      "Watersports and diving",
+      "D'Mall dining strip"
+    ],
+    "travel_tips": [
+      "Book accommodations early during peak season",
+      "Follow local environmental rules on beach access",
+      "Try island-hopping to nearby coves",
+      "Use tricycles for short trips around the island"
+    ]
+  },
+  "el-nido": {
+    "name": "Palawan (El Nido)",
+    "short_description": "Limestone cliffs, hidden lagoons, and world-class island hopping.",
+    "content": "El Nido enchants with towering limestone cliffs and hidden lagoons where you can kayak or swim in emerald waters. Part of Palawan, often called the Last Frontier, El Nido is a crown jewel of Southeast Asian travel with dramatic karst landscapes and clear lagoons.",
+    "highlights": [
+      "Big Lagoon",
+      "Small Lagoon",
+      "Secret Beach",
+      "Nacpan Beach",
+      "Island-hopping tours"
+    ],
+    "travel_tips": [
+      "Join organized Tour A/B/C/D packages for lagoon access",
+      "Bring reef-safe sunscreen",
+      "Cash is useful in smaller establishments",
+      "Allow 3–4 days to explore properly"
+    ]
+  },
+  "coron": {
+    "name": "Palawan (Coron)",
+    "short_description": "Pristine lakes, lagoons, and legendary wreck diving.",
+    "content": "Coron is world-renowned for stunning lakes, lagoons, and diving spots. Kayangan Lake is often called the cleanest lake in Asia, surrounded by towering limestone cliffs. For divers, WWII shipwrecks rest beneath the sea, transformed into coral-encrusted dive sites.",
+    "highlights": [
+      "Kayangan Lake",
+      "Twin Lagoon",
+      "WWII shipwreck dives",
+      "Siete Pecados snorkeling",
+      "Mt. Tapyas viewpoint"
+    ],
+    "travel_tips": [
+      "Pay environmental fees at the tourism office",
+      "Book dive shops in advance during peak season",
+      "Start island tours early to avoid crowds",
+      "Fly into Busuanga Airport then van to Coron town"
+    ]
+  },
+  "cebu": {
+    "name": "Cebu",
+    "short_description": "History, canyoneering, and the Queen City of the South.",
+    "content": "Cebu blends history, urban life, and outdoor adventure. In Cebu City, landmarks like Magellan's Cross and the Basilica Minore del Santo Niño anchor the island's Spanish heritage. For nature lovers, Kawasan Falls in Badian is famous for canyoneering through turquoise waters.",
+    "highlights": [
+      "Magellan's Cross",
+      "Kawasan Falls canyoneering",
+      "Oslob whale sharks",
+      "Moalboal sardine run",
+      "Sinulog Festival (January)"
+    ],
+    "travel_tips": [
+      "Fly into Mactan–Cebu International Airport",
+      "Book canyoneering tours with licensed guides",
+      "Combine city heritage walks with south Cebu day trips",
+      "Try lechon and dried mangoes"
+    ]
+  },
+  "bohol": {
+    "name": "Bohol",
+    "short_description": "Chocolate Hills, tarsiers, and Panglao's white-sand beaches.",
+    "content": "Bohol is famous for unique natural and cultural treasures. The Chocolate Hills are a surreal landscape of over 1,200 grass-covered mounds. Philippine tarsiers, tiny primates with enormous eyes, are protected in local sanctuaries. Panglao Island offers resorts and diving access to coral reefs.",
+    "highlights": [
+      "Chocolate Hills",
+      "Tarsier sanctuary",
+      "Loboc River cruise",
+      "Panglao beaches",
+      "Historic churches"
+    ],
+    "travel_tips": [
+      "Rent a motorbike or join countryside tours for hills and churches",
+      "Visit tarsiers only at accredited sanctuaries",
+      "Fast ferries connect Cebu and Bohol in about 2 hours",
+      "Combine hills tour with river lunch cruise"
+    ]
+  },
+  "siargao": {
+    "name": "Siargao",
+    "short_description": "Surfing capital with lagoons, islands, and laid-back island life.",
+    "content": "Known as the Surfing Capital of the Philippines, Siargao draws international surfers to Cloud 9. Beyond waves, Magpupungko Rock Pools and Sugba Lagoon offer swimming and paddleboarding surrounded by mangroves.",
+    "highlights": [
+      "Cloud 9 surf break",
+      "Magpupungko Rock Pools",
+      "Sugba Lagoon",
+      "Naked Island",
+      "Sohoton Cove"
+    ],
+    "travel_tips": [
+      "Rent a scooter to explore the island",
+      "Reserve boat tours for Sohoton in advance",
+      "Respect local surf lineup etiquette",
+      "Cash and e-wallets are widely used"
+    ]
+  },
+  "baguio": {
+    "name": "Baguio",
+    "short_description": "Cool mountain retreat and Summer Capital of the Philippines.",
+    "content": "Dubbed the Summer Capital of the Philippines, Baguio is a refreshing mountain retreat with cool climate, pine-covered hills, and vibrant culture. Burnham Park, Strawberry Farm in La Trinidad, and Session Road define the city experience.",
+    "highlights": [
+      "Burnham Park",
+      "Mines View Park",
+      "Session Road cafés",
+      "Strawberry Farm",
+      "Panagbenga Festival"
+    ],
+    "travel_tips": [
+      "Bring a light jacket even in summer",
+      "Try ube jam and local coffee",
+      "Weekend traffic can be heavy from Manila",
+      "Visit Tam-awan Village for Cordillera art"
+    ]
+  },
+  "vigan": {
+    "name": "Vigan",
+    "short_description": "UNESCO heritage city of cobblestone streets and Spanish colonial charm.",
+    "content": "A UNESCO World Heritage Site, Vigan transports visitors to the Spanish colonial era. Calle Crisologo is lined with centuries-old houses, cobblestone streets, and horse-drawn carriages that glow under warm lantern lights at night.",
+    "highlights": [
+      "Calle Crisologo",
+      "Bantay Bell Tower",
+      "Kalesa rides",
+      "Vigan empanada",
+      "Syquia Mansion"
+    ],
+    "travel_tips": [
+      "Stay overnight to see Calle Crisologo lit at night",
+      "Try empanada and longganisa at Plaza Burgos",
+      "Combine with Pagudpud or Banaue on a north Luzon loop",
+      "Wear comfortable shoes for cobblestones"
+    ]
+  },
+  "banaue-rice-terraces": {
+    "name": "Banaue Rice Terraces",
+    "short_description": "Ancient rice terraces carved into the mountains — a UNESCO wonder.",
+    "content": "The Banaue Rice Terraces, often called the Eighth Wonder of the World, were carved into the mountains more than 2,000 years ago. The more secluded Batad terraces, shaped like an amphitheater, remain actively farmed by Ifugao communities.",
+    "highlights": [
+      "Banaue viewpoint",
+      "Batad Rice Terraces",
+      "Tappiya Falls trek",
+      "Ifugao heritage villages",
+      "Local weaving"
+    ],
+    "travel_tips": [
+      "Hire a local guide for Batad treks",
+      "Overnight buses run from Manila (9–10 hours)",
+      "Wear sturdy shoes — trails can be steep and muddy",
+      "Respect farming communities and terrace boundaries"
+    ]
+  },
+  "chocolate-hills": {
+    "name": "Chocolate Hills",
+    "short_description": "Over 1,000 unique dome-shaped hills that turn brown in the dry season.",
+    "content": "The Chocolate Hills are a geological formation of more than 1,000 grass-covered mounds that turn chocolate-brown during the dry season, creating one of the Philippines' most recognizable landscapes.",
+    "highlights": [
+      "Chocolate Hills Complex viewpoint",
+      "Butterfly Garden",
+      "ATV rides",
+      "Nearby tarsier sanctuaries",
+      "Loboc River"
+    ],
+    "travel_tips": [
+      "Visit early morning for clearer views",
+      "Combine with a full Bohol countryside tour",
+      "Bring sun protection — the viewpoint is exposed",
+      "Pair with Panglao for a beach extension"
+    ]
+  },
+  "camiguin": {
+    "name": "Camiguin",
+    "short_description": "Volcanic island of hot springs, waterfalls, and the Sunken Cemetery.",
+    "content": "Dubbed the Island Born of Fire, Camiguin packs volcanoes, hot springs, and the haunting Sunken Cemetery marked by a large cross rising from the sea. White Island sandbar offers panoramic views of Mount Hibok-Hibok.",
+    "highlights": [
+      "White Island",
+      "Sunken Cemetery",
+      "Katibawasan Falls",
+      "Ardent Hot Springs",
+      "Mt. Hibok-Hibok"
+    ],
+    "travel_tips": [
+      "Rent a multicab or motorbike to circle the island",
+      "Check weather before White Island boat trips",
+      "Try lanzones in season",
+      "Flights or ferries from Cagayan de Oro work well"
+    ]
+  },
+  "davao": {
+    "name": "Davao",
+    "short_description": "Gateway to Mt. Apo, Philippine eagles, and Mindanao's cultural heart.",
+    "content": "Davao City is the largest city in Mindanao, balancing urban development with natural wonders. It is the gateway to Mount Apo, the country's highest peak, and the Philippine Eagle Center protects the endangered national bird.",
+    "highlights": [
+      "Philippine Eagle Center",
+      "Eden Nature Park",
+      "Samal Island beaches",
+      "Durian and seafood markets",
+      "Mount Apo treks"
+    ],
+    "travel_tips": [
+      "Fly into Davao International Airport",
+      "Check travel advisories for mountain treks",
+      "Try durian, pomelo, and grilled tuna",
+      "Samal Island is a short ferry ride away"
+    ]
+  },
+  "sagada": {
+    "name": "Sagada",
+    "short_description": "Cool highland town of caves, waterfalls, and hanging coffins.",
+    "content": "Sagada is celebrated for cool climate, rich Igorot traditions, and stunning landscapes. The Hanging Coffins of Echo Valley reflect ancient burial practices. Sumaguing Cave and Bomod-ok Falls reward adventurous visitors.",
+    "highlights": [
+      "Hanging Coffins",
+      "Sumaguing Cave",
+      "Bomod-ok Falls",
+      "Kiltepan sea of clouds",
+      "Echo Valley"
+    ],
+    "travel_tips": [
+      "Hire cave guides — required for Sumaguing",
+      "Expect cool nights; pack layers",
+      "Bus from Baguio takes about 5 hours",
+      "Respect sacred burial sites and local customs"
+    ]
+  },
+  "mayon-volcano": {
+    "name": "Mayon Volcano",
+    "short_description": "Perfect-cone volcano with ATV rides, ruins, and adventure views.",
+    "content": "Mayon Volcano is renowned for its near-perfect cone shape. Visitors admire its beauty at the Cagsawa Ruins, where church remnants stand as a reminder of the 1814 eruption. ATV rides at the foothills add adventure to the experience.",
+    "highlights": [
+      "Cagsawa Ruins",
+      "Mayon ATV adventure",
+      "Lignon Hill",
+      "Donsol whale sharks (seasonal)",
+      "Bicol cuisine"
+    ],
+    "travel_tips": [
+      "Fly to Legazpi for the best access",
+      "Views depend on weather — allow extra days",
+      "Try Bicol Express and laing",
+      "Combine with Donsol in whale shark season"
+    ]
+  },
+  "kawasan-falls": {
+    "name": "Cebu (Kawasan Falls)",
+    "short_description": "Turquoise waterfalls and famous canyoneering adventures.",
+    "content": "Kawasan Falls is famous for canyoneering through turquoise pools and cascades. The multi-level falls are among Cebu's most photographed natural attractions and pair well with south Cebu coastal trips.",
+    "highlights": [
+      "Canyoneering",
+      "Three-tier Kawasan Falls",
+      "Moalboal nearby",
+      "Oslob whale sharks",
+      "Tumalog Falls"
+    ],
+    "travel_tips": [
+      "Book canyoneering with accredited operators",
+      "Wear secure water shoes",
+      "Start early to avoid crowds",
+      "Keep electronics in dry bags"
+    ]
+  },
+  "intramuros": {
+    "name": "Intramuros (Manila)",
+    "short_description": "Historic walled city at the heart of the Philippine capital.",
+    "content": "The walled city of Intramuros is Manila's heritage centerpiece, where cobblestone streets lead to Fort Santiago and San Agustin Church, a UNESCO World Heritage site.",
+    "highlights": [
+      "Fort Santiago",
+      "San Agustin Church",
+      "Casa Manila",
+      "Kalesa tours",
+      "Rizal Park nearby"
+    ],
+    "travel_tips": [
+      "Walk or bike the walls early morning",
+      "Combine with National Museum visits",
+      "Watch for cultural performances on weekends",
+      "Use ride-hailing apps for Manila traffic"
+    ]
+  },
+  "panglao": {
+    "name": "Panglao Island",
+    "short_description": "White-sand beaches and diving gateways near Bohol.",
+    "content": "Panglao offers resorts, beaches, and diving access to coral reefs, with Alona Beach as the main hub for island-hopping and sunset dining.",
+    "highlights": [
+      "Alona Beach",
+      "Balicasag diving",
+      "Virgin Island sandbar",
+      "Hinagdanan Cave",
+      "Dolphin watching"
+    ],
+    "travel_tips": [
+      "Fly into Bohol–Panglao International Airport",
+      "Book diving in advance during holidays",
+      "Combine with Chocolate Hills day tour",
+      "Respect marine protected areas"
+    ]
+  },
+  "apo-island": {
+    "name": "Apo Island",
+    "short_description": "Marine sanctuary famous for sea turtles and snorkeling.",
+    "content": "Apo Island is a protected marine sanctuary where sea turtles glide among vibrant coral reefs, accessible by boat from Dumaguete or Dauin.",
+    "highlights": [
+      "Sea turtle snorkeling",
+      "Coral gardens",
+      "Marine sanctuary",
+      "Island village",
+      "Dauin dive sites"
+    ],
+    "travel_tips": [
+      "Pay marine sanctuary fees",
+      "Do not touch turtles or corals",
+      "Bring snorkel gear or rent on-site",
+      "Start boat trips early for calmer seas"
+    ]
+  }
+}

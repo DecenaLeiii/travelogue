@@ -1,0 +1,2928 @@
+[
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/admin",
+      "seconds": 658,
+      "max_scroll": 0,
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-13T12:02:35.615Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-13T12:02:43.363Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/admin",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-13T12:02:58.092Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/admin",
+      "depth": 50,
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-13T12:02:58.208Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/admin",
+      "depth": 75,
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-13T12:02:58.372Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/admin",
+      "depth": 100,
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-13T12:02:58.390Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/admin",
+      "tag": "button",
+      "href": null,
+      "text": "Logout",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-13T12:03:00.617Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/admin",
+      "seconds": 17,
+      "max_scroll": 100,
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-13T12:03:00.639Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/login",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-13T12:03:00.639Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/admin/login",
+      "tag": "a",
+      "href": "http://localhost:3004/",
+      "text": "Philippines Travelogue",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-13T12:03:03.535Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/admin/login",
+      "seconds": 3,
+      "max_scroll": 0,
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-13T12:03:03.537Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-13T12:03:11.412Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-13T12:03:14.149Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 50,
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-13T12:03:14.624Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 75,
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-13T12:03:18.941Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 100,
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-13T12:03:22.190Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:34:03.469Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/login",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:34:06.226Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/admin/login",
+      "tag": "a",
+      "href": "http://localhost:3000/admin",
+      "text": "Admin",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:34:13.255Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/admin/login",
+      "seconds": 7,
+      "max_scroll": 0,
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:34:13.261Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/login",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:34:14.171Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/admin/login",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:34:19.116Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/admin/login",
+      "depth": 50,
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:34:19.134Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/admin/login",
+      "depth": 75,
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:34:19.161Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/admin/login",
+      "depth": 100,
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:34:19.162Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/admin/login",
+      "tag": "a",
+      "href": "http://localhost:3000/",
+      "text": "Philippines Travelogue",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:34:20.943Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/admin/login",
+      "seconds": 7,
+      "max_scroll": 100,
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:34:20.948Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:34:28.696Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:34:33.485Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 50,
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:34:35.104Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 75,
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:34:36.520Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 100,
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:09.281Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:21.834Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:21.856Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:22.044Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:22.045Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:23.026Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:23.027Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:24.081Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:24.081Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:24.211Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:24.250Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:24.785Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:24.878Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:25.625Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:25.696Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:30.873Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/",
+      "seconds": 5,
+      "max_scroll": 0,
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:30.886Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:30.887Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:30.993Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:31.804Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:31.836Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:32.823Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:32.858Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:37.188Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:37.189Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:40.285Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:40.286Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:36:50.801Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "a",
+      "href": "http://localhost:3000/#destinations",
+      "text": "Aprende más",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:37:31.867Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/",
+      "seconds": 183,
+      "max_scroll": 38,
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:39:43.395Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "a",
+      "href": "http://localhost:3000/contact",
+      "text": "Contacto",
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:40:17.025Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/",
+      "seconds": 217,
+      "max_scroll": 0,
+      "scan_id": null,
+      "visitor_id": "v_1782288234021_d2sgb4j"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:40:17.032Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1785134472062_m4k573i"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:41:12.420Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1785134472062_m4k573i"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:41:24.683Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 50,
+      "scan_id": null,
+      "visitor_id": "v_1785134472062_m4k573i"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:41:29.513Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 75,
+      "scan_id": null,
+      "visitor_id": "v_1785134472062_m4k573i"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:41:30.047Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Itataas",
+      "scan_id": null,
+      "visitor_id": "v_1785134472062_m4k573i"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:42:40.386Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782290069688_upzolv0"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:48:29.530Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782290069688_upzolv0"
+    },
+    "scan_id": null,
+    "created_at": "2026-07-27T06:48:44.547Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782290069688_upzolv0"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:41:55.844Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786434281042_pl4prre"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:44:41.105Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "a",
+      "href": "https://wpxtql4g-3000.asse.devtunnels.ms/#destinations",
+      "text": "Learn more",
+      "scan_id": null,
+      "visitor_id": "v_1786434281042_pl4prre"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:44:56.951Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1786434281042_pl4prre"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:44:57.213Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/",
+      "seconds": 135,
+      "max_scroll": 31,
+      "scan_id": null,
+      "visitor_id": "v_1786434281042_pl4prre"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:46:56.823Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786434281042_pl4prre"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:47:05.408Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1786434281042_pl4prre"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:47:05.673Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1782290069688_upzolv0"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:49:20.702Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/",
+      "seconds": 476,
+      "max_scroll": 26,
+      "scan_id": null,
+      "visitor_id": "v_1782290069688_upzolv0"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:49:50.977Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:50:13.854Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:50:18.638Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 50,
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:50:20.522Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 75,
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:50:20.963Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 100,
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:50:21.568Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/",
+      "seconds": 13,
+      "max_scroll": 100,
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:50:25.766Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/destination/panglao",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:50:41.013Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/destination/panglao",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:50:43.644Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/destination/panglao",
+      "depth": 50,
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:50:43.751Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/destination/panglao",
+      "depth": 75,
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:50:44.170Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/destination/panglao",
+      "seconds": 10,
+      "max_scroll": 90,
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:50:51.331Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/",
+      "seconds": 290,
+      "max_scroll": 31,
+      "scan_id": null,
+      "visitor_id": "v_1786434281042_pl4prre"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:51:56.376Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/destination/panglao",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:52:10.434Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/destination/panglao",
+      "seconds": 2,
+      "max_scroll": 0,
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:52:12.468Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/destination/panglao",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:52:27.341Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/destination/panglao",
+      "tag": "a",
+      "href": "http://localhost:3001/",
+      "text": "Philippines Travelogue",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:52:32.086Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/destination/panglao",
+      "seconds": 5,
+      "max_scroll": 0,
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:52:32.110Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:52:39.924Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:52:45.373Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:53:02.281Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:53:10.688Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:53:18.208Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:53:30.719Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:53:37.153Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T07:53:48.185Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/",
+      "seconds": 542,
+      "max_scroll": 40,
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:01:42.398Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:01:50.375Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:02:12.110Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:02:22.328Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:02:22.471Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:02:41.540Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:02:54.744Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782292086821_tedfr37"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:09:12.195Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782292086821_tedfr37"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:09:24.687Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782292086821_tedfr37"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:09:36.139Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1782292086821_tedfr37"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:09:36.677Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782292086821_tedfr37"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:10:00.901Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782292086821_tedfr37"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:10:11.719Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782885618258_7nrb7wf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:11:49.942Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782885618258_7nrb7wf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:12:00.680Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782885618258_7nrb7wf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:12:29.680Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1782885618258_7nrb7wf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:12:30.160Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:16:11.697Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:16:22.139Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:16:23.231Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:16:33.976Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:16:46.414Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Send",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:16:57.963Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Is it best to go to Baguio now",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:18:19.411Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Suggest beaches for snorkeling",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:18:24.463Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Translate Boracay to Spanish",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:18:31.084Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/",
+      "seconds": 596,
+      "max_scroll": 25,
+      "scan_id": null,
+      "visitor_id": "v_1782292086821_tedfr37"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:19:08.249Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Show less",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:19:10.580Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Where to see whale sharks",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:19:34.791Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Best islands for diving",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:19:41.301Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Highlights of El Nido",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:19:56.190Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Suggest beaches for snorkeling",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:22:49.272Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Tell me about Bohol",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:22:53.542Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Highlights of El Nido",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:22:57.933Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Tell me about Palawan (El Nido)",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:23:02.745Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "What destinations are best in August",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:23:06.181Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Suggest beaches for snorkeling",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:23:19.671Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 50,
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:24:03.869Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782888196152_st96g5t"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:27:59.343Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1782888196152_st96g5t"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:28:17.914Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 50,
+      "scan_id": null,
+      "visitor_id": "v_1782888196152_st96g5t"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:28:17.949Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786436933407_bptd9xf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:28:53.539Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1786436933407_bptd9xf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:28:53.841Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Top",
+      "scan_id": null,
+      "visitor_id": "v_1786436933407_bptd9xf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:29:02.341Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Top",
+      "scan_id": null,
+      "visitor_id": "v_1786436933407_bptd9xf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:29:02.961Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Top",
+      "scan_id": null,
+      "visitor_id": "v_1786436933407_bptd9xf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:29:03.230Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Top",
+      "scan_id": null,
+      "visitor_id": "v_1786436933407_bptd9xf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:29:03.617Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "a",
+      "href": "http://localhost:3004/qr-travelogue.svg",
+      "text": "",
+      "scan_id": null,
+      "visitor_id": "v_1782888019409_ilofw55"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:29:21.390Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 50,
+      "scan_id": null,
+      "visitor_id": "v_1786436933407_bptd9xf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:32:25.821Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 75,
+      "scan_id": null,
+      "visitor_id": "v_1786436933407_bptd9xf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:32:26.229Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786437075658_h1wwv6r"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:32:28.537Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 100,
+      "scan_id": null,
+      "visitor_id": "v_1786436933407_bptd9xf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:32:29.604Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786437075658_h1wwv6r"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:32:45.929Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786437075658_h1wwv6r"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:32:55.220Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786437075658_h1wwv6r"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:33:04.117Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786437075658_h1wwv6r"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:33:12.220Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "a",
+      "href": "https://wpxtql4g-3005.asse.devtunnels.ms/qr-travelogue.svg",
+      "text": "",
+      "scan_id": null,
+      "visitor_id": "v_1786437075658_h1wwv6r"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:33:17.554Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Show less",
+      "scan_id": null,
+      "visitor_id": "v_1786437075658_h1wwv6r"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:33:31.768Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Best islands for diving",
+      "scan_id": null,
+      "visitor_id": "v_1786437075658_h1wwv6r"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:33:32.751Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Is it best to go to Baguio now",
+      "scan_id": null,
+      "visitor_id": "v_1786437075658_h1wwv6r"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:33:36.886Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1786437075658_h1wwv6r"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:33:39.292Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 50,
+      "scan_id": null,
+      "visitor_id": "v_1786437075658_h1wwv6r"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:33:40.675Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 75,
+      "scan_id": null,
+      "visitor_id": "v_1786437075658_h1wwv6r"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:33:41.802Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 100,
+      "scan_id": null,
+      "visitor_id": "v_1786437075658_h1wwv6r"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:33:43.560Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/",
+      "seconds": 462,
+      "max_scroll": 100,
+      "scan_id": null,
+      "visitor_id": "v_1786436933407_bptd9xf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:36:36.988Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786436933407_bptd9xf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:39:05.339Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1786436933407_bptd9xf"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:39:05.386Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786437613465_8tm3c3e"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:40:14.104Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1786437613465_8tm3c3e"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:40:14.106Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "",
+      "scan_id": null,
+      "visitor_id": "v_1786437613465_8tm3c3e"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:40:26.211Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:41:12.204Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:41:18.063Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:41:34.359Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/destination/boracay",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:41:57.513Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/destination/boracay",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:42:00.507Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/destination/boracay",
+      "depth": 50,
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:42:01.136Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/destination/boracay",
+      "tag": "button",
+      "href": null,
+      "text": "★",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:42:04.548Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/destination/boracay",
+      "tag": "button",
+      "href": null,
+      "text": "",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:42:06.745Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/destination/boracay",
+      "depth": 75,
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:42:09.431Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/destination/boracay",
+      "tag": "a",
+      "href": "https://wpxtql4g-3006.asse.devtunnels.ms/",
+      "text": "Philippines Travelogue",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:42:19.081Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/destination/boracay",
+      "tag": "a",
+      "href": "https://wpxtql4g-3006.asse.devtunnels.ms/",
+      "text": "Philippines Travelogue",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:42:19.588Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:42:27.834Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Translate Boracay to Spanish",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:42:30.985Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "Is it best to go to Baguio now",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:42:35.059Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:42:37.876Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 50,
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:42:39.743Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "a",
+      "href": "https://wpxtql4g-3006.asse.devtunnels.ms/#destinations",
+      "text": "Tourism",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:42:42.082Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "a",
+      "href": "https://wpxtql4g-3006.asse.devtunnels.ms/#destinations",
+      "text": "Destinations",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:42:43.369Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "a",
+      "href": "https://wpxtql4g-3006.asse.devtunnels.ms/",
+      "text": "Home",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:42:44.453Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "a",
+      "href": "https://wpxtql4g-3006.asse.devtunnels.ms/#destinations",
+      "text": "Destinations",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:42:45.040Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:42:52.987Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:43:26.793Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 50,
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:43:28.785Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 75,
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:43:29.375Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 100,
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:43:30.936Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 50,
+      "scan_id": null,
+      "visitor_id": "v_1786437613465_8tm3c3e"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:46:18.046Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 75,
+      "scan_id": null,
+      "visitor_id": "v_1786437613465_8tm3c3e"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:46:22.363Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 100,
+      "scan_id": null,
+      "visitor_id": "v_1786437613465_8tm3c3e"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:46:22.844Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786437613465_8tm3c3e"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:48:08.751Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 100,
+      "scan_id": null,
+      "visitor_id": "v_1786437613465_8tm3c3e"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:50:29.666Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 50,
+      "scan_id": null,
+      "visitor_id": "v_1786437613465_8tm3c3e"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:50:29.896Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1786437613465_8tm3c3e"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:50:29.923Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 75,
+      "scan_id": null,
+      "visitor_id": "v_1786437613465_8tm3c3e"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:50:29.972Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/",
+      "seconds": 142,
+      "max_scroll": 100,
+      "scan_id": null,
+      "visitor_id": "v_1786437613465_8tm3c3e"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:50:30.712Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:50:51.706Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:50:51.714Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "button",
+      "href": null,
+      "text": "",
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:51:16.499Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 50,
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:51:22.407Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 75,
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:51:27.113Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/",
+      "seconds": 39,
+      "max_scroll": 93,
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:51:29.793Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 100,
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:51:34.903Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/destination/apo-island",
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:51:45.219Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/destination/apo-island",
+      "tag": "a",
+      "href": "https://wpxtql4g-3007.asse.devtunnels.ms/admin",
+      "text": "Admin",
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:51:46.964Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/destination/apo-island",
+      "seconds": 2,
+      "max_scroll": 0,
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:51:46.999Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/login",
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:51:49.262Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/admin/login",
+      "tag": "button",
+      "href": null,
+      "text": "Login",
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:52:17.439Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/admin/login",
+      "seconds": 29,
+      "max_scroll": 0,
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:52:17.848Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin",
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:52:17.853Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/admin",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:52:31.486Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/admin",
+      "depth": 50,
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:52:31.735Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/admin",
+      "depth": 75,
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:52:31.785Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/admin",
+      "depth": 100,
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:52:32.002Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/admin",
+      "tag": "button",
+      "href": null,
+      "text": "Apply filters",
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:52:33.888Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/admin",
+      "seconds": 19,
+      "max_scroll": 100,
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:52:36.622Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/admin",
+      "tag": "a",
+      "href": "https://wpxtql4g-3007.asse.devtunnels.ms/api/admin/export",
+      "text": "Export CSV",
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:52:36.873Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:56:18.850Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "a",
+      "href": "https://wpxtql4g-3006.asse.devtunnels.ms/",
+      "text": "← Back to home",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:56:20.827Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:56:21.848Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/",
+      "tag": "a",
+      "href": "https://wpxtql4g-3006.asse.devtunnels.ms/",
+      "text": "Philippines Travelogue",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:56:23.279Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786437599251_93g7ksk"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:56:24.659Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/admin",
+      "tag": "a",
+      "href": "https://wpxtql4g-3007.asse.devtunnels.ms/",
+      "text": "Philippines Travelogue",
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:59:05.840Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/admin",
+      "seconds": 407,
+      "max_scroll": 100,
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:59:05.843Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:59:14.926Z"
+  },
+  {
+    "event_type": "scroll_depth",
+    "payload": {
+      "path": "/",
+      "depth": 25,
+      "scan_id": null,
+      "visitor_id": "v_1786438250890_526xwjh"
+    },
+    "scan_id": null,
+    "created_at": "2026-08-11T08:59:15.525Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782290069688_upzolv0"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-19T09:09:06.076Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782290069688_upzolv0"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-19T09:10:31.815Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782290069688_upzolv0"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-22T07:53:54.477Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-22T07:57:40.154Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-22T07:58:11.784Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-22T07:58:19.885Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-22T07:58:41.937Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-22T07:58:56.815Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/login",
+      "scan_id": null,
+      "visitor_id": "v_1782290069688_upzolv0"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-25T10:56:57.218Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/destinations",
+      "scan_id": null,
+      "visitor_id": "v_1782290069688_upzolv0"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-28T04:18:16.811Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/destinations",
+      "scan_id": null,
+      "visitor_id": "v_1782290069688_upzolv0"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-28T04:18:17.430Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/login",
+      "scan_id": null,
+      "visitor_id": "v_1782290069688_upzolv0"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-28T04:18:17.448Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/login",
+      "scan_id": null,
+      "visitor_id": "v_1782290069688_upzolv0"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-28T04:18:17.485Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/login",
+      "scan_id": null,
+      "visitor_id": "v_1782290069688_upzolv0"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-28T04:18:17.508Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782290069688_upzolv0"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-28T04:18:21.806Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/",
+      "seconds": 20,
+      "max_scroll": 0,
+      "scan_id": null,
+      "visitor_id": "v_1782290069688_upzolv0"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-28T04:18:40.931Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782290069688_upzolv0"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-28T04:18:48.955Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782291291814_ma7xgrf"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-28T04:19:22.254Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/",
+      "scan_id": null,
+      "visitor_id": "v_1782292086821_tedfr37"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-28T04:20:07.001Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/login",
+      "scan_id": null,
+      "visitor_id": "v_1793161431378_2ue6v7u"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-28T04:23:51.429Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/admin/login",
+      "seconds": 12,
+      "max_scroll": 0,
+      "scan_id": null,
+      "visitor_id": "v_1793161431378_2ue6v7u"
+    },
+    "scan_id": null,
+    "created_at": "2026-10-28T04:24:03.124Z"
+  }
+]

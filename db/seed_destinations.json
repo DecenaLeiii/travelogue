@@ -1,0 +1,22 @@
+[
+  { "id": "1", "name": "Boracay", "slug": "boracay", "short_description": "White-sand beaches and lively nightlife.", "content": "Boracay is famous for White Beach and watersports." },
+  { "id": "2", "name": "Palawan (El Nido)", "slug": "el-nido", "short_description": "Limestone cliffs and island hopping.", "content": "El Nido offers dramatic karst landscapes and clear lagoons." },
+  { "id": "3", "name": "Palawan (Coron)", "slug": "coron", "short_description": "Shipwreck diving and freshwater lakes.", "content": "Coron is a top wreck-diving and snorkeling site." },
+  { "id": "4", "name": "Chocolate Hills (Bohol)", "slug": "chocolate-hills", "short_description": "Unique karst hill formations.", "content": "The Chocolate Hills are a geological formation of over 1,000 hills." },
+  { "id": "5", "name": "Banaue Rice Terraces", "slug": "banaue-rice-terraces", "short_description": "Ancient rice terraces carved into the mountains.", "content": "A UNESCO World Heritage site built by indigenous people." },
+  { "id": "6", "name": "Vigan", "slug": "vigan", "short_description": "Spanish-colonial architecture and cobblestone streets.", "content": "Vigan is known for its preserved colonial townscape." },
+  { "id": "7", "name": "Mayon Volcano (Legazpi)", "slug": "mayon-volcano", "short_description": "Perfect cone volcano and outdoor activities.", "content": "Mayon Volcano offers scenic views and hiking opportunities." },
+  { "id": "8", "name": "Cebu (Kawasan Falls)", "slug": "kawasan-falls", "short_description": "Canyoneering and turquoise waterfalls.", "content": "Kawasan Falls is famous for canyoneering and clear waters." },
+  { "id": "9", "name": "Siargao", "slug": "siargao", "short_description": "Surfing capital with island lagoons.", "content": "Siargao is famous for Cloud 9 surf break and laid-back vibe." },
+  { "id": "10", "name": "Intramuros (Manila)", "slug": "intramuros", "short_description": "Historic walled city in Manila.", "content": "Intramuros contains Fort Santiago and colonial-era churches." },
+  { "id": "11", "name": "Taal Volcano", "slug": "taal-volcano", "short_description": "Crater lake within a volcano island.", "content": "Taal Volcano features a lake within a volcanic island." },
+  { "id": "12", "name": "Panglao Island (Bohol)", "slug": "panglao", "short_description": "Beaches and diving near Bohol.", "content": "Panglao offers resorts, beaches, and diving access to coral reefs." },
+  { "id": "13", "name": "Davao (Eden Nature Park)", "slug": "eden-nature-park", "short_description": "Highland resort with nature activities.", "content": "Eden Nature Park is a cool highland retreat near Davao City." },
+  { "id": "14", "name": "Hundred Islands (Pangasinan)", "slug": "hundred-islands", "short_description": "Cluster of small islands with beaches.", "content": "Hundred Islands National Park is popular for island hopping." },
+  { "id": "15", "name": "Fortune Island (Batangas)", "slug": "fortune-island", "short_description": "Clifftop ruins and snorkeling.", "content": "Fortune Island is known for Grecian-style ruins and clear waters." },
+  { "id": "16", "name": "Apo Island", "slug": "apo-island", "short_description": "Marine sanctuary for turtles and snorkeling.", "content": "Apo Island is a protected marine sanctuary with abundant turtles." },
+  { "id": "17", "name": "Samal Island", "slug": "samal-island", "short_description": "Beaches and beach resorts near Davao.", "content": "Samal Island is popular for resorts and white-sand beaches." },
+  { "id": "18", "name": "Camiguin", "slug": "camiguin", "short_description": "Small island with volcanoes and hot springs.", "content": "Camiguin offers hot springs, waterfalls, and diving." },
+  { "id": "19", "name": "Mt. Pulag", "slug": "mt-pulag", "short_description": "Highest peak in Luzon with sea-of-clouds.", "content": "Mt. Pulag is famed for its sunrise sea of clouds and trekking." },
+  { "id": "20", "name": "Pagudpud", "slug": "pagudpud", "short_description": "Beaches and coastal scenery in northern Luzon.", "content": "Pagudpud is known for its pristine beaches and windmills." }
+]

@@ -1,7 +1,7 @@
 -- Seed 20 Philippines destinations with placeholder images
 insert into destinations (name, slug, region, short_description, content, images, featured)
 values
-('Boracay', 'boracay', 'Visayas', 'White-sand beaches and lively nightlife.', 'Boracay is famous for White Beach and watersports.', to_jsonb(array['/assets/destinations/boracay.jpg']), true),
+('Boracay', 'boracay', 'Visayas', 'White-sand beaches and lively nightlife.', 'Boracay is famous for White Beach and watersports.', to_jsonb(array['/boracay homepage.jpg', '/boracay1.jpg', '/boracay2.jpg', '/boracay3.jpg', '/boracay4.jpg', '/boracay5.jpg', '/boracay6.jpg']), true),
 ('Palawan (El Nido)', 'el-nido', 'MIMAROPA', 'Limestone cliffs and island hopping.', 'El Nido offers dramatic karst landscapes and clear lagoons.', to_jsonb(array['/assets/destinations/el-nido.jpg']), true),
 ('Palawan (Coron)', 'coron', 'MIMAROPA', 'Shipwreck diving and freshwater lakes.', 'Coron is a top wreck-diving and snorkeling site.', to_jsonb(array['/assets/destinations/coron.jpg']), false),
 ('Chocolate Hills (Bohol)', 'chocolate-hills', 'Visayas', 'Unique karst hill formations.', 'The Chocolate Hills are a geological formation of over 1,000 hills.', to_jsonb(array['/assets/destinations/chocolate-hills.jpg']), false),

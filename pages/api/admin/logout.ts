@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { clearAdminSessionCookie } from '../../../lib/auth';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  // Clear cookie
-  res.setHeader('Set-Cookie', 'admin_token=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax');
-  res.json({ ok: true });
+  if (req.method !== 'POST') return res.status(405).end();
+  clearAdminSessionCookie(res);
+  return res.json({ ok: true });
 }

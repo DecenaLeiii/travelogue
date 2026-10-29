@@ -1,5 +1,7 @@
 ﻿node_modules
 .next
+.next-production
 .env.local
 assets/destinations.pdf
 .DS_Store
+/public/TOURISM VIDEO.mp4
