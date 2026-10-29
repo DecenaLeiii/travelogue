@@ -61,8 +61,9 @@ npm run dev
 - Login at `/admin/login`
 - For production: create a user in Supabase Auth and use those credentials
 - Fallback: set `ADMIN_EMAIL` and `ADMIN_PASSWORD` in `.env.local`
+- Admin image and video uploads use Supabase Storage. Create a public bucket named `travelogue-media` in Supabase, or set `SUPABASE_STORAGE_BUCKET` to another public bucket. Configure `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in Render.
 
 ## CI / Deployment
 
 - GitHub Actions workflow at `.github/workflows/ci.yml`
-- Deploy to Vercel with environment variables from `.env.local`
+- Deploy with environment variables from `.env.local`

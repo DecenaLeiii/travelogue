@@ -1,7 +1,6 @@
-import fs from 'fs';
-import path from 'path';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { verifyAdmin } from '../../../lib/auth';
+import { uploadToStorage } from '../../../lib/supabaseStorage';
 
 export const config = {
   api: {
@@ -25,10 +24,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (imageBuffer.length > 8 * 1024 * 1024) return res.status(413).json({ error: 'Images must be 8 MB or smaller.' });
   const requestedCategory = req.body?.category;
   const category = requestedCategory === 'destinations' || requestedCategory === 'logos' ? requestedCategory : 'promo-spots';
-  const directory = path.join(process.cwd(), 'public', category);
-  fs.mkdirSync(directory, { recursive: true });
   const filename = `${category === 'destinations' ? 'destination' : 'promo'}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${extension}`;
-  fs.writeFileSync(path.join(directory, filename), imageBuffer);
-
-  return res.json({ url: `/${category}/${filename}` });
+  try {
+    const url = await uploadToStorage(`${category}/${filename}`, imageBuffer, match[1]);
+    return res.json({ url });
+  } catch (error) {
+    return res.status(500).json({ error: error instanceof Error ? error.message : 'Unable to save image.' });
+  }
 }
