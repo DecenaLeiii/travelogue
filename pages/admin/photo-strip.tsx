@@ -38,6 +38,8 @@ export default function AdminPhotoStrip() {
   const [logoUploading, setLogoUploading] = useState(false);
   const [heroDescription, setHeroDescription] = useState('');
   const [heroVideo, setHeroVideo] = useState(DEFAULT_SITE_BRANDING.hero_video);
+  const [heroVideos, setHeroVideos] = useState<string[]>(DEFAULT_SITE_BRANDING.hero_videos);
+  const [newVideoUrl, setNewVideoUrl] = useState('');
   const [videoStatus, setVideoStatus] = useState('');
   const [videoUploading, setVideoUploading] = useState(false);
   const [heroStatus, setHeroStatus] = useState('');
@@ -61,6 +63,7 @@ export default function AdminPhotoStrip() {
         const branding = await response.json();
         if (typeof branding.logo === 'string') setLogo(branding.logo);
         if (typeof branding.hero_video === 'string') setHeroVideo(branding.hero_video);
+        if (Array.isArray(branding.hero_videos) && branding.hero_videos.length) setHeroVideos(branding.hero_videos);
         setCultureHidden(Array.isArray(branding.culture_hidden) ? branding.culture_hidden : []);
         setCultureBlocks(Array.isArray(branding.culture_blocks) ? branding.culture_blocks : []);
         if (typeof branding.hero_description === 'string') setHeroDescription(branding.hero_description);
@@ -90,16 +93,33 @@ export default function AdminPhotoStrip() {
     setLogoStatus(response.ok ? 'Logo saved.' : result.error || 'Unable to save logo.');
   };
 
-  const saveHeroVideo = async (value = heroVideo) => {
-    setVideoStatus('Saving video...');
+  const saveHeroVideos = async (videos: string[], active: string, message = 'Homepage videos saved.') => {
+    setVideoStatus('Saving...');
     const response = await fetch('/api/site-branding', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ hero_video: value }),
+      body: JSON.stringify({ hero_video: active, hero_videos: videos }),
     });
     const result = await response.json();
-    if (response.ok) setHeroVideo(result.hero_video);
-    setVideoStatus(response.ok ? 'Homepage video saved.' : result.error || 'Unable to save video.');
+    if (response.ok) {
+      setHeroVideo(result.hero_video);
+      setHeroVideos(result.hero_videos);
+    }
+    setVideoStatus(response.ok ? message : result.error || 'Unable to save videos.');
+    return response.ok;
+  };
+
+  const addHeroVideo = async (url: string) => {
+    const value = url.trim();
+    if (!value) return;
+    if (heroVideos.includes(value)) { setVideoStatus('That video is already in the list.'); return; }
+    if (await saveHeroVideos([...heroVideos, value], heroVideo, 'Video added.')) setNewVideoUrl('');
+  };
+
+  const removeHeroVideo = (url: string) => {
+    if (heroVideos.length <= 1) { setVideoStatus('Keep at least one video.'); return; }
+    const next = heroVideos.filter((video) => video !== url);
+    void saveHeroVideos(next, url === heroVideo ? next[0] : heroVideo, 'Video removed.');
   };
 
   const uploadHeroVideo = async (file: File) => {
@@ -107,11 +127,22 @@ export default function AdminPhotoStrip() {
     setVideoUploading(true);
     setVideoStatus('Uploading video...');
     try {
-      const response = await fetch('/api/admin/video-upload', { method: 'POST', headers: { 'Content-Type': file.type }, body: file });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || 'Unable to upload video.');
-      setHeroVideo(result.url);
-      await saveHeroVideo(result.url);
+      const prepare = await fetch('/api/admin/video-upload-url', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contentType: file.type }),
+      });
+      const prepared = await prepare.json().catch(() => ({}));
+      if (!prepare.ok) throw new Error(prepared.error || 'Unable to prepare upload.');
+      const form = new FormData();
+      form.append('cacheControl', '3600');
+      form.append('', file);
+      const upload = await fetch(prepared.signedUrl, { method: 'PUT', headers: { 'x-upsert': 'false' }, body: form });
+      if (!upload.ok) {
+        const detail = await upload.json().catch(() => ({}));
+        throw new Error(detail.message || detail.error || 'Upload failed. Check the file size limit in your Supabase Storage settings.');
+      }
+      await addHeroVideo(prepared.publicUrl);
     } catch (error) {
       setVideoStatus(error instanceof Error ? error.message : 'Unable to upload video.');
     } finally {
@@ -274,22 +305,34 @@ export default function AdminPhotoStrip() {
       <section className="admin-panel site-logo-editor">
         <div>
           <p className="panel-label">Homepage</p>
-          <h2>Homepage hero video</h2>
+          <h2>Homepage video</h2>
         </div>
-        <div className="site-logo-controls">
-          <div className="site-logo-preview" style={{ width: 220, height: 124 }}>
-            <video key={heroVideo} src={heroVideo} muted loop playsInline autoPlay style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 8 }} />
-          </div>
+        <div className="site-logo-controls" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
+          <p>Add as many videos as you like and choose which one plays on the homepage. At least one video is required.</p>
+          {heroVideos.map((video) => (
+            <div key={video} style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
+              <div className="site-logo-preview" style={{ width: 160, height: 90 }}>
+                <video src={video} muted loop playsInline preload="metadata" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 8 }} />
+              </div>
+              <label style={{ display: 'flex', gap: 8, alignItems: 'center', flex: 1, minWidth: 200, wordBreak: 'break-all' }}>
+                <input type="radio" name="hero-video" checked={video === heroVideo} onChange={() => void saveHeroVideos(heroVideos, video, 'Now playing on the homepage.')} />
+                <span>{video === heroVideo ? 'Playing now: ' : ''}{decodeURIComponent(video.split('/').pop() || video)}</span>
+              </label>
+              <button type="button" className="details-btn" disabled={heroVideos.length <= 1} onClick={() => removeHeroVideo(video)}>Remove</button>
+            </div>
+          ))}
           <label className="site-logo-url">
-            <span>Video URL (MP4 or WebM)</span>
-            <input value={heroVideo} onChange={(event) => setHeroVideo(event.target.value)} placeholder="/videos/my-video.mp4 or https://..." />
+            <span>Add video URL (MP4 or WebM)</span>
+            <input value={newVideoUrl} onChange={(event) => setNewVideoUrl(event.target.value)} placeholder="/videos/my-video.mp4 or https://..." />
           </label>
-          <label className="promo-upload-button">
-            {videoUploading ? 'Uploading...' : 'Upload video'}
-            <input type="file" accept="video/mp4,video/webm" disabled={videoUploading} onChange={(event) => { const file = event.target.files?.[0]; if (file) void uploadHeroVideo(file); event.currentTarget.value = ''; }} />
-          </label>
-          <button type="button" className="details-btn" onClick={() => saveHeroVideo()}>Save video</button>
-          <button type="button" className="details-btn" onClick={() => saveHeroVideo(DEFAULT_SITE_BRANDING.hero_video)}>Reset to default</button>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            <button type="button" className="details-btn" onClick={() => void addHeroVideo(newVideoUrl)}>Add video</button>
+            <label className="promo-upload-button">
+              {videoUploading ? 'Uploading...' : 'Upload video'}
+              <input type="file" accept="video/mp4,video/webm" disabled={videoUploading} onChange={(event) => { const file = event.target.files?.[0]; if (file) void uploadHeroVideo(file); event.currentTarget.value = ''; }} />
+            </label>
+            <button type="button" className="details-btn" onClick={() => void saveHeroVideos(heroVideos.includes(DEFAULT_SITE_BRANDING.hero_video) ? heroVideos : [...heroVideos, DEFAULT_SITE_BRANDING.hero_video], DEFAULT_SITE_BRANDING.hero_video, 'Default video restored.')}>Use default video</button>
+          </div>
           {videoStatus && <span className="site-logo-status">{videoStatus}</span>}
         </div>
       </section>

@@ -1,0 +1,182 @@
+{
+  "boracay": {
+    "name": "Boracay",
+    "short_description": "Baybay a maputi so buhangin tan makulay so biang labi ed saray pinakambelat a isla ed mundo.",
+    "content": "Saray Boracay so arum ed pinakakilalaan a pasyalan ed Filipinas, tan masansan a mailista ed saray pinakambelat a isla ed mundo. Say White Beach so pinakabantog a yaman to, ya apat a kilometro so kaatagey na masustansya a buhangin tan malinaw a malinaw a danum. Ag-abay na panpahingalo ed baybay, saray Boracay et mangiter met na parasailing, kiteboarding, scuba diving, tan panaglayag ed paraw ed paglubog na agew.",
+    "highlights": ["White Beach", "Puka Shell Beach", "Panaglayag ed paraw ed paglubog na agew", "Saray paligsan ed danum tan panag-diving", "Saray kainan ed D'Mall"],
+    "travel_tips": ["Magpareserba na panag-iyan a maaga no matalem so bisita", "Sundon so lokal a saray paglinteg parad panangaywan ed kalikasan tan panag-akses ed baybay", "Subukan so panaglibot ed saray abay a isla tan cove", "Usaren so tricycle parad saray abeba a biyahe ed palibot na isla"],
+    "region": "Visayas",
+    "location": "Malay, Aklan",
+    "best_time_to_visit": "Disyembre anggad Mayo (panawen na namaga)"
+  },
+  "el-nido": {
+    "name": "Palawan (El Nido)",
+    "short_description": "Matayag a saray bangin a apog, nailemmeng a laguna, tan bantog a panaglibot ed saray isla.",
+    "content": "Say El Nido et mangengganyo ed saray matayag a bangin a apog tan nailemmeng a laguna ya mabalin a liboten na kayak o langoyan ed berde tan malinaw a danum. Kaiba ed Palawan, ya masansan a tawagen a Huling Pabpaway, say El Nido so saray pinakaberdeng a pasyalan ed panagbiyahe ed Southeast Asia, ya walaan na mabiskeg a tanaway a karst tan malinaw a laguna.",
+    "highlights": ["Big Lagoon", "Small Lagoon", "Secret Beach", "Nacpan Beach", "Saray tour ed panaglibot ed isla"],
+    "travel_tips": ["Makisaray ed organisado a Tour A/B/C/D parad panag-akses ed laguna", "Mangiyakar na sunscreen ya ligtas ed coral reef", "Makatulong so kwarta ed saray melag a negosyo", "Mangila ed 3-4 agew pian nasayaat a nasiyasat so lugar"],
+    "region": "MIMAROPA",
+    "location": "El Nido, Palawan",
+    "best_time_to_visit": "Disyembre anggad Mayo"
+  },
+  "coron": {
+    "name": "Palawan (Coron)",
+    "short_description": "Malinis a saray danum, laguna, tan bantog a saray lugar na panag-diving ed saray nalunod a barko.",
+    "content": "Say Coron et bantog ed interon mundo lapud saray marakep a danum, laguna, tan saray lugar na panag-diving. Masansan a tawagen so Kayangan Lake bilang pinakanlinis a danum ed Asia, ya napalibotan na matayag a bangin a apog. Para ed saray manag-diving, saray barko na Ikadua a Gera Mundial et ag-iyan ed leksab na dayat tan nagbalin a coral-encrusted a saray lugar na panag-diving.",
+    "highlights": ["Kayangan Lake", "Twin Lagoon", "Panag-diving ed saray nalunod a barko na Ikadua a Gera Mundial", "Panag-snorkel ed Siete Pecados", "Tanaway ed Mt. Tapyas"],
+    "travel_tips": ["Bayaran so environmental fee ed opisina na turismo", "Magpareserba na dive shop a maaga no matalem so bisita", "Mangrugi na saray tour ed isla a maaga pian likayan so kadakelan na totoo", "Manlapud ed Busuanga Airport, sakay na van pasingger ed baley na Coron"],
+    "region": "MIMAROPA",
+    "location": "Coron, Busuanga, Palawan",
+    "best_time_to_visit": "Disyembre anggad Mayo"
+  },
+  "cebu": {
+    "name": "Cebu",
+    "short_description": "Kasaritaan, canyoneering, tan say Reina a Siyudad na Habagat.",
+    "content": "Say Cebu et mangkombina na kasaysayan, biang na siyudad, tan adventure ed luwar. Ed Cebu City, saray landmark a singa Magellan's Cross tan Basilica Minore del Santo Niño et mangipapanengneng na saray Espanyol a tawir na isla. Para ed saray mankakalikasan, say Kawasan Falls ed Badian et bantog lapud canyoneering ed saray turquoise a danum.",
+    "highlights": ["Magellan's Cross", "Canyoneering ed Kawasan Falls", "Saray whale shark ed Oslob", "Panagdalagan na sardinas ed Moalboal", "Pista na Sinulog (Enero)"],
+    "travel_tips": ["Manlapud ed Mactan-Cebu International Airport", "Magpareserba na canyoneering tour ed saray lisensyado a guide", "Kombinaren so panaglakbay ed saray makasaysayan a lugar na siyudad tan saray biyahe ed abagatan na Cebu", "Subukan so lechon tan pinatuyo a mangga"],
+    "region": "Visayas",
+    "location": "Probinsia na Cebu",
+    "best_time_to_visit": "Nobyembre anggad Abril"
+  },
+  "bohol": {
+    "name": "Bohol",
+    "short_description": "Chocolate Hills, tarsier, tan maputi a saray baybay ed Panglao.",
+    "content": "Bantog so Bohol lapud saray pambihira a likas tan kultural a yaman to. Say Chocolate Hills et napakaliket a tanaway na labi 1,200 a burol ya tinawyan na dagem. Say tarsier na Filipinas, melag a primate ya walaan na marakep a matan, et pinalikel ed lokal a saray santuwaryo. Say Panglao Island et walaan na resort tan saray akses ed diving parad coral reef.",
+    "highlights": ["Chocolate Hills", "Santuwaryo na tarsier", "Panaglayag ed Loboc River", "Saray baybay ed Panglao", "Saray makasaysayan a simbale"],
+    "travel_tips": ["Mag-abang na motor o makisaray ed tour ed kabukiran parad saray burol tan simbale", "Bisitaen la iray tarsier ed saray akreditado a santuwaryo", "Saray fast ferry et mangkokonekta ed Cebu tan Bohol ed agnas 2 oras", "Kombinaren so tour ed burol ed pananginmuran ed ilog"],
+    "region": "Visayas",
+    "location": "Probinsia na Bohol",
+    "best_time_to_visit": "Disyembre anggad Mayo"
+  },
+  "siargao": {
+    "name": "Siargao",
+    "short_description": "Kapitolyo na surfing ya walaan na laguna, isla, tan natalna a biang ed isla.",
+    "content": "Bilang Kapitolyo na Surfing na Filipinas, say Siargao et mangawit na saray surfer a manlapud interon mundo ed Cloud 9. Ag-abay na saray balod, say Magpupungko Rock Pools tan Sugba Lagoon et mangiter na panaglangoy tan paddleboarding ya napalibotan na bakawan.",
+    "highlights": ["Lugar na panag-surf ed Cloud 9", "Magpupungko Rock Pools", "Sugba Lagoon", "Naked Island", "Sohoton Cove"],
+    "travel_tips": ["Mag-abang na scooter pian liboten so isla", "Magpareserba na biyahe ed bangka pasingger ed Sohoton a maaga", "Irespeto so lokal a palatuntunan ed panag-ila ed surfing", "Malawak so gamit na cash tan e-wallet"],
+    "region": "Mindanao",
+    "location": "Surigao del Norte",
+    "best_time_to_visit": "Agosto-Nobyembre parad surfing; Marso-Mayo parad natalna a danum"
+  },
+  "baguio": {
+    "name": "Baguio",
+    "short_description": "Nalamig a panagpahingalo ed kabukiran tan Kapitolyo na Panawen na Init na Filipinas.",
+    "content": "A tawagen a Kapitolyo na Panawen na Init na Filipinas, say Baguio et natalna a panagpahingalo ed kabukiran ya walaan na nalamig a klima, saray burol ya tinawyan na pine, tan makulay a kultura. Say Burnham Park, Strawberry Farm ed La Trinidad, tan Session Road et mangipaliwanag na biang na siyudad.",
+    "highlights": ["Burnham Park", "Mines View Park", "Saray kapehan ed Session Road", "Strawberry Farm", "Pista na Panagbenga"],
+    "travel_tips": ["Mangiyakar na malaka a jacket maski panawen na init", "Subukan so ube jam tan lokal a kape", "Mabiskeg so trapiko na weekend manlapud Manila", "Bisitaen so Tam-awan Village parad arte na Cordillera"],
+    "region": "Cordillera",
+    "location": "Baguio City, Benguet",
+    "best_time_to_visit": "Pebrero parad Panagbenga o Marso-Mayo parad pinakanalamig a panawen"
+  },
+  "vigan": {
+    "name": "Vigan",
+    "short_description": "Siyudad a tawir na UNESCO na saray bato a dalan tan Espanyol a kolonyal a alindog.",
+    "content": "Bilang UNESCO World Heritage Site, say Vigan et mangiyakar ed saray bisita ed panahon na kolonyal a Espanya. Say Calle Crisologo et napalibotan na saray daan a abung, dalan a bato, tan saray kalesa ya magilaw ed malagong a ilaw na parol no labi.",
+    "highlights": ["Calle Crisologo", "Bantay Bell Tower", "Panagbiyahe ed kalesa", "Empanada na Vigan", "Syquia Mansion"],
+    "travel_tips": ["Man-iyan na sankalabi pian natey so Calle Crisologo a makailaw no labi", "Subukan so empanada tan longganisa ed Plaza Burgos", "Kombinaren ed Pagudpud o Banaue ed saray biyahe ed norte na Luzon", "Mansuot na komportable a sapatos parad saray dalan a bato"],
+    "region": "Ilocos",
+    "location": "Vigan City, Ilocos Sur",
+    "best_time_to_visit": "Nobyembre anggad Abril"
+  },
+  "banaue-rice-terraces": {
+    "name": "Saray Hagdan-hagdan a Palayan na Banaue",
+    "short_description": "Daan a saray hagdan-hagdan a palayan ya inukit ed kabukiran - pakakakel a milagro na UNESCO.",
+    "content": "Saray Hagdan-hagdan a Palayan na Banaue, ya masansan a tawagen a Kawalo a Milagro na Mundo, et inukit ed kabukiran ed labi 2,000 taon. Saray mas nailemmeng a palayan na Batad, ya walay porma na ampiteatro, et man-ani ni labat na saray komunidad na Ifugao.",
+    "highlights": ["Tanaway na Banaue", "Saray Hagdan-hagdan a Palayan na Batad", "Panagtrek ed Tappiya Falls", "Saray baryo a tawir na Ifugao", "Lokal a panaghabol"],
+    "travel_tips": ["Mag-abang na lokal a guide parad saray panagtrek ed Batad", "Saray bus ed labi et manbiyahe manlapud Manila (9-10 oras)", "Mansuot na mabiskeg a sapatos - matarik tan maputik so saray dalan", "Irespeto so saray komunidad na magsasaka tan saray limitasyon na palayan"],
+    "region": "Cordillera",
+    "location": "Probinsia na Ifugao",
+    "best_time_to_visit": "Disyembre anggad Mayo parad panagtrek; panawen na anien parad saray tanaway a bulawan"
+  },
+  "chocolate-hills": {
+    "name": "Chocolate Hills",
+    "short_description": "Labi 1,000 a pambihira a burol ya pormaan na dome ya nagbabrown no panawen na namaga.",
+    "content": "Say Chocolate Hills et geolohikal a pormasyon na labi 1,000 a burol ya tinawyan na dagem ya nagbabrown a singa tsokolate no panawen na namaga, ya mamakurang na saray pinakakilalaan a tanaway ed Filipinas.",
+    "highlights": ["Tanaway ed Chocolate Hills Complex", "Hardin na paruparo", "Panag-atv", "Saray abay a santuwaryo na tarsier", "Loboc River"],
+    "travel_tips": ["Bisitaen na kaaraw pian mas malinaw so tanaway", "Kombinaren ed interon tour ed kabukiran na Bohol", "Mangiyakar na panagprotekta ed agew - nabuklat so tanaway", "Kombinaren ed Panglao parad panagpahingalo ed baybay"],
+    "region": "Visayas",
+    "location": "Carmen, Bohol",
+    "best_time_to_visit": "Disyembre anggad Mayo"
+  },
+  "camiguin": {
+    "name": "Camiguin",
+    "short_description": "Isla na bulkan, maiinit a saray bukal, talon, tan Sunken Cemetery.",
+    "content": "A tawagen a Isla ya Liniknaan na Apoy, say Camiguin et walaan na bulkan, maiinit a bukal, tan makapaliket a Sunken Cemetery ya markado na dakel a krus ya bumangat manlapud dayat. Say White Island sandbar et mangiter na malawak a tanaway ed Mount Hibok-Hibok.",
+    "highlights": ["White Island", "Sunken Cemetery", "Katibawasan Falls", "Ardent Hot Springs", "Mt. Hibok-Hibok"],
+    "travel_tips": ["Mag-abang na multicab o motor pian liboten so isla", "Siyasaten so paniempo antis na panagbiyahe ed bangka pasingger ed White Island", "Subukan so lanzones no panawen to", "Mabiskeg so biyahe ed eroplano o ferry manlapud Cagayan de Oro"],
+    "region": "Mindanao",
+    "location": "Probinsia na Camiguin",
+    "best_time_to_visit": "Marso-Mayo o Oktubre parad Pista na Lanzones"
+  },
+  "davao": {
+    "name": "Davao",
+    "short_description": "Pasingger ed Mt. Apo, saray agila na Filipinas, tan kultural a puso na Mindanao.",
+    "content": "Say Davao City so pinakadakel a siyudad ed Mindanao, ya mangkombina na panag-unlad na siyudad tan likas a saray milagro. Say Davao so dalan pasingger ed Mount Apo, say katayagan a bundok na bansa, tan say Philippine Eagle Center et mangaywan ed nanganganib a pambansan a manok.",
+    "highlights": ["Philippine Eagle Center", "Eden Nature Park", "Saray baybay na Samal Island", "Saray pamilian na durian tan seafood", "Saray panagtrek ed Mount Apo"],
+    "travel_tips": ["Manlipad pasingger ed Davao International Airport", "Siyasaten so saray travel advisory parad panagtrek ed bundok", "Subukan so durian, pomelo, tan inihaw a tuna", "Abeba la so panagbiyahe ed ferry pasingger ed Samal Island"],
+    "region": "Mindanao",
+    "location": "Davao City tan saray abay to",
+    "best_time_to_visit": "Marso parad Araw ng Dabaw o Agosto parad Pista na Kadayawan"
+  },
+  "sagada": {
+    "name": "Sagada",
+    "short_description": "Nalamig a baley ed kabukiran ya walaan na kweba, talon, tan saray kabaong ya nakabitay.",
+    "content": "Say Sagada et bantog lapud nalamig a klima, maong a saray tradisyon na Igorot, tan marakep a saray tanaway. Saray Hanging Coffins ed Echo Valley et mangipapanengneng na saray kaugalian ed panaon na panaglibing. Say Sumaguing Cave tan Bomod-ok Falls et mangiter na gantimpala ed saray bisita ya guston adventure.",
+    "highlights": ["Saray Kabaong ya Nakabitay", "Sumaguing Cave", "Bomod-ok Falls", "Dagat na pabulos ed Kiltepan", "Echo Valley"],
+    "travel_tips": ["Mag-abang na guide ed kweba - obligasyon parad Sumaguing", "Nalamig saray labi; mangiyakar na saray layer a bado", "Agnas 5 oras so bus manlapud Baguio", "Irespeto so saray sagrado a lugar na panaglibing tan lokal a kaugalian"],
+    "region": "Cordillera",
+    "location": "Mountain Province",
+    "best_time_to_visit": "Nobyembre anggad Pebrero"
+  },
+  "mayon-volcano": {
+    "name": "Mayon Volcano",
+    "short_description": "Bulkan ya perpekto so porma na kono, panag-atv, saray rurok, tan adventure a tanaway.",
+    "content": "Bantog so Mayon Volcano lapud say porma na kono et kasla perpekto. Adayaw na saray bisita so kagandahan to ed Cagsawa Ruins, ya saray labi na simbale et mananap ed panangipalagip ed panagbulos na 1814. Saray panag-atv ed sakey na bulkan et mangiter na adventure ed eksperience.",
+    "highlights": ["Cagsawa Ruins", "Adventure na Mayon ATV", "Lignon Hill", "Saray whale shark ed Donsol (panawen la)", "Lutong Bicol"],
+    "travel_tips": ["Manlipad ed Legazpi parad pinakabiskeg a akses", "Agpadepende ed paniempo so tanaway - mangila na dagdag a agew", "Subukan so Bicol Express tan laing", "Kombinaren ed Donsol no panawen na whale shark"],
+    "region": "Bicol",
+    "location": "Legazpi City, Albay",
+    "best_time_to_visit": "Disyembre-Abril parad malinaw a tanaway"
+  },
+  "kawasan-falls": {
+    "name": "Cebu (Kawasan Falls)",
+    "short_description": "Turquoise a saray talon tan bantog a saray adventure na canyoneering.",
+    "content": "Bantog so Kawasan Falls lapud canyoneering ed turquoise a saray danum tan agdadalusdos a danum. Saray talon ya walay arum a antas et kaiba ed saray pinakanaretratoan a likas a atraksyon ed Cebu tan marakep a kombinasyon ed saray biyahe ed baybay na abagatan na Cebu.",
+    "highlights": ["Canyoneering", "Kawasan Falls a tuloy a antas", "Abay a Moalboal", "Saray whale shark ed Oslob", "Tumalog Falls"],
+    "travel_tips": ["Magpareserba na canyoneering ed saray akreditado a operator", "Mansuot na sapatos ed danum ya matibay so kapet", "Mangrugi na kaaraw pian likayan so kadakelan na totoo", "Ilugan so electronic ed saray supot a waterproof"],
+    "region": "Visayas",
+    "location": "Badian, Cebu",
+    "best_time_to_visit": "Nobyembre anggad Abril"
+  },
+  "intramuros": {
+    "name": "Intramuros (Manila)",
+    "short_description": "Makasaysayan a siyudad a pinalibotan na pader ed puso na kapitolyo na Filipinas.",
+    "content": "Say pinalibotan na pader a siyudad na Intramuros so sentro na tawir na Manila, ya saray dalan a bato et mangituloy ed Fort Santiago tan San Agustin Church, sakey a UNESCO World Heritage Site.",
+    "highlights": ["Fort Santiago", "San Agustin Church", "Casa Manila", "Saray tour ed kalesa", "Abay a Rizal Park"],
+    "travel_tips": ["Maglakad o magbisikleta ed pader na kaaraw", "Kombinaren ed bisita ed National Museum", "Mansiansia parad saray cultural performance ed weekend", "Usaren so ride-hailing app parad trapiko ed Manila"],
+    "region": "NCR",
+    "location": "Manila",
+    "best_time_to_visit": "Disyembre anggad Mayo"
+  },
+  "panglao": {
+    "name": "Panglao Island",
+    "short_description": "Maputi a saray baybay tan panag-diving a pasingger ed Bohol.",
+    "content": "Say Panglao et walaan na saray resort, baybay, tan akses ed panag-diving ed coral reef, ya say Alona Beach so panguuluan a pasinggeran parad panaglibot ed isla tan panagkakan ed paglubog na agew.",
+    "highlights": ["Alona Beach", "Panag-diving ed Balicasag", "Virgin Island sandbar", "Hinagdanan Cave", "Panangamta ed dolphin"],
+    "travel_tips": ["Manlipad ed Bohol-Panglao International Airport", "Magpareserba na diving a maaga no bakasyon", "Kombinaren ed Chocolate Hills ed sakey agew", "Irespeto so saray marine protected area"],
+    "region": "Visayas",
+    "location": "Bohol",
+    "best_time_to_visit": "Disyembre anggad Mayo"
+  },
+  "apo-island": {
+    "name": "Apo Island",
+    "short_description": "Marine sanctuary ya bantog ed saray pawikan tan panag-snorkel.",
+    "content": "Say Apo Island et protektado a marine sanctuary ya saray pawikan et manlalangoy ed saray makulay a coral reef, ya maabot ed bangka manlapud Dumaguete o Dauin.",
+    "highlights": ["Panag-snorkel na pawikan", "Saray coral garden", "Marine sanctuary", "Baley ed isla", "Saray lugar na panag-diving ed Dauin"],
+    "travel_tips": ["Bayaran so marine sanctuary fee", "Agsagiten iray pawikan o coral", "Mangiyakar na snorkel gear o ag-abang ed site", "Mangrugi na biyahe ed bangka a maaga pian mas natalna so dayat"],
+    "region": "Visayas",
+    "location": "Dauin, Negros Oriental",
+    "best_time_to_visit": "Nobyembre anggad Mayo"
+  }
+}

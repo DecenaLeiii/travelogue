@@ -1,0 +1,380 @@
+{
+  "boracay": {
+    "name": "Boracay",
+    "short_description": "Maputi a dalampasigan a pasig at masigla a bengi king metung king pinakamalagu a pulu keng yatu.",
+    "content": "Ing Boracay metung ya keng pinakamabiyayag a destinasyun da reng turista keng Filipinas, at lawan ya ming kasapi keng pinakamalagu a pulu keng yatu. Ing pinakamahalaga yang bahagi ya ing White Beach, metung a 4-kilometrung dalampasigan a maputi at malambut a pasig at malinaw a danum. Pelimbasan ning pamagpapayapa king pangpang, atin yang parasailing, kiteboarding, scuba diving, at paglayag king paraw keng lulubugan ning aldo ing Boracay.",
+    "highlights": [
+      "White Beach",
+      "Puka Shell Beach",
+      "Paglayag king paraw keng lulubugan ning aldo",
+      "Mapaglaruang danum at diving",
+      "D'Mall a pamangan"
+    ],
+    "travel_tips": [
+      "Mag-reserba nung maaga ning panuluyan kapanaun ning dakal a turista",
+      "Sundan ding lokal a patakaran para king kapaligiran keng pamasok king dalampasigan",
+      "Subukan ing island-hopping keng malapit a maliit a luklukan ning dagat",
+      "Gamitan ding traysikel para king malapit a bayahe king pulu"
+    ],
+    "region": "Visayas",
+    "location": "Malay, Aklan",
+    "best_time_to_visit": "Disiembre angga Mayu (panaun a tuyu)"
+  },
+  "el-nido": {
+    "name": "Palawan (El Nido)",
+    "short_description": "Matayutang bunduk a batung-apug, makalingid a lagoon, at pandaigdigang island hopping.",
+    "content": "Ing El Nido mayayaman ya king matas a bunduk a batung-apug at makalingid a lagoon nung nu ika makapag-kayak o makapaligo king luntiang danum. Bahagi ning Palawan, a tinatawag a Huling Hangganan, ing El Nido metung ya a mahalagang hiyas ning bayahe keng Timog-Silangang Asya a atin yang makamamanghang karst a tanawan at malinaw a lagoon.",
+    "highlights": [
+      "Big Lagoon",
+      "Small Lagoon",
+      "Secret Beach",
+      "Nacpan Beach",
+      "Mapaglibut a tour king island-hopping"
+    ],
+    "travel_tips": [
+      "Sumali king organisadung Tour A/B/C/D a pakete para keng pamasok king lagoon",
+      "Magdala ng sunscreen a ligtas para king reef",
+      "Makabuklod ya ing pera kareng maliit a negosyu",
+      "Maglaan ng 3–4 a aldo para mapasyalan ya nung tutu"
+    ],
+    "region": "MIMAROPA",
+    "location": "El Nido, Palawan",
+    "best_time_to_visit": "Disiembre angga Mayu"
+  },
+  "coron": {
+    "name": "Palawan (Coron)",
+    "short_description": "Malinis a lawa, lagoon, at bantug a wreck diving.",
+    "content": "Ing Coron bantug ya king buong yatu bilang kareng makamamanghang lawa, lagoon, at lugar ning diving. Ing Kayangan Lake tinatawag yang pinakamalinis a lawa keng Asya, a palibutan da reng matas a bunduk a batung-apug. Para kareng divers, reng lunud a barku ning WWII atin la king lalam ning dagat, a mibalu lang lugar ning diving a mapuno ning korales.",
+    "highlights": [
+      "Kayangan Lake",
+      "Twin Lagoon",
+      "Diving kareng lunud a barku ning WWII",
+      "Snorkeling king Siete Pecados",
+      "Tanawan king Mt. Tapyas"
+    ],
+    "travel_tips": [
+      "Bayaran ing bayad para king kapaligiran king opisina ning turismo",
+      "Mag-reserba nung maaga king dive shop kapanaun ning dakal a turista",
+      "Mamuntuk nung maaga king island tour para maiwasan ing dakal a tau",
+      "Lumipad pasaup king Busuanga Airport at mag-van pasaup king bayan ning Coron"
+    ],
+    "region": "MIMAROPA",
+    "location": "Coron, Busuanga, Palawan",
+    "best_time_to_visit": "Disiembre angga Mayu"
+  },
+  "cebu": {
+    "name": "Cebu",
+    "short_description": "Kasaysayan, canyoneering, at ing Queen City ning Timog.",
+    "content": "Ing Cebu pamagsasamasamang kasaysayan, buhay king lakanbalen, at pakikipagsapalaran king labas. Keng Lakanbalen ning Cebu, reng bantug a lugar a singsing ning Magellan's Cross at Basilica Minore del Santo Niño ding mamitnang kayamanan ning Kastila ning pulu. Para kareng mangibig king kalikasan, ing Kawasan Falls king Badian bantug ya king canyoneering king asul-luntiang danum.",
+    "highlights": [
+      "Magellan's Cross",
+      "Canyoneering king Kawasan Falls",
+      "Reng whale shark ning Oslob",
+      "Sardine run ning Moalboal",
+      "Sinulog Festival (Enero)"
+    ],
+    "travel_tips": [
+      "Lumipad pasaup king Mactan–Cebu International Airport",
+      "Mag-reserba ning canyoneering tour kareng gabay a atin lisensya",
+      "Pagsamasamang ing paglakad king kasaysayan ning lakanbalen at maiksing bayahe king timog ning Cebu",
+      "Subukan ing lechon at uga a mangga"
+    ],
+    "region": "Visayas",
+    "location": "Lalawigan ning Cebu",
+    "best_time_to_visit": "Nobiembre angga Abril"
+  },
+  "bohol": {
+    "name": "Bohol",
+    "short_description": "Chocolate Hills, tarsier, at maputing dalampasigan ning Panglao.",
+    "content": "Ing Bohol bantug ya king bukud-tanging kayamanan ning kalikasan at kultura. Ing Chocolate Hills metung yang makamamanghang tanawan a mayayari king lalu pang 1,200 a bunduk-bunduk a natatakpan ning dikut. Reng Philippine tarsier, maliit a primate a atin lang malaking mata, ipagmalasakit la kareng lokal a santuaryu. Ing Pulung Panglao atin yang resort at pamasok king coral reef para king diving.",
+    "highlights": [
+      "Chocolate Hills",
+      "Santuaryu ning tarsier",
+      "Loboc River cruise",
+      "Reng dalampasigan ning Panglao",
+      "Makasaysayan a simbahan"
+    ],
+    "travel_tips": [
+      "Umarkila ning motorsiklu o sumali kareng countryside tour para kareng bunduk at simbahan",
+      "Dalawan mu lang ding tarsier kareng aprubadung santuaryu",
+      "Ding fast ferry mamagkonekta la king Cebu at Bohol king mga 2 oras",
+      "Pagsamasamang ing tour king bunduk at ing river cruise a atin yang pamanyaman"
+    ],
+    "region": "Visayas",
+    "location": "Lalawigan ning Bohol",
+    "best_time_to_visit": "Disiembre angga Mayu"
+  },
+  "siargao": {
+    "name": "Siargao",
+    "short_description": "Kabisera ning surfing a atin lagoon, pulu, at mapayapang buhay king pulu.",
+    "content": "Bantug bilang Surfing Capital ning Filipinas, ing Siargao mamanyaki da reng surfer manibala king Cloud 9. Pelimbasan ning alon, ing Magpupungko Rock Pools at Sugba Lagoon atin lang paglangui at paddleboarding a palibutan ning bakawan.",
+    "highlights": [
+      "Cloud 9 surf break",
+      "Magpupungko Rock Pools",
+      "Sugba Lagoon",
+      "Naked Island",
+      "Sohoton Cove"
+    ],
+    "travel_tips": [
+      "Umarkila ning scooter para mapasyalan ing pulu",
+      "Mag-reserba nung maaga ning boat tour para king Sohoton",
+      "Igalang ing lokal a kaugalian da reng surfer king lineup",
+      "Malawak a gagamitan ing pera at e-wallet"
+    ],
+    "region": "Mindanao",
+    "location": "Surigao del Norte",
+    "best_time_to_visit": "Agostu–Nobiembre para king surf; Marso–Mayu para king kalmadung danum"
+  },
+  "baguio": {
+    "name": "Baguio",
+    "short_description": "Malamig a pamagpapayapaan king bunduk at Summer Capital ning Filipinas.",
+    "content": "Tinatawag a Summer Capital ning Filipinas, ing Baguio metung yang makapagpapasigla a pamagpapayapaan king bunduk a atin yang malamig a klima, bunduk a natatakpan ning pino, at masiglang kultura. Ing Burnham Park, Strawberry Farm king La Trinidad, at Session Road ing mamipakilala king karanasan king lakanbalen.",
+    "highlights": [
+      "Burnham Park",
+      "Mines View Park",
+      "Reng café king Session Road",
+      "Strawberry Farm",
+      "Panagbenga Festival"
+    ],
+    "travel_tips": [
+      "Magdala ning magaan a jacket pati king tag-araw",
+      "Subukan ing ube jam at lokal a kape",
+      "Mabagat ing trapiku king katapusan ning sanga-linggu manibala king Manila",
+      "Dalawan ing Tam-awan Village para king sining ning Cordillera"
+    ],
+    "region": "Cordillera",
+    "location": "Lakanbalen ning Baguio, Benguet",
+    "best_time_to_visit": "Febrero para king Panagbenga o Marso–Mayu para king pinakamalamig a panaun"
+  },
+  "vigan": {
+    "name": "Vigan",
+    "short_description": "Lakanbalen a kayamanan ning UNESCO a atin batung kalsada at gandang kolonyal a Kastila.",
+    "content": "Metung a UNESCO World Heritage Site, ing Vigan dinan yang ding bisita keng panaun ning kolonyal a Kastila. Ing Calle Crisologo palibutan ya ning mapag-ibat a bale a daan-daan ya tauan, batung kalsada, at karwahe a hila ning kabayu a mamilatik king maginit a ilaw ning parol king bengi.",
+    "highlights": [
+      "Calle Crisologo",
+      "Bantay Bell Tower",
+      "Pagsakay king kalesa",
+      "Empanada ning Vigan",
+      "Syquia Mansion"
+    ],
+    "travel_tips": [
+      "Matuknang ning metung a bengi para mamasdan ing Calle Crisologo a maylaw king bengi",
+      "Subukan ing empanada at longganisa king Plaza Burgos",
+      "Pagsamasamang king Pagudpud o Banaue king metung a bayahe king palibot ning hilaga ning Luzon",
+      "Magsuot ning kumportableng sapatus para kareng batung kalsada"
+    ],
+    "region": "Ilocos",
+    "location": "Lakanbalen ning Vigan, Ilocos Sur",
+    "best_time_to_visit": "Nobiembre angga Abril"
+  },
+  "banaue-rice-terraces": {
+    "name": "Banaue Rice Terraces",
+    "short_description": "Mapaglumang hagdan-hagdang bukid a inukit king bunduk — metung a kamanghaan ning UNESCO.",
+    "content": "Ing Banaue Rice Terraces, a tinatawag a Maykawalung Kamanghaan ning Yatu, inukit ya king bunduk lalu pang 2,000 ya taun a milabas. Ing mas malayung terraces ning Batad, a anyung amphitheater, gagamitan pa mu naman da reng komunidad ning Ifugao king pagtanam.",
+    "highlights": [
+      "Tanawan king Banaue",
+      "Batad Rice Terraces",
+      "Trek king Tappiya Falls",
+      "Reng baryu ning kayamanan ning Ifugao",
+      "Lokal a paghabi"
+    ],
+    "travel_tips": [
+      "Umarkila ning lokal a gabay para kareng trek king Batad",
+      "Atin lang bus king bengi manibala king Manila (9–10 oras)",
+      "Magsuot ning matibay a sapatus — ding dalan maki-tarik at maputik",
+      "Igalang ding komunidad ning magsasaka at ding hangganan ning terraces"
+    ],
+    "region": "Cordillera",
+    "location": "Lalawigan ning Ifugao",
+    "best_time_to_visit": "Disiembre angga Mayu para king trekking; panaun ning anihan para king ginintuang tanawan"
+  },
+  "chocolate-hills": {
+    "name": "Chocolate Hills",
+    "short_description": "Lalu pang 1,000 a bukud-tanging bunduk a anyung simboryo a mibalung brown king panaun a tuyu.",
+    "content": "Ing Chocolate Hills metung yang pormasyun ning lupa a atin lalu pang 1,000 a bunduk-bunduk a natatakpan ning dikut a mibalung chocolate-brown king panaun a tuyu, a gumawa king metung kareng pinakakilalang tanawan ning Filipinas.",
+    "highlights": [
+      "Tanawan king Chocolate Hills Complex",
+      "Butterfly Garden",
+      "Pagsakay king ATV",
+      "Malapit a santuaryu ning tarsier",
+      "Loboc River"
+    ],
+    "travel_tips": [
+      "Dalawan nung maaga king umaga para king mas malinaw a tanawan",
+      "Pagsamasamang king buong countryside tour ning Bohol",
+      "Magdala ning panglaban king aldo — bukas ya ing tanawan",
+      "Pagsamasamang king Panglao para king dagdag a pamagpapayapa king dalampasigan"
+    ],
+    "region": "Visayas",
+    "location": "Carmen, Bohol",
+    "best_time_to_visit": "Disiembre angga Mayu"
+  },
+  "camiguin": {
+    "name": "Camiguin",
+    "short_description": "Pulung bulkan a atin maginit a bukal, talon, at ing Sunken Cemetery.",
+    "content": "Tinatawag a Pulung Mibayag king Apuy, ing Camiguin atin yang bulkan, maginit a bukal, at ing makatatakut a Sunken Cemetery a atin yang malaking krus a tatindeg king dagat. Ing sandbar ning White Island atin yang malawak a tanawan king Bulkan Hibok-Hibok.",
+    "highlights": [
+      "White Island",
+      "Sunken Cemetery",
+      "Katibawasan Falls",
+      "Ardent Hot Springs",
+      "Mt. Hibok-Hibok"
+    ],
+    "travel_tips": [
+      "Umarkila ning multicab o motorsiklu para mailibut ing pulu",
+      "Tingnan ing panaun bago ing bayahe king bangka pasaup king White Island",
+      "Subukan ing lanzones nung panaun",
+      "Mayap ya ing lipad o ferry manibala king Cagayan de Oro"
+    ],
+    "region": "Mindanao",
+    "location": "Lalawigan ning Camiguin",
+    "best_time_to_visit": "Marso–Mayu o Oktubre para king Lanzones Festival"
+  },
+  "davao": {
+    "name": "Davao",
+    "short_description": "Pintu pasaup king Mt. Apo, agila ning Filipinas, at pusu ning kultura ning Mindanao.",
+    "content": "Ing Lakanbalen ning Davao ya ing pinakamalaking lakanbalen king Mindanao, a mamalansa king pamagsulong ning lakanbalen at kamanghaan ning kalikasan. Pintu ya pasaup king Bunduk Apo, ing pinakamatas a tuktok ning bansa, at ing Philippine Eagle Center ing mamitagun king nanganganib a pambansang ibon.",
+    "highlights": [
+      "Philippine Eagle Center",
+      "Eden Nature Park",
+      "Reng dalampasigan ning Pulung Samal",
+      "Pamilihan ning durian at lutung dagat",
+      "Reng trek king Bunduk Apo"
+    ],
+    "travel_tips": [
+      "Lumipad pasaup king Davao International Airport",
+      "Tingnan ding travel advisory para kareng trek king bunduk",
+      "Subukan ing durian, pomelo, at inihaw a tuna",
+      "Ing Pulung Samal malapit la, maiksing bayahe king ferry"
+    ],
+    "region": "Mindanao",
+    "location": "Lakanbalen ning Davao at palibot",
+    "best_time_to_visit": "Marso para king Araw ng Dabaw o Agostu para king Kadayawan Festival"
+  },
+  "sagada": {
+    "name": "Sagada",
+    "short_description": "Malamig a bayan king kabunduk a atin yungib, talon, at nakasabit a kabaong.",
+    "content": "Ing Sagada bantug ya king malamig a klima, mayamang tradisyun da reng Igorot, at makamamanghang tanawan. Reng Nakasabit a Kabaong ning Echo Valley mamipakit la ning mapaglumang paraan ning paglibing. Ing Sumaguing Cave at Bomod-ok Falls babayaran da reng bisitang mahilig king pakikipagsapalaran.",
+    "highlights": [
+      "Nakasabit a Kabaong",
+      "Sumaguing Cave",
+      "Bomod-ok Falls",
+      "Dagat ning alapaap king Kiltepan",
+      "Echo Valley"
+    ],
+    "travel_tips": [
+      "Umarkila ning gabay king yungib — kailangan ya ini para king Sumaguing",
+      "Asahan ing malamig a bengi; magdala ning dakal a damit",
+      "Ing bus manibala king Baguio mga 5 oras",
+      "Igalang ding sagradung lugar ning paglibing at lokal a kaugalian"
+    ],
+    "region": "Cordillera",
+    "location": "Mountain Province",
+    "best_time_to_visit": "Nobiembre angga Febrero"
+  },
+  "mayon-volcano": {
+    "name": "Mayon Volcano",
+    "short_description": "Bulkan a halus sakdal a kono ing anyu a atin yang ATV, guba, at makamamanghang tanawan.",
+    "content": "Ing Bulkan Mayon bantug ya king halus sakdal a anyung kono. Pamamangaan da reng bisita ing gandang yang keng Cagsawa Ruins, nung nu reng labi ning simbahan tatindeg la bilang alaala ning pamagbuga ning 1814. Ding ATV king paldan ning bunduk dinagdag da ing pakikipagsapalaran king karanasan.",
+    "highlights": [
+      "Cagsawa Ruins",
+      "Mayon ATV adventure",
+      "Lignon Hill",
+      "Reng whale shark ning Donsol (pana-panaun)",
+      "Pamangan ning Bicol"
+    ],
+    "travel_tips": [
+      "Lumipad pasaup king Legazpi para king pinakamayap a pamasok",
+      "Ing tanawan nanayun ya king panaun — maglaan ning dagdag a aldo",
+      "Subukan ing Bicol Express at laing",
+      "Pagsamasamang king Donsol kapanaun ning whale shark"
+    ],
+    "region": "Bicol",
+    "location": "Lakanbalen ning Legazpi, Albay",
+    "best_time_to_visit": "Disiembre–Abril para king malinaw a tanawan"
+  },
+  "kawasan-falls": {
+    "name": "Cebu (Kawasan Falls)",
+    "short_description": "Asul-luntiang talon at bantug a canyoneering a pakikipagsapalaran.",
+    "content": "Ing Kawasan Falls bantug ya king canyoneering king asul-luntiang danum at talon. Ing talon a atin yang dakal a antas metung ya kareng pinakamaragul pakuan ning larawan a natural a atraksyun ning Cebu at mayap yang isama kareng bayahe king pangpang ning timog ning Cebu.",
+    "highlights": [
+      "Canyoneering",
+      "Kawasan Falls a atin yang atlung antas",
+      "Malapit ing Moalboal",
+      "Reng whale shark ning Oslob",
+      "Tumalog Falls"
+    ],
+    "travel_tips": [
+      "Mag-reserba ning canyoneering kareng aprubadung operator",
+      "Magsuot ning matibay a sapatus king danum",
+      "Mamuntuk nung maaga para maiwasan ing dakal a tau",
+      "Ilagay ding elektroniku king dry bag"
+    ],
+    "region": "Visayas",
+    "location": "Badian, Cebu",
+    "best_time_to_visit": "Nobiembre angga Abril"
+  },
+  "intramuros": {
+    "name": "Intramuros (Manila)",
+    "short_description": "Makasaysayan a lakanbalen a atin yang pader king kalagitnaan ning kabisera ning Filipinas.",
+    "content": "Ing lakanbalen a atin yang pader ning Intramuros ing sentro ning kayamanan ning Maynila, nung nu reng batung kalsada ding mamitudtud king Fort Santiago at San Agustin Church, metung a UNESCO World Heritage site.",
+    "highlights": [
+      "Fort Santiago",
+      "San Agustin Church",
+      "Casa Manila",
+      "Reng tour king kalesa",
+      "Malapit ing Rizal Park"
+    ],
+    "travel_tips": [
+      "Maglakad o magbisikleta king pader nung maaga king umaga",
+      "Pagsamasamang king pamasyal king National Museum",
+      "Abangan ding pagtatanghal ning kultura king katapusan ning sanga-linggu",
+      "Gamitan ding ride-hailing app para king trapiku ning Maynila"
+    ],
+    "region": "NCR",
+    "location": "Maynila",
+    "best_time_to_visit": "Disiembre angga Mayu"
+  },
+  "panglao": {
+    "name": "Panglao Island",
+    "short_description": "Maputing dalampasigan a pasig at pintu ning diving malapit king Bohol.",
+    "content": "Ing Panglao atin yang resort, dalampasigan, at pamasok king coral reef para king diving, at ing Alona Beach ya ing pangunahing sentro ning island-hopping at pamangan keng lulubugan ning aldo.",
+    "highlights": [
+      "Alona Beach",
+      "Diving king Balicasag",
+      "Sandbar ning Virgin Island",
+      "Hinagdanan Cave",
+      "Pamagmasid king dolphin"
+    ],
+    "travel_tips": [
+      "Lumipad pasaup king Bohol–Panglao International Airport",
+      "Mag-reserba nung maaga ning diving kapanaun ning bakasyun",
+      "Pagsamasamang king metung-aldung tour king Chocolate Hills",
+      "Igalang ding marine protected area"
+    ],
+    "region": "Visayas",
+    "location": "Bohol",
+    "best_time_to_visit": "Disiembre angga Mayu"
+  },
+  "apo-island": {
+    "name": "Apo Island",
+    "short_description": "Santuaryu king dagat a bantug king pawikan at snorkeling.",
+    "content": "Ing Apo Island metung yang pinagmalasakitan a santuaryu king dagat nung nu reng pawikan mamilanguy la keng kalibutan ning makulay a coral reef, a mapupuntan king bangka manibala king Dumaguete o Dauin.",
+    "highlights": [
+      "Snorkeling a kaibat da reng pawikan",
+      "Reng hardin ning korales",
+      "Santuaryu king dagat",
+      "Baryu king pulu",
+      "Lugar ning diving king Dauin"
+    ],
+    "travel_tips": [
+      "Bayaran ing bayad ning santuaryu king dagat",
+      "Ali kayu tutukun ding pawikan at korales",
+      "Magdala ning snorkel gear o umarkila king lugar",
+      "Mamuntuk nung maaga king bayahe king bangka para king mas kalmadung dagat"
+    ],
+    "region": "Visayas",
+    "location": "Dauin, Negros Oriental",
+    "best_time_to_visit": "Nobiembre angga Mayu"
+  }
+}

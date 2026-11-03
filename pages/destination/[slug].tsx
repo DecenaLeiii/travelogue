@@ -2,6 +2,7 @@ import { GetServerSideProps } from 'next';
 import QRCode from 'qrcode';
 import { useEffect, useState } from 'react';
 import { useTranslation } from '../../lib/i18n';
+import { useDestinationTranslations } from '../../lib/useDestinationTranslation';
 import { parseContentSections } from '../../lib/content';
 import { Destination } from '../../lib/destinations';
 import FloatingAssistant from '../../components/FloatingAssistant';
@@ -13,6 +14,7 @@ type Props = {
 
 export default function DestinationPage({ destination, related }: Props) {
   const { t, lang } = useTranslation();
+  const translations = useDestinationTranslations(lang);
 
   if (!destination) {
     return (
@@ -46,6 +48,9 @@ export default function DestinationPage({ destination, related }: Props) {
     content?: string;
     highlights?: string[];
     travel_tips?: string[];
+    region?: string;
+    location?: string;
+    best_time_to_visit?: string;
     overview?: string;
     full?: string;
   } | null>(null);
@@ -98,6 +103,9 @@ export default function DestinationPage({ destination, related }: Props) {
           content: content,
           highlights: entry.highlights,
           travel_tips: entry.travel_tips,
+          region: entry.region,
+          location: entry.location,
+          best_time_to_visit: entry.best_time_to_visit,
           overview: sect.overview,
           full: sect.full,
         });
@@ -197,7 +205,7 @@ export default function DestinationPage({ destination, related }: Props) {
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
             <div>
               <h1>{translated?.name || destination.name}</h1>
-              <p className="dest-location">{destination.location || destination.region}</p>
+              <p className="dest-location">{translated?.location || destination.location || translated?.region || destination.region}</p>
             </div>
             {destination.qr_code ? (
               <button type="button" onClick={(e) => { e.stopPropagation(); setQrModalOpen(true); }} className="qr-link hero-qr-link">
@@ -215,19 +223,19 @@ export default function DestinationPage({ destination, related }: Props) {
           {destination.region && (
             <div className="dest-meta-card">
               <strong>{t('regionLabel')}</strong>
-              <span>{destination.region}</span>
+              <span>{translated?.region || destination.region}</span>
             </div>
           )}
           {destination.location && (
             <div className="dest-meta-card">
               <strong>{t('locationLabel')}</strong>
-              <span>{destination.location}</span>
+              <span>{translated?.location || destination.location}</span>
             </div>
           )}
           {destination.best_time_to_visit && (
             <div className="dest-meta-card">
               <strong>{t('bestTimeLabel')}</strong>
-              <span>{destination.best_time_to_visit}</span>
+              <span>{translated?.best_time_to_visit || destination.best_time_to_visit}</span>
             </div>
           )}
         </div>
@@ -239,7 +247,7 @@ export default function DestinationPage({ destination, related }: Props) {
           </section>
         )}
 
-        {(translated?.highlights && translated.highlights.length > 0) || (destination.highlights && destination.highlights.length > 0) && (
+        {((translated?.highlights && translated.highlights.length > 0) || (destination.highlights && destination.highlights.length > 0)) && (
           <section className="dest-section">
             <h2>{t('highlightsLabel')}</h2>
             <ul className="dest-list">
@@ -250,7 +258,7 @@ export default function DestinationPage({ destination, related }: Props) {
           </section>
         )}
 
-        {(translated?.travel_tips && translated.travel_tips.length > 0) || (destination.travel_tips && destination.travel_tips.length > 0) && (
+        {((translated?.travel_tips && translated.travel_tips.length > 0) || (destination.travel_tips && destination.travel_tips.length > 0)) && (
           <section className="dest-section">
             <h2>{t('travelTipsLabel')}</h2>
             <ul className="dest-list dest-tips">
@@ -388,8 +396,8 @@ export default function DestinationPage({ destination, related }: Props) {
                     <img src={(r.images && r.images.find((image) => image?.trim())) || '/hero.svg'} alt={`${r.name} cover`} onError={(event) => { event.currentTarget.src = '/hero.svg'; }} />
                   </div>
                   <div className="related-card-body">
-                    <strong>{r.name}</strong>
-                    <span>{r.short_description}</span>
+                    <strong>{translations[r.slug]?.name || r.name}</strong>
+                    <span>{translations[r.slug]?.short_description || r.short_description}</span>
                   </div>
                 </a>
               ))}

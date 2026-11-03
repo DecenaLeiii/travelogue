@@ -1,0 +1,380 @@
+{
+  "boracay": {
+    "name": "Boracay",
+    "short_description": "Dagiti baybay a nasimpa ti darat ken naragsak a nightlife iti maysa kadagiti kapipintasan nga isla iti lubong.",
+    "content": "Maysa ti Boracay kadagiti kadayawan a pagturongan dagiti turista iti Pilipinas, ken kanayon a maibilang kadagiti kapipintasan nga isla iti lubong. Ti kangrunaan a pamataudna ket ti White Beach, 4-kilometro a baybay a nasimpa ti darat ken nalawag unay ti danum. Saan laeng a panaginana ti maaramid ditoy; mabalin pay ti parasailing, kiteboarding, scuba diving, ken aglayag iti paraw bayat ti ilelennek ti init.",
+    "highlights": [
+      "White Beach",
+      "Puka Shell Beach",
+      "Panaglayag iti paraw iti ilelennek ti init",
+      "Dagiti water sport ken diving",
+      "Dagiti pagkanan iti D'Mall"
+    ],
+    "travel_tips": [
+      "Agreserba iti pagyanan a nasapa bayat ti peak season",
+      "Salimetmetan dagiti lokal a pagannurutan para iti salaknib ti aglawlaw ken pannakausar ti baybay",
+      "Padasen ti island-hopping kadagiti asideg a rukib",
+      "Agtakder iti traysikel para kadagiti ababa a panagbiahe iti isla"
+    ],
+    "region": "Visayas",
+    "location": "Malay, Aklan",
+    "best_time_to_visit": "Disiembre agingga Mayo (panawen ti kalgaw)"
+  },
+  "el-nido": {
+    "name": "Palawan (El Nido)",
+    "short_description": "Nangato a turod a limestone, nailemmeng a laguna, ken naimbag a panag-island-hopping.",
+    "content": "Mangay-ayo ti El Nido gapu kadagiti nangato a turod a limestone ken nailemmeng a laguna a mabalin a pagkayakan wenno paglangoyan iti berde a danum. Paset daytoy ti Palawan, a masansan a maawagan iti Maudi a Hangganan, ken maysa a naisangsangayan a pagturongan iti Southeast Asia gapu kadagiti napintas a talon ken nalawag a laguna.",
+    "highlights": [
+      "Big Lagoon",
+      "Small Lagoon",
+      "Secret Beach",
+      "Nacpan Beach",
+      "Dagiti tour ti island-hopping"
+    ],
+    "travel_tips": [
+      "Makikadua kadagiti naurnos a Tour A/B/C/D tapno makastrek kadagiti laguna",
+      "Mangyeg iti sunscreen a natalged para kadagiti koral",
+      "Naimbag ti kuarta a cash kadagiti babassit nga establisimyento",
+      "Ilaan ti 3?4 nga aldaw tapno umiso a masuroy ti lugar"
+    ],
+    "region": "MIMAROPA",
+    "location": "El Nido, Palawan",
+    "best_time_to_visit": "Disiembre agingga Mayo"
+  },
+  "coron": {
+    "name": "Palawan (Coron)",
+    "short_description": "Nalinis a dan-aw ken rukib, ken nabantog a panag-dive kadagiti nalunod a barko.",
+    "content": "Nabigbig iti intero a lubong ti Coron gapu kadagiti napintas a dan-aw, rukib, ken lugar a pagdive-an. Masansan a maawagan ti Kayangan Lake nga isu ti kalinisan unay a dan-aw iti Asia, a napalawlawan kadagiti nangato a turod a limestone. Adda dagiti barko a nalunod idi Gubat ti Sangapulo ket Siam a Siglo iti baba ti taaw, a nagbalin a dive site a napno kadagiti koral.",
+    "highlights": [
+      "Kayangan Lake",
+      "Twin Lagoon",
+      "Panag-dive kadagiti nalunod a barko idi Gubat ti Sangapulo ket Siam a Siglo",
+      "Panag-snorkel iti Siete Pecados",
+      "Pagbuya iti Mt. Tapyas"
+    ],
+    "travel_tips": [
+      "Bayadan dagiti environmental fee iti opisina ti turismo",
+      "Agreserba a nasapa kadagiti dive shop bayat ti peak season",
+      "Rugian a nasapa dagiti tour ti isla tapno maliklikan dagiti adu a tattao",
+      "Agpagna iti Busuanga Airport ket agvan agingga iti Coron town"
+    ],
+    "region": "MIMAROPA",
+    "location": "Coron, Busuanga, Palawan",
+    "best_time_to_visit": "Disiembre agingga Mayo"
+  },
+  "cebu": {
+    "name": "Cebu",
+    "short_description": "Pakasaritaan, canyoneering, ken ti Reyna a Siudad ti Abagatan.",
+    "content": "Pagtipunen ti Cebu ti pakasaritaan, panagbiag iti siudad, ken dagiti pannakipadas iti ruar. Iti Cebu City, ipakitada dagiti lugar a kas iti Magellan's Cross ken Basilica Minore del Santo Ni?o ti tawid ti Espanyol iti isla. Para kadagiti mangayat iti kinaparsua, nabantog ti Kawasan Falls iti Badian para iti canyoneering iti danum a turquoise.",
+    "highlights": [
+      "Magellan's Cross",
+      "Canyoneering iti Kawasan Falls",
+      "Dagiti whale shark iti Oslob",
+      "Panagtagbo dagiti sardinas iti Moalboal",
+      "Sinulog Festival (Enero)"
+    ],
+    "travel_tips": [
+      "Agpangato iti Mactan?Cebu International Airport",
+      "Agreserba kadagiti tour ti canyoneering a kadua dagiti lisensiado a giya",
+      "Pagtipunen dagiti panagpangpangruna kadagiti pakasaritaan iti siudad ken dagiti day trip iti abagatan ti Cebu",
+      "Padasen ti lechon ken pinaga a mangga"
+    ],
+    "region": "Visayas",
+    "location": "Probinsia ti Cebu",
+    "best_time_to_visit": "Nobiembre agingga Abril"
+  },
+  "bohol": {
+    "name": "Bohol",
+    "short_description": "Chocolate Hills, dagiti tarsier, ken dagiti baybay a nasimpa ti darat iti Panglao.",
+    "content": "Nabigbig ti Bohol kadagiti naisangsangayan a kinaparsuaan ken kultura. Dagiti Chocolate Hills ket nasurok 1,200 a turod a nasimsimpa ti ruot. Salakniban dagiti lokal a santuwaryo dagiti babassit a tarsier ti Pilipinas a dakkel ti matana. Adda dagiti resort ken lugar a pagdive-an kadagiti koral iti Panglao Island.",
+    "highlights": [
+      "Chocolate Hills",
+      "Santuwaryo dagiti tarsier",
+      "Panaglayag iti Loboc River",
+      "Dagiti baybay iti Panglao",
+      "Dagiti daan a simbaan"
+    ],
+    "travel_tips": [
+      "Agabang iti motor wenno makikadua iti tour iti suli ti ili tapno makita dagiti turod ken simbaan",
+      "Dagiti akreditado a santuwaryo laeng ti papanan dagiti tarsier",
+      "Agarup 2 nga oras ti panagbiahe dagiti fast ferry manipud Cebu agingga Bohol",
+      "Pagtipunen ti tour kadagiti turod ken paniag a river cruise"
+    ],
+    "region": "Visayas",
+    "location": "Probinsia ti Bohol",
+    "best_time_to_visit": "Disiembre agingga Mayo"
+  },
+  "siargao": {
+    "name": "Siargao",
+    "short_description": "Kapital ti surfing agraman dagiti laguna, isla, ken naulimek a panagbiag iti isla.",
+    "content": "Maawagan a Kapital ti Surfing ti Pilipinas, awisen ti Siargao dagiti surfer manipud adu a pagilian nga agturong iti Cloud 9. Malaksid kadagiti dalluyon, mabalin ti aglangoy ken ag-paddleboard iti Magpupungko Rock Pools ken Sugba Lagoon a napalawlawan kadagiti bakawan.",
+    "highlights": [
+      "Cloud 9 surf break",
+      "Magpupungko Rock Pools",
+      "Sugba Lagoon",
+      "Naked Island",
+      "Sohoton Cove"
+    ],
+    "travel_tips": [
+      "Agabang iti scooter tapno masuroy ti isla",
+      "Agreserba a nasapa kadagiti boat tour nga agturong iti Sohoton",
+      "Irespeto dagiti lokal a pagannurutan kadagiti surfer",
+      "Naiparbeng ti panagusar iti cash ken e-wallet"
+    ],
+    "region": "Mindanao",
+    "location": "Surigao del Norte",
+    "best_time_to_visit": "Agosto?Nobiembre para iti surfing; Marso?Mayo para iti naulimek a danum"
+  },
+  "baguio": {
+    "name": "Baguio",
+    "short_description": "Nalam-ek a paginana iti bantay ken Kapital ti Kalgaw ti Pilipinas.",
+    "content": "Maawagan a Kapital ti Kalgaw ti Pilipinas, makapabang-ar a paginana iti bantay ti Baguio gapu iti nalam-ek a klima, turod a napno kadagiti kayo a pino, ken naragsak a kultura. Mangbukel iti kapadasan ti siudad ti Burnham Park, Strawberry Farm iti La Trinidad, ken Session Road.",
+    "highlights": [
+      "Burnham Park",
+      "Mines View Park",
+      "Dagiti caf? iti Session Road",
+      "Strawberry Farm",
+      "Panagbenga Festival"
+    ],
+    "travel_tips": [
+      "Mangyeg iti nalag-an a dyaket uray kalgaw",
+      "Padasen ti ube jam ken lokal a kape",
+      "Mabalin a narigat ti trapiko manipud Manila no weekend",
+      "Bisitaen ti Tam-awan Village para iti arte ti Cordillera"
+    ],
+    "region": "Cordillera",
+    "location": "Siudad ti Baguio, Benguet",
+    "best_time_to_visit": "Pebrero para iti Panagbenga wenno Marso?Mayo para iti kalam-ekan"
+  },
+  "vigan": {
+    "name": "Vigan",
+    "short_description": "Siudad a tawid ti UNESCO agraman dagiti kalsada a bato ken ayat ti kolonyal nga Espanya.",
+    "content": "Kas UNESCO World Heritage Site, iturong ti Vigan dagiti bisita iti panawen ti kolonyal nga Espanya. Nakaurnong dagiti balay a nagbayagen a siglo iti Calle Crisologo, agraman dagiti kalsada a bato ken kalesa a guyoden ti kabayo a kumilap iti lawag dagiti parol iti rabii.",
+    "highlights": [
+      "Calle Crisologo",
+      "Bantay Bell Tower",
+      "Panagkalesa",
+      "Vigan empanada",
+      "Syquia Mansion"
+    ],
+    "travel_tips": [
+      "Agidda iti maysa a rabii tapno makita ti silaw ti Calle Crisologo",
+      "Padasen ti empanada ken longganisa iti Plaza Burgos",
+      "Pagtipunen iti Pagudpud wenno Banaue iti panaglibot iti amianan a Luzon",
+      "Agsuot iti komportable a sapatos kadagiti kalsada a bato"
+    ],
+    "region": "Ilocos",
+    "location": "Siudad ti Vigan, Ilocos Sur",
+    "best_time_to_visit": "Nobiembre agingga Abril"
+  },
+  "banaue-rice-terraces": {
+    "name": "Banaue Rice Terraces",
+    "short_description": "Daan a nagatadan a pagay a naukit kadagiti bantay?nakaskasdaaw a tawid ti UNESCO.",
+    "content": "Naukit kadagiti bantay iti nasurok 2,000 a tawen ti Banaue Rice Terraces, a masansan a maawagan a Maikawalo a Pagsidsiddaawan ti Lubong. Itultuloy dagiti komunidad ti Ifugao ti panagtalon kadagiti adayo a nagatadan a pagay iti Batad a kasla ampiteatro.",
+    "highlights": [
+      "Pagbuya iti Banaue",
+      "Batad Rice Terraces",
+      "Panagtrek agingga Tappiya Falls",
+      "Dagiti ili a tawid ti Ifugao",
+      "Lokal a panagabel"
+    ],
+    "travel_tips": [
+      "Agupa iti lokal a giya para kadagiti trek iti Batad",
+      "Adda dagiti bus manipud Manila a bumiahe iti rabii (9?10 nga oras)",
+      "Agsuot iti napigsa a sapatos?mabalin a naingato ken namulmok dagiti pagnaan",
+      "Irespeto dagiti komunidad a mannalon ken dagiti beddeng ti pagay"
+    ],
+    "region": "Cordillera",
+    "location": "Probinsia ti Ifugao",
+    "best_time_to_visit": "Disiembre agingga Mayo para iti trekking; panawen ti panagapit para iti balitok a talon"
+  },
+  "chocolate-hills": {
+    "name": "Chocolate Hills",
+    "short_description": "Nasurok 1,000 a naidumduma a turod a kasla simboryo a agbrown no kalgaw.",
+    "content": "Porma ti daga a gapu iti heolohiya dagiti Chocolate Hills, agraman ti nasurok 1,000 a turod a nasimsimpa ti ruot a agbrown bayat ti kalgaw. Mangparnuay daytoy iti maysa kadagiti kadayawan a talon iti Pilipinas.",
+    "highlights": [
+      "Pagbuya iti Chocolate Hills Complex",
+      "Hardin dagiti paruparo",
+      "Panag-ATV",
+      "Dagiti asideg a santuwaryo dagiti tarsier",
+      "Loboc River"
+    ],
+    "travel_tips": [
+      "Agpasyar a nasapa iti agsapa tapno nalawlawag ti buya",
+      "Pagtipunen iti intero nga aldaw a tour iti suli ti ili ti Bohol",
+      "Mangyeg iti salaknib iti init?awan ti linong iti pagbuya",
+      "Ipares iti Panglao para iti baybay a panagpabang-ar"
+    ],
+    "region": "Visayas",
+    "location": "Carmen, Bohol",
+    "best_time_to_visit": "Disiembre agingga Mayo"
+  },
+  "camiguin": {
+    "name": "Camiguin",
+    "short_description": "Isla dagiti bulkan agraman dagiti napudot a bukal, talon, ken Sunken Cemetery.",
+    "content": "Maawagan a Isla a Nayanak iti Apuy, napno ti Camiguin kadagiti bulkan, napudot a bukal, ken nakabutbuteng a Sunken Cemetery a tandaanna ti dakkel a krus a tumakder manipud taaw. Mangted ti White Island sandbar iti nalawa a buya ti Mount Hibok-Hibok.",
+    "highlights": [
+      "White Island",
+      "Sunken Cemetery",
+      "Katibawasan Falls",
+      "Ardent Hot Springs",
+      "Mt. Hibok-Hibok"
+    ],
+    "travel_tips": [
+      "Agabang iti multicab wenno motor tapno liboten ti isla",
+      "Kitaen ti kasasaad ti paniempo sakbay ti panagbangka agturong iti White Island",
+      "Padasen ti lanzones no panawenna",
+      "Naimbag dagiti eroplano wenno ferry manipud Cagayan de Oro"
+    ],
+    "region": "Mindanao",
+    "location": "Probinsia ti Camiguin",
+    "best_time_to_visit": "Marso?Mayo wenno Oktubre para iti Lanzones Festival"
+  },
+  "davao": {
+    "name": "Davao",
+    "short_description": "Pagserkan ti Mt. Apo, dagiti agila ti Pilipinas, ken puso ti kultura ti Mindanao.",
+    "content": "Ti Davao City ti kadakkelan a siudad iti Mindanao, a pagtipunenna ti panagrang-ay ti siudad ken dagiti kinaparsuaan a pagsidsiddaawan. Pagserkan daytoy ti Mount Apo, ti kangatoan a turod iti pagilian, ken salakniban ti Philippine Eagle Center ti agila a pagilian a nangnangina a mapukaw.",
+    "highlights": [
+      "Philippine Eagle Center",
+      "Eden Nature Park",
+      "Dagiti baybay iti Samal Island",
+      "Dagiti merkado ti durian ken lames",
+      "Dagiti panagtrek iti Mount Apo"
+    ],
+    "travel_tips": [
+      "Agpangato iti Davao International Airport",
+      "Kitaen dagiti pammagbaga iti panagbiahe sakbay ti panagtrek iti bantay",
+      "Padasen ti durian, pomelo, ken inihaw a tuna",
+      "Ababa laeng a ferry ti panagbiahe agturong iti Samal Island"
+    ],
+    "region": "Mindanao",
+    "location": "Siudad ti Davao ken dagiti aglawlawna",
+    "best_time_to_visit": "Marso para iti Araw ng Dabaw wenno Agosto para iti Kadayawan Festival"
+  },
+  "sagada": {
+    "name": "Sagada",
+    "short_description": "Nalam-ek a ili iti nangato a lugar agraman dagiti kweba, talon, ken nakabitin a lungon.",
+    "content": "Maidaydayaw ti Sagada gapu iti nalam-ek a klima, nabaknang a tradision dagiti Igorot, ken napintas a talon. Ipakita dagiti Hanging Coffins iti Echo Valley ti daan a pamay-an ti panagitabon. Gunggona kadagiti agayat iti panagpakpadas dagiti Sumaguing Cave ken Bomod-ok Falls.",
+    "highlights": [
+      "Hanging Coffins",
+      "Sumaguing Cave",
+      "Bomod-ok Falls",
+      "Baybay ti ulep iti Kiltepan",
+      "Echo Valley"
+    ],
+    "travel_tips": [
+      "Agupa iti giya ti kuweba?masapul iti Sumaguing",
+      "Nalam-ek dagiti rabii; mangyeg iti adu a sapaw ti kawes",
+      "Agarup 5 nga oras ti panagbiahe ti bus manipud Baguio",
+      "Irespeto dagiti nasagradoan a pagitabonan ken lokal a kaugalian"
+    ],
+    "region": "Cordillera",
+    "location": "Probinsia ti Mountain",
+    "best_time_to_visit": "Nobiembre agingga Pebrero"
+  },
+  "mayon-volcano": {
+    "name": "Mayon Volcano",
+    "short_description": "Bulkan a kasla perpekto a kono agraman ATV, dagiti guho, ken buya ti pakipadas.",
+    "content": "Nabigbig ti Mayon Volcano gapu iti asideg a perpekto a porma ti kono. Pammadayaw dagiti bisita ti kinapintasna iti Cagsawa Ruins, a pakairamanan dagiti nabati a paset ti simbaan a mangipalagip iti panagputok idi 1814. Mangnayon iti pakipadas dagiti panag-ATV iti saka ti bulkan.",
+    "highlights": [
+      "Cagsawa Ruins",
+      "Pakipadas ti ATV iti Mayon",
+      "Lignon Hill",
+      "Dagiti whale shark iti Donsol (iti sumagmamano laeng a bulan)",
+      "Paglutuan ti Bicol"
+    ],
+    "travel_tips": [
+      "Agpangato iti Legazpi tapno nalaklaka ti panagserrek",
+      "Agdepende iti paniempo ti buya?mangilasin iti kanayon nga aldaw",
+      "Padasen ti Bicol Express ken laing",
+      "Pagtipunen iti Donsol bayat ti panawen dagiti whale shark"
+    ],
+    "region": "Bicol",
+    "location": "Siudad ti Legazpi, Albay",
+    "best_time_to_visit": "Disiembre?Abril para iti nalawag a buya"
+  },
+  "kawasan-falls": {
+    "name": "Cebu (Kawasan Falls)",
+    "short_description": "Turquoise a talon ken nabantog a panagpakipadas iti canyoneering.",
+    "content": "Nabigbig ti Kawasan Falls gapu iti canyoneering iti turquoise a danum ken dagiti agtinnulong a talon. Kadagiti kapipintasan a kinaparsuaan a pagbuyaan iti Cebu dagiti talon nga adu ti tukad, ken nasayaat nga ipagtipunen kadagiti panaglibot iti igid ti baybay iti abagatan ti Cebu.",
+    "highlights": [
+      "Canyoneering",
+      "Tallo a tukad ti Kawasan Falls",
+      "Asideg ti Moalboal",
+      "Dagiti whale shark iti Oslob",
+      "Tumalog Falls"
+    ],
+    "travel_tips": [
+      "Agreserba iti canyoneering kadagiti akreditado nga operator",
+      "Agsuot iti natalged a sapatos a pagdanuman",
+      "Rugian a nasapa tapno maliklikan dagiti adu a tattao",
+      "Itaud dagiti elektronik a ramit iti mamaga a supot"
+    ],
+    "region": "Visayas",
+    "location": "Badian, Cebu",
+    "best_time_to_visit": "Nobiembre agingga Abril"
+  },
+  "intramuros": {
+    "name": "Intramuros (Manila)",
+    "short_description": "Makasaysayan a siudad a napalawlawan ti pader iti puso ti kapitolio ti Pilipinas.",
+    "content": "Pangrugian a sentro ti tawid ti Manila ti Intramuros, ti siudad a napalawlawan ti pader. Dagiti kalsada a bato ditoy ti mangiturong iti Fort Santiago ken San Agustin Church, maysa a UNESCO World Heritage site.",
+    "highlights": [
+      "Fort Santiago",
+      "San Agustin Church",
+      "Casa Manila",
+      "Dagiti tour iti kalesa",
+      "Asideg ti Rizal Park"
+    ],
+    "travel_tips": [
+      "Magna o agbisikleta iti rabaw dagiti pader iti nasapa nga agsapa",
+      "Pagtipunen iti panagbisita kadagiti National Museum",
+      "Agbuya kadagiti panangipakita ti kultura no weekend",
+      "Usaren dagiti ride-hailing app iti trapiko ti Manila"
+    ],
+    "region": "NCR",
+    "location": "Manila",
+    "best_time_to_visit": "Disiembre agingga Mayo"
+  },
+  "panglao": {
+    "name": "Panglao Island",
+    "short_description": "Dagiti baybay a nasimpa ti darat ken pagserkan kadagiti dive site iti asideg ti Bohol.",
+    "content": "Mangipaay ti Panglao kadagiti resort, baybay, ken pagserkan kadagiti koral a pagdive-an; ti Alona Beach ti kangrunaan a pagtiponan para iti island-hopping ken pangrabii bayat ti ilelennek ti init.",
+    "highlights": [
+      "Alona Beach",
+      "Panag-dive iti Balicasag",
+      "Virgin Island sandbar",
+      "Hinagdanan Cave",
+      "Panagbuya kadagiti dolphin"
+    ],
+    "travel_tips": [
+      "Agpangato iti Bohol?Panglao International Airport",
+      "Agreserba iti diving a nasapa bayat dagiti bakasion",
+      "Pagtipunen iti day tour dagiti Chocolate Hills",
+      "Irespeto dagiti naprotektaran a lugar iti taaw"
+    ],
+    "region": "Visayas",
+    "location": "Bohol",
+    "best_time_to_visit": "Disiembre agingga Mayo"
+  },
+  "apo-island": {
+    "name": "Apo Island",
+    "short_description": "Santuwaryo iti taaw a nabigbig kadagiti pawikan ken snorkeling.",
+    "content": "Naprotektaran a santuwaryo iti taaw ti Apo Island a paglangoyan dagiti pawikan iti nagbaetan dagiti napintas a koral. Mabalin a mapan ditoy babaen iti bangka manipud Dumaguete wenno Dauin.",
+    "highlights": [
+      "Panag-snorkel kadagiti pawikan",
+      "Dagiti hardin ti koral",
+      "Santuwaryo iti taaw",
+      "Ili iti isla",
+      "Dagiti dive site iti Dauin"
+    ],
+    "travel_tips": [
+      "Bayadan dagiti bayad iti santuwaryo iti taaw",
+      "Dimo sagiden dagiti pawikan wenno koral",
+      "Mangyeg iti ramit ti snorkeling wenno agabang idiay",
+      "Rugian a nasapa dagiti biyahe ti bangka tapno nasalsalun-at ti taaw"
+    ],
+    "region": "Visayas",
+    "location": "Dauin, Negros Oriental",
+    "best_time_to_visit": "Nobiembre agingga Mayo"
+  }
+}

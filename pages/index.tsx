@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useDestinationTranslations, DestinationTranslation } from '../lib/useDestinationTranslation';
 import QRCode from 'qrcode';
 import SmartAssistant from '../components/SmartAssistant';
 import supabase from '../lib/supabaseClient';
@@ -66,6 +67,7 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
   const [cultureContent, setCultureContent] = useState<HomepageCultureContent>(EMPTY_HOMEPAGE_CULTURE);
   const siteLogo = useSiteLogo();
   const { t, lang } = useTranslation();
+  const translations = useDestinationTranslations(lang);
   const [qrOpen, setQrOpen] = useState(false)
   const [assistantOpen, setAssistantOpen] = useState(false)
 
@@ -224,7 +226,7 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
                         if (!event.currentTarget.src.endsWith('/hero.svg')) event.currentTarget.src = '/hero.svg';
                       }}
                     />
-                    <span>{destination.name}</span>
+                    <span>{(translations[destination.slug]?.name) || destination.name}</span>
                   </a>
                 );
               })}
@@ -387,8 +389,22 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
   );
 }
 
-function SearchableDestinations({ initial }: { initial: Destination[] }) {
-  const { t } = useTranslation();
+function localizeDestination<T extends Destination>(d: T, map: Record<string, DestinationTranslation>): T {
+  const tr = map[d.slug];
+  if (!tr) return d;
+  return {
+    ...d,
+    name: tr.name || d.name,
+    short_description: tr.short_description || d.short_description,
+    region: tr.region || d.region,
+    ...(tr.content ? { content: tr.content } : {}),
+  };
+}
+
+function SearchableDestinations({ initial: rawInitial }: { initial: Destination[] }) {
+  const { t, lang } = useTranslation();
+  const translations = useDestinationTranslations(lang);
+  const initial = useMemo(() => rawInitial.map((d) => localizeDestination(d, translations)), [rawInitial, translations]);
   const [query, setQuery] = useState('');
   const [favorites, setFavorites] = useState<string[]>([]);
   const [modal, setModal] = useState<Destination | null>(null);

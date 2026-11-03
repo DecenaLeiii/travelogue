@@ -17,6 +17,7 @@ export type SiteBranding = {
   culture_hidden: CultureBuiltIn[];
   culture_blocks: CultureBlock[];
   hero_video: string;
+  hero_videos: string[];
   hero_description: string;
   tourism_heading: string;
   tourism_description: string;
@@ -34,6 +35,7 @@ export const DEFAULT_SITE_BRANDING: SiteBranding = {
   culture_hidden: [],
   culture_blocks: [],
   hero_video: '/TOURISM%20VIDEO.mp4',
+  hero_videos: ['/TOURISM%20VIDEO.mp4'],
   hero_description: 'Explore beaches, mountains, history, and culture across featured destinations.',
   tourism_heading: 'Tourism & Culture',
   tourism_description: 'Discover what makes the Philippines a top travel destination for food, heritage, and natural beauty.',

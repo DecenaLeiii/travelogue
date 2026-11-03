@@ -8,6 +8,7 @@ import path from 'path';
 import type { Lang } from '../../lib/i18n';
 import { atext, monthLabel, normalizeLang } from '../../lib/assistantI18n';
 import { getDestinationViewCounts } from '../../lib/destinationViews';
+import { DestinationTranslationEntry, findTranslation, loadTranslationMap } from '../../lib/destinationTranslations';
 
 type DestinationCard = { name: string; slug: string; image?: string; region?: string; blurb?: string };
 type FollowUp = { intent: 'plan' | 'month' | 'contact' | 'timing' | 'tips' | 'food' | 'popular'; slug?: string; name?: string };
@@ -20,18 +21,11 @@ const LANGUAGE_NAMES: Record<Lang, string> = {
   pam: 'Kapampangan', bik: 'Bicolano', pag: 'Pangasinan', zh: 'Simplified Chinese', hi: 'Hindi', es: 'Spanish', ar: 'Arabic',
 };
 
-type LocalizedDestination = { name?: string; short_description?: string; highlights?: string[]; travel_tips?: string[] };
+type LocalizedDestination = DestinationTranslationEntry;
 
 function localizedDestination(destination: Destination, lang: Lang): LocalizedDestination {
   if (lang === 'en') return {};
-  try {
-    const file = path.join(process.cwd(), 'db', `destination_translations.${lang}.json`);
-    if (!fs.existsSync(file)) return {};
-    const map = JSON.parse(fs.readFileSync(file, 'utf8')) as Record<string, LocalizedDestination>;
-    return map[DESCRIPTION_MAP[destination.slug] || destination.slug] || {};
-  } catch {
-    return {};
-  }
+  return findTranslation(loadTranslationMap(lang), destination.slug, DESCRIPTION_MAP[destination.slug]) || {};
 }
 
 // Words in other supported languages that signal a contact/timing question when the user types freely.
@@ -53,7 +47,7 @@ function toCard(destination: Destination, lang: Lang = 'en'): DestinationCard {
     name: local.name || destination.name,
     slug: destination.slug,
     image: destination.images?.[0],
-    region: destination.region,
+    region: local.region || destination.region,
     blurb: clean(local.short_description || destination.short_description, 140) || undefined,
   };
 }
@@ -302,7 +296,7 @@ function recommendForMonth(month: string, destinations: Destination[], lang: Lan
   if (!matches.length) return atext(lang, 'monthNone', { m: label });
   const recommendations = matches.map((destination) => {
     const local = localizedDestination(destination, lang);
-    return `• ${local.name || destination.name}: ${local.short_description || destination.short_description || ''}\n  ${atext(lang, 'bestTime')}: ${destination.best_time_to_visit}\n  /destination/${destination.slug}`;
+    return `• ${local.name || destination.name}: ${local.short_description || destination.short_description || ''}\n  ${atext(lang, 'bestTime')}: ${local.best_time_to_visit || destination.best_time_to_visit}\n  /destination/${destination.slug}`;
   });
   return `${atext(lang, 'monthHeader', { m: label })}\n\n${recommendations.join('\n\n')}`;
 }
@@ -317,7 +311,8 @@ function isTimingQuestion(message: string) {
 
 function answerDestinationTiming(destination: Destination, month: string, lang: Lang) {
   const bestTime = destination.best_time_to_visit?.trim();
-  const vars = { n: localizedDestination(destination, lang).name || destination.name, m: monthLabel(lang, month), t: bestTime || '' };
+  const local = localizedDestination(destination, lang);
+  const vars = { n: local.name || destination.name, m: monthLabel(lang, month), t: local.best_time_to_visit || bestTime || '' };
   if (!bestTime) return `${atext(lang, 'timingNone', vars)}\n/destination/${destination.slug}`;
   return atext(lang, bestMonths(bestTime).has(month) ? 'timingYes' : 'timingNo', vars);
 }
@@ -375,7 +370,7 @@ function fallbackReply(message: string, destinations: Destination[], contacts: P
     return [
       local.name || destination.name,
       local.short_description || destination.short_description,
-      destination.best_time_to_visit && `${atext(lang, 'bestTime')}: ${destination.best_time_to_visit}`,
+      destination.best_time_to_visit && `${atext(lang, 'bestTime')}: ${local.best_time_to_visit || destination.best_time_to_visit}`,
       `${atext(lang, 'moreDetails')}: /destination/${destination.slug}`,
     ].filter(Boolean).join('\n');
   }

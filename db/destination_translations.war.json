@@ -1,0 +1,380 @@
+{
+  "boracay": {
+    "name": "Boracay",
+    "short_description": "Busag nga baybayon nga baras ngan masigla nga kagabihon ha usa han pinakamaopay nga isla ha kalibutan.",
+    "content": "An Boracay usa han pinakabantog nga destinasyon han mga turista ha Pilipinas, ngan padayon nga naruruyag ha mga pinakamaopay nga isla ha kalibutan. An iya pinakamahal nga bahin amo an White Beach, 4-kilometro nga baybayon nga may pino nga baras ngan hamis nga tubig. Gawas ha pagpahuway ha baybayon, may parasailing, kiteboarding, scuba diving, ngan paglayag ha paraw ha pagsalop han adlaw an Boracay.",
+    "highlights": [
+      "White Beach",
+      "Puka Shell Beach",
+      "Paglayag ha paraw ha pagsalop han adlaw",
+      "Mga ehersisyo ha tubig ngan diving",
+      "D'Mall nga lugar han pagkaon"
+    ],
+    "travel_tips": [
+      "Magpa-reserba hin tutulugan nga aga durante han kadamo han turista",
+      "Sundon an lokal nga mga lagda ha kalikasan ha pagsulod ha baybayon",
+      "Sulayi an island-hopping ha duol nga mga linaw han dagat",
+      "Gamita an mga traysikel para ha hirani nga biyahe ha isla"
+    ],
+    "region": "Visayas",
+    "location": "Malay, Aklan",
+    "best_time_to_visit": "Disyembre tubtob Mayo (tig-init)"
+  },
+  "el-nido": {
+    "name": "Palawan (El Nido)",
+    "short_description": "Mga pangpang nga bato-apog, tinago nga mga lagoon, ngan klase-kalibutan nga island hopping.",
+    "content": "An El Nido makaruruyag tungod han mataas nga mga pangpang nga bato-apog ngan tinago nga mga lagoon diin makakayak o makaligo ka ha berde nga tubig. Bahin han Palawan, nga gintatawag nga Katapusan nga Utlanan, an El Nido usa nga mahal nga hiyas han pagbiyahe ha Timog-Sinirangan nga Asya nga may makaruruyag nga karst nga talan-awon ngan hamis nga mga lagoon.",
+    "highlights": [
+      "Big Lagoon",
+      "Small Lagoon",
+      "Secret Beach",
+      "Nacpan Beach",
+      "Mga tour ha island-hopping"
+    ],
+    "travel_tips": [
+      "Sumali ha organisado nga mga Tour A/B/C/D nga pakete para ha pagsulod ha mga lagoon",
+      "Magdara hin sunscreen nga luwas ha reef",
+      "Mapuslanon an kwarta ha mga gutiay nga establisimyento",
+      "Maghatag hin 3–4 nga adlaw basi mabisita hin tadong"
+    ],
+    "region": "MIMAROPA",
+    "location": "El Nido, Palawan",
+    "best_time_to_visit": "Disyembre tubtob Mayo"
+  },
+  "coron": {
+    "name": "Palawan (Coron)",
+    "short_description": "Putli nga mga linaw, lagoon, ngan bantog nga wreck diving.",
+    "content": "An Coron bantog ha tibuok kalibutan tungod han makaruruyag nga mga linaw, lagoon, ngan lugar han diving. An Kayangan Lake gintatawag nga pinakamaharumi nga linaw ha Asya, nga gin-aangkop han mataas nga mga pangpang nga bato-apog. Para ha mga divers, an mga nalunod nga barko han WWII nahunhon ha ilarom han dagat, nga nahimo nga mga lugar han diving nga puno hin korales.",
+    "highlights": [
+      "Kayangan Lake",
+      "Twin Lagoon",
+      "Diving ha mga nalunod nga barko han WWII",
+      "Snorkeling ha Siete Pecados",
+      "Tanaw ha Mt. Tapyas"
+    ],
+    "travel_tips": [
+      "Bayari an mga bayranan para ha kalikasan ha opisina han turismo",
+      "Magpa-reserba ha mga dive shop nga aga durante han kadamo han turista",
+      "Magtikang nga aga ha mga island tour basi malikawan an kadamo han tawo",
+      "Lupad pakadto ha Busuanga Airport dayon mag-van pakadto ha banwa han Coron"
+    ],
+    "region": "MIMAROPA",
+    "location": "Coron, Busuanga, Palawan",
+    "best_time_to_visit": "Disyembre tubtob Mayo"
+  },
+  "cebu": {
+    "name": "Cebu",
+    "short_description": "Kaagi-an, canyoneering, ngan an Queen City han Timog.",
+    "content": "An Cebu nagtitipon hin kaagi-an, kinabuhi ha syudad, ngan pakigsapalaran ha gawas. Ha Syudad han Cebu, an mga bantog nga lugar sugad han Magellan's Cross ngan Basilica Minore del Santo Niño nagpapakita han kabilin nga Espanyol han isla. Para ha mga mahigugmaon ha kinaiyahan, an Kawasan Falls ha Badian bantog ha canyoneering ha asul-berde nga tubig.",
+    "highlights": [
+      "Magellan's Cross",
+      "Canyoneering ha Kawasan Falls",
+      "Mga whale shark han Oslob",
+      "Sardine run han Moalboal",
+      "Sinulog Festival (Enero)"
+    ],
+    "travel_tips": [
+      "Lupad pakadto ha Mactan–Cebu International Airport",
+      "Magpa-reserba hin canyoneering tour ha mga giya nga may lisensya",
+      "Hiusa an mga lakaw ha kabilin han syudad ngan mga usa-ka-adlaw nga biyahe ha timog han Cebu",
+      "Sulayi an lechon ngan uga nga mangga"
+    ],
+    "region": "Visayas",
+    "location": "Probinsya han Cebu",
+    "best_time_to_visit": "Nobyembre tubtob Abril"
+  },
+  "bohol": {
+    "name": "Bohol",
+    "short_description": "Chocolate Hills, mga tarsier, ngan busag nga baybayon han Panglao.",
+    "content": "An Bohol bantog tungod han talagsa nga yaman han kinaiyahan ngan kultura. An Chocolate Hills usa nga makaruruyag nga talan-awon hin sobra 1,200 nga mga bungtod nga natabunan hin sagbot. An mga Philippine tarsier, gutiay nga primate nga may dagko nga mga mata, gin-aataman ha mga lokal nga santuaryo. An Isla han Panglao may mga resort ngan pag-abot ha mga coral reef para ha diving.",
+    "highlights": [
+      "Chocolate Hills",
+      "Santuaryo han tarsier",
+      "Loboc River cruise",
+      "Mga baybayon han Panglao",
+      "Mga makasaysayan nga simbahan"
+    ],
+    "travel_tips": [
+      "Mag-abang hin motorsiklo o sumali ha mga countryside tour para ha mga bungtod ngan simbahan",
+      "Bisitaha la an mga tarsier ha mga aprubado nga santuaryo",
+      "An mga fast ferry nagkokonekta han Cebu ngan Bohol ha mga 2 nga oras",
+      "Hiusa an tour ha mga bungtod ngan an cruise ha salog nga may pamaudto"
+    ],
+    "region": "Visayas",
+    "location": "Probinsya han Bohol",
+    "best_time_to_visit": "Disyembre tubtob Mayo"
+  },
+  "siargao": {
+    "name": "Siargao",
+    "short_description": "Kapital han surfing nga may mga lagoon, isla, ngan hinay nga kinabuhi ha isla.",
+    "content": "Kilala sugad nga Surfing Capital han Pilipinas, an Siargao nag-aawat hin mga surfer tikang ha iba nga nasud ha Cloud 9. Gawas ha mga balud, an Magpupungko Rock Pools ngan Sugba Lagoon nagtatanyag hin paglangoy ngan paddleboarding nga ginlilibotan hin mga bakhawan.",
+    "highlights": [
+      "Cloud 9 surf break",
+      "Magpupungko Rock Pools",
+      "Sugba Lagoon",
+      "Naked Island",
+      "Sohoton Cove"
+    ],
+    "travel_tips": [
+      "Mag-abang hin scooter basi libotan an isla",
+      "Magpa-reserba nga aga hin boat tour para ha Sohoton",
+      "Tamdon an lokal nga ugali han mga surfer ha lineup",
+      "Kasagaran gingagamit an kwarta ngan e-wallet"
+    ],
+    "region": "Mindanao",
+    "location": "Surigao del Norte",
+    "best_time_to_visit": "Agosto–Nobyembre para ha surf; Marso–Mayo para ha kalmado nga tubig"
+  },
+  "baguio": {
+    "name": "Baguio",
+    "short_description": "Mabugnaw nga pahuwayan ha bukid ngan Summer Capital han Pilipinas.",
+    "content": "Gintatawag nga Summer Capital han Pilipinas, an Baguio usa nga makapabuhi nga pahuwayan ha bukid nga may mabugnaw nga klima, mga bungtod nga natabunan hin pino, ngan buhi nga kultura. An Burnham Park, Strawberry Farm ha La Trinidad, ngan Session Road an nagpapakilala han kasinatian ha syudad.",
+    "highlights": [
+      "Burnham Park",
+      "Mines View Park",
+      "Mga café ha Session Road",
+      "Strawberry Farm",
+      "Panagbenga Festival"
+    ],
+    "travel_tips": [
+      "Magdara hin gaan nga jacket bisan ha tig-init",
+      "Sulayi an ube jam ngan lokal nga kape",
+      "Mabug-at an trapiko ha katapusan han semana tikang ha Manila",
+      "Bisitaha an Tam-awan Village para ha arte han Cordillera"
+    ],
+    "region": "Cordillera",
+    "location": "Syudad han Baguio, Benguet",
+    "best_time_to_visit": "Pebrero para ha Panagbenga o Marso–Mayo para ha pinakamabugnaw nga panahon"
+  },
+  "vigan": {
+    "name": "Vigan",
+    "short_description": "Syudad nga kabilin han UNESCO nga may mga kalsada nga bato ngan kaanyag han kolonyal nga Espanyol.",
+    "content": "Usa nga UNESCO World Heritage Site, an Vigan nagdadara ha mga bisita ngadto ha panahon han kolonyal nga Espanyol. An Calle Crisologo ginlilibotan hin mga balay nga gatos-gatos na ka tuig an edad, mga kalsada nga bato, ngan mga karwahe nga guyod hin kabayo nga nasisidlak ha mainit nga suga han parol ha gabii.",
+    "highlights": [
+      "Calle Crisologo",
+      "Bantay Bell Tower",
+      "Pagsakay ha kalesa",
+      "Empanada han Vigan",
+      "Syquia Mansion"
+    ],
+    "travel_tips": [
+      "Pagpaliton hin usa nga gabii basi makita an Calle Crisologo nga may suga ha gabii",
+      "Sulayi an empanada ngan longganisa ha Plaza Burgos",
+      "Hiusa ha Pagudpud o Banaue ha usa nga biyahe libot ha amihanan han Luzon",
+      "Magsul-ot hin komportable nga sapatos para ha mga kalsada nga bato"
+    ],
+    "region": "Ilocos",
+    "location": "Syudad han Vigan, Ilocos Sur",
+    "best_time_to_visit": "Nobyembre tubtob Abril"
+  },
+  "banaue-rice-terraces": {
+    "name": "Banaue Rice Terraces",
+    "short_description": "Karaan nga mga hagdan-hagdan nga uma nga gintaktak ha mga bukid — usa nga kahibulongan han UNESCO.",
+    "content": "An Banaue Rice Terraces, nga gintatawag nga Ikawalo nga Kahibulongan han Kalibutan, gintaktak ha mga bukid sobra 2,000 ka tuig na an naglabay. An mas hirayo nga mga terraces han Batad, nga hugpa hin amphitheater, padayon nga ginhuhumay han mga komunidad han Ifugao.",
+    "highlights": [
+      "Tanaw ha Banaue",
+      "Batad Rice Terraces",
+      "Trek ha Tappiya Falls",
+      "Mga baryo han kabilin han Ifugao",
+      "Lokal nga paghabol"
+    ],
+    "travel_tips": [
+      "Mag-hire hin lokal nga giya para ha mga trek ha Batad",
+      "May mga bus ha gabii tikang ha Manila (9–10 nga oras)",
+      "Magsul-ot hin makusog nga sapatos — an mga dalan mahimo nga matarik ngan lapok",
+      "Tamdon an mga komunidad han mag-uuma ngan an mga utlanan han terraces"
+    ],
+    "region": "Cordillera",
+    "location": "Probinsya han Ifugao",
+    "best_time_to_visit": "Disyembre tubtob Mayo para ha trekking; panahon han ani para ha bulawan nga talan-awon"
+  },
+  "chocolate-hills": {
+    "name": "Chocolate Hills",
+    "short_description": "Sobra 1,000 nga talagsa nga bungtod nga hugpa hin simboryo nga nagbabaylo hin brown ha tig-init.",
+    "content": "An Chocolate Hills usa nga pormasyon han tuna nga may sobra 1,000 nga mga bungtod nga natabunan hin sagbot nga nagbabaylo hin kolor chocolate-brown ha tig-init, nga nagbubuhat hin usa han pinakakilala nga talan-awon han Pilipinas.",
+    "highlights": [
+      "Tanaw ha Chocolate Hills Complex",
+      "Butterfly Garden",
+      "Pagsakay ha ATV",
+      "Duol nga mga santuaryo han tarsier",
+      "Loboc River"
+    ],
+    "travel_tips": [
+      "Bisitaha ha aga han kabuntagon para ha mas klaro nga tanaw",
+      "Hiusa ha bug-os nga countryside tour han Bohol",
+      "Magdara hin panalipod ha adlaw — buksan an tinan-awan",
+      "Hiusa ha Panglao para ha dugang nga pagpahuway ha baybayon"
+    ],
+    "region": "Visayas",
+    "location": "Carmen, Bohol",
+    "best_time_to_visit": "Disyembre tubtob Mayo"
+  },
+  "camiguin": {
+    "name": "Camiguin",
+    "short_description": "Isla nga bulkan nga may mga mainit nga tuburan, busay, ngan an Sunken Cemetery.",
+    "content": "Gintatawag nga Isla nga Natawo ha Kalayo, an Camiguin may mga bulkan, mainit nga tuburan, ngan an makahadlok nga Sunken Cemetery nga may dako nga krus nga nakatindog ha dagat. An sandbar han White Island nagtatanyag hin malapad nga tanaw ha Bulkan Hibok-Hibok.",
+    "highlights": [
+      "White Island",
+      "Sunken Cemetery",
+      "Katibawasan Falls",
+      "Ardent Hot Springs",
+      "Mt. Hibok-Hibok"
+    ],
+    "travel_tips": [
+      "Mag-abang hin multicab o motorsiklo para libotan an isla",
+      "Tan-awa an panahon antes han biyahe ha bangka pakadto ha White Island",
+      "Sulayi an lanzones kun panahon",
+      "Maopay an mga lupad o ferry tikang ha Cagayan de Oro"
+    ],
+    "region": "Mindanao",
+    "location": "Probinsya han Camiguin",
+    "best_time_to_visit": "Marso–Mayo o Oktubre para ha Lanzones Festival"
+  },
+  "davao": {
+    "name": "Davao",
+    "short_description": "Ganghaan pakadto ha Mt. Apo, mga agila han Pilipinas, ngan kasingkasing han kultura han Mindanao.",
+    "content": "An Syudad han Davao amo an pinakadako nga syudad ha Mindanao, nga nagbabalanse han kauswagan han syudad ngan mga kahibulongan han kinaiyahan. Usa ini nga ganghaan pakadto ha Bukid Apo, an pinakamataas nga tuktok han nasud, ngan an Philippine Eagle Center nag-aataman han nameligro nga pambansa nga pispis.",
+    "highlights": [
+      "Philippine Eagle Center",
+      "Eden Nature Park",
+      "Mga baybayon han Isla han Samal",
+      "Mga merkado han durian ngan mga pagkaon ha dagat",
+      "Mga trek ha Bukid Apo"
+    ],
+    "travel_tips": [
+      "Lupad pakadto ha Davao International Airport",
+      "Tan-awa an mga travel advisory para ha mga trek ha bukid",
+      "Sulayi an durian, pomelo, ngan inihaw nga tuna",
+      "An Isla han Samal hirani la, usa nga mubo nga biyahe ha ferry"
+    ],
+    "region": "Mindanao",
+    "location": "Syudad han Davao ngan mga palibot",
+    "best_time_to_visit": "Marso para ha Araw ng Dabaw o Agosto para ha Kadayawan Festival"
+  },
+  "sagada": {
+    "name": "Sagada",
+    "short_description": "Mabugnaw nga banwa ha kabukiran nga may mga lungib, busay, ngan nakabitay nga mga lungon.",
+    "content": "An Sagada bantog tungod han mabugnaw nga klima, mayaman nga tradisyon han mga Igorot, ngan makaruruyag nga talan-awon. An Nakabitay nga mga Lungon han Echo Valley nagpapakita han karaan nga pamaagi hin paglubong. An Sumaguing Cave ngan Bomod-ok Falls nagbabalos ha mga bisita nga mahilig ha pakigsapalaran.",
+    "highlights": [
+      "Nakabitay nga mga Lungon",
+      "Sumaguing Cave",
+      "Bomod-ok Falls",
+      "Dagat han dampog ha Kiltepan",
+      "Echo Valley"
+    ],
+    "travel_tips": [
+      "Mag-hire hin giya ha lungib — kinahanglan ini para ha Sumaguing",
+      "Pag-agda hin mabugnaw nga gabii; magdara hin damo nga bayo",
+      "An bus tikang ha Baguio mga 5 nga oras",
+      "Tamdon an mga sagrado nga lugar han paglubong ngan lokal nga kustombre"
+    ],
+    "region": "Cordillera",
+    "location": "Mountain Province",
+    "best_time_to_visit": "Nobyembre tubtob Pebrero"
+  },
+  "mayon-volcano": {
+    "name": "Mayon Volcano",
+    "short_description": "Bulkan nga hugpa hin halos perpekto nga kono nga may ATV, mga guba, ngan makaruruyag nga tanaw.",
+    "content": "An Bulkan Mayon bantog tungod han iya halos perpekto nga hugpa nga kono. Ginhahangaan han mga bisita an iya kaanyag ha Cagsawa Ruins, diin an mga nabilin han simbahan nakatindog sugad nga handumanan han pagbuthó han 1814. An mga ATV ha tiilan han bukid nagdudugang hin pakigsapalaran ha kasinatian.",
+    "highlights": [
+      "Cagsawa Ruins",
+      "Mayon ATV adventure",
+      "Lignon Hill",
+      "Mga whale shark han Donsol (pana-panahon)",
+      "Pagkaon han Bicol"
+    ],
+    "travel_tips": [
+      "Lupad pakadto ha Legazpi para ha pinakamaopay nga pag-abot",
+      "An tanaw nagdepende ha panahon — maghatag hin dugang nga mga adlaw",
+      "Sulayi an Bicol Express ngan laing",
+      "Hiusa ha Donsol durante han panahon han whale shark"
+    ],
+    "region": "Bicol",
+    "location": "Syudad han Legazpi, Albay",
+    "best_time_to_visit": "Disyembre–Abril para ha klaro nga tanaw"
+  },
+  "kawasan-falls": {
+    "name": "Cebu (Kawasan Falls)",
+    "short_description": "Asul-berde nga mga busay ngan bantog nga canyoneering nga pakigsapalaran.",
+    "content": "An Kawasan Falls bantog ha canyoneering ha asul-berde nga mga linaw ngan busay. An busay nga may damo nga lebel usa han pinakakuhaan hin retrato nga natural nga atraksyon han Cebu ngan maopay nga ihiusa ha mga biyahe ha baybayon han timog han Cebu.",
+    "highlights": [
+      "Canyoneering",
+      "Kawasan Falls nga may tulo nga lebel",
+      "Duol an Moalboal",
+      "Mga whale shark han Oslob",
+      "Tumalog Falls"
+    ],
+    "travel_tips": [
+      "Magpa-reserba hin canyoneering ha mga aprubado nga operator",
+      "Magsul-ot hin makusog nga sapatos ha tubig",
+      "Magtikang nga aga basi malikawan an kadamo han tawo",
+      "Ibutang an mga elektroniko ha dry bag"
+    ],
+    "region": "Visayas",
+    "location": "Badian, Cebu",
+    "best_time_to_visit": "Nobyembre tubtob Abril"
+  },
+  "intramuros": {
+    "name": "Intramuros (Manila)",
+    "short_description": "Makasaysayan nga syudad nga may pader ha tunga han kapital han Pilipinas.",
+    "content": "An syudad nga may pader han Intramuros amo an sentro han kabilin han Manila, diin an mga kalsada nga bato nagdudul-ong ha Fort Santiago ngan San Agustin Church, usa nga UNESCO World Heritage site.",
+    "highlights": [
+      "Fort Santiago",
+      "San Agustin Church",
+      "Casa Manila",
+      "Mga tour ha kalesa",
+      "Duol an Rizal Park"
+    ],
+    "travel_tips": [
+      "Maglakaw o magbisikleta ha mga pader ha aga han kabuntagon",
+      "Hiusa ha pagbisita ha National Museum",
+      "Abangi an mga pasundayag han kultura ha katapusan han semana",
+      "Gamita an mga ride-hailing app para ha trapiko han Manila"
+    ],
+    "region": "NCR",
+    "location": "Manila",
+    "best_time_to_visit": "Disyembre tubtob Mayo"
+  },
+  "panglao": {
+    "name": "Panglao Island",
+    "short_description": "Busag nga baybayon nga baras ngan ganghaan han diving hirani ha Bohol.",
+    "content": "An Panglao may mga resort, baybayon, ngan pag-abot ha mga coral reef para ha diving, ngan an Alona Beach amo an pangunhan nga sentro han island-hopping ngan pagkaon ha pagsalop han adlaw.",
+    "highlights": [
+      "Alona Beach",
+      "Diving ha Balicasag",
+      "Sandbar han Virgin Island",
+      "Hinagdanan Cave",
+      "Pagtan-aw hin dolphin"
+    ],
+    "travel_tips": [
+      "Lupad pakadto ha Bohol–Panglao International Airport",
+      "Magpa-reserba hin diving nga aga durante han mga piyesta opisyal",
+      "Hiusa ha usa-ka-adlaw nga tour ha Chocolate Hills",
+      "Tamdon an mga marine protected area"
+    ],
+    "region": "Visayas",
+    "location": "Bohol",
+    "best_time_to_visit": "Disyembre tubtob Mayo"
+  },
+  "apo-island": {
+    "name": "Apo Island",
+    "short_description": "Santuaryo ha dagat nga bantog ha mga pawikan ngan snorkeling.",
+    "content": "An Apo Island usa nga gin-aataman nga santuaryo ha dagat diin an mga pawikan naglalangoy ha tunga han mga kolor-kolor nga coral reef, nga maabot paagi ha bangka tikang ha Dumaguete o Dauin.",
+    "highlights": [
+      "Snorkeling upod han mga pawikan",
+      "Mga hardin han korales",
+      "Santuaryo ha dagat",
+      "Baryo ha isla",
+      "Mga lugar han diving ha Dauin"
+    ],
+    "travel_tips": [
+      "Bayari an mga bayranan han santuaryo ha dagat",
+      "Ayaw hikapa an mga pawikan ngan korales",
+      "Magdara hin snorkel gear o mag-abang didto mismo",
+      "Magtikang nga aga han biyahe ha bangka para ha mas kalmado nga dagat"
+    ],
+    "region": "Visayas",
+    "location": "Dauin, Negros Oriental",
+    "best_time_to_visit": "Nobyembre tubtob Mayo"
+  }
+}
