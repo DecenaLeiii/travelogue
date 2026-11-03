@@ -1,5 +1,7 @@
 const isProduction = process.env.NODE_ENV === 'production';
+const isVercel = Boolean(process.env.VERCEL);
 
 module.exports = {
-  distDir: isProduction ? '.next-production' : '.next',
+  // Vercel requires the default ".next" output directory.
+  distDir: isProduction && !isVercel ? '.next-production' : '.next',
 };
