@@ -54,19 +54,29 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req }) =>
     } else {
       const { data: destRows, error: destError } = await supabaseAdmin
         .from('destinations')
-        .select('slug')
+        .select('id,slug')
         .eq('slug', code)
         .limit(1);
 
       if (!destError && destRows && destRows.length > 0) {
         destinationSlug = destRows[0].slug;
+        // Create the QR record on first scan so the scan is attributed to this destination in analytics.
+        const { data: created, error: createError } = await supabaseAdmin
+          .from('qr_codes')
+          .upsert({ code, destination_id: destRows[0].id, label: destRows[0].slug }, { onConflict: 'code' })
+          .select('id')
+          .limit(1);
+        if (createError) console.error('QR auto-create error', createError);
+        else if (created && created.length > 0) qrId = created[0].id;
       } else if (code === 'travelogue') {
-        return {
-          redirect: {
-            destination: '/?qr=travelogue&scan=local-dev',
-            permanent: false,
-          },
-        };
+        // Main travelogue QR: record the scan under its own QR row, then land on the homepage.
+        const { data: created, error: createError } = await supabaseAdmin
+          .from('qr_codes')
+          .upsert({ code, label: 'Main travelogue' }, { onConflict: 'code' })
+          .select('id')
+          .limit(1);
+        if (createError) console.error('QR auto-create error', createError);
+        else if (created && created.length > 0) qrId = created[0].id;
       } else {
         return { redirect: { destination: '/qr-invalid', permanent: false } };
       }

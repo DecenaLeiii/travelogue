@@ -71,7 +71,12 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
   const [qrOpen, setQrOpen] = useState(false)
   const [assistantOpen, setAssistantOpen] = useState(false)
 
-  const shareUrl = typeof window !== 'undefined' ? window.location.href : ''
+  const shareUrl = typeof window !== 'undefined' ? `${window.location.origin}/r/travelogue` : ''
+  const [mainQr, setMainQr] = useState('')
+  useEffect(() => {
+    if (!qrOpen || !shareUrl) return
+    QRCode.toDataURL(shareUrl, { width: 640, margin: 2, errorCorrectionLevel: 'M' }).then(setMainQr).catch(() => setMainQr(''))
+  }, [qrOpen, shareUrl])
 
   useEffect(() => {
     fetch('/api/admin/promo-spots')
@@ -341,9 +346,9 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
               <div className="modal" onClick={(e)=>e.stopPropagation()} style={{maxWidth:420}}>
                 <button className="close" onClick={()=>setQrOpen(false)}>✕</button>
                 <div style={{display:'flex',flexDirection:'column',gap:12,alignItems:'center'}}>
-                  <img src="/qr-travelogue.svg" alt="QR Travelogue Large" style={{width:320,height:320}} />
+                  {mainQr ? <img src={mainQr} alt="QR Travelogue Large" style={{width:320,height:320}} /> : <div style={{width:320,height:320}} />}
                   <div style={{display:'flex',gap:8}}>
-                    <a href="/qr-travelogue.svg" download="travelogue-qr.svg" className="read-more">Download QR</a>
+                    <a href={mainQr || undefined} download="travelogue-qr.png" className="read-more">Download QR</a>
                     <button className="details-btn" onClick={async ()=>{ try{ await navigator.clipboard.writeText(shareUrl); alert('Share URL copied to clipboard') }catch(e){ alert('Copy failed') } }}>Copy link</button>
                   </div>
                   <div style={{fontSize:13,color:'#64748b',textAlign:'center'}}>Scan this QR to open the travelogue on mobile, or download to print/share.</div>
