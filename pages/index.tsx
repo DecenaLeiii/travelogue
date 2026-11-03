@@ -513,9 +513,9 @@ function SearchableDestinations({ initial }: { initial: Destination[] }) {
                   </div>
                   <div className="meta">{d.short_description}</div>
                   <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 8, flexWrap: 'wrap' }}>
-                    <a className="read-more" href={`/destination/${d.slug}`} onClick={(e)=>e.stopPropagation()}>{t('readMore')}</a>
+                    <a className="cta" href={`/destination/${d.slug}`} onClick={(e)=>e.stopPropagation()}>{t('readMore')}</a>
                     {d.slug ? (
-                      <a href={`/r/${encodeURIComponent(d.qr_code || d.slug)}`} target="_blank" rel="noreferrer" className="read-more">{t('qrCode')}</a>
+                      <a href={`/r/${encodeURIComponent(d.qr_code || d.slug)}`} target="_blank" rel="noreferrer" className="secondary-cta">{t('qrCode')}</a>
                     ) : null}
                   </div>
                 </div>
