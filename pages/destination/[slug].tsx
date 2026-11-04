@@ -6,6 +6,7 @@ import { useDestinationTranslations } from '../../lib/useDestinationTranslation'
 import { parseContentSections } from '../../lib/content';
 import { Destination } from '../../lib/destinations';
 import FloatingAssistant from '../../components/FloatingAssistant';
+import FeedbackForm from '../../components/FeedbackForm';
 
 type Props = {
   destination: Destination | null;
@@ -54,11 +55,6 @@ export default function DestinationPage({ destination, related }: Props) {
     overview?: string;
     full?: string;
   } | null>(null);
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
-  const [feedbackPhotos, setFeedbackPhotos] = useState<string[]>([]);
-  const [feedbackMessage, setFeedbackMessage] = useState('');
-  const [submitting, setSubmitting] = useState(false);
   const [averageRating, setAverageRating] = useState<number | null>(null);
   const [ratingCount, setRatingCount] = useState(0);
   const [qrPreview, setQrPreview] = useState<string | null>(null);
@@ -127,36 +123,6 @@ export default function DestinationPage({ destination, related }: Props) {
         setRatingCount(0);
       });
   }, [destination]);
-
-  const submitFeedback = async () => {
-    if (!rating) {
-      setFeedbackMessage(t('pleaseSelectRating'));
-      return;
-    }
-    setSubmitting(true);
-    setFeedbackMessage('');
-
-    const res = await fetch(`/api/destinations/${encodeURIComponent(destination.slug)}/feedback`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ rating, comment, photoData: feedbackPhotos }),
-    });
-
-    if (res.ok) {
-      setComment('');
-      setFeedbackPhotos([]);
-      setFeedbackMessage(t('ratingThankYou'));
-      setRatingCount((count) => count + 1);
-      setAverageRating((prev) => {
-        if (!prev) return rating;
-        return Math.round(((prev * ratingCount + rating) / (ratingCount + 1)) * 10) / 10;
-      });
-    } else {
-      setFeedbackMessage(t('failedToLoad'));
-    }
-
-    setSubmitting(false);
-  };
 
   return (
     <main className="dest-detail">
@@ -323,67 +289,15 @@ export default function DestinationPage({ destination, related }: Props) {
             )}
           </div>
 
-          <div className="star-rating" aria-label={t('ratingPrompt')}>
-            {[1, 2, 3, 4, 5].map((value) => (
-              <button
-                type="button"
-                key={value}
-                className={`star ${value <= rating ? 'selected' : ''}`}
-                onClick={() => setRating(value)}
-                aria-label={`${value} ${t('stars')}`}
-              >
-                ★
-              </button>
-            ))}
-          </div>
-
-          <label className="feedback-field">
-            {t('commentLabel')}
-            <textarea
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              placeholder={t('ratingPlaceholder')}
-              rows={4}
-            />
-          </label>
-
-          <label className="feedback-field feedback-photo-field">
-            Add reference photos (up to 3, 5 MB each)
-            <input
-              type="file"
-              accept="image/png,image/jpeg,image/webp"
-              multiple
-              onChange={async (event) => {
-                const input = event.currentTarget;
-                const files = Array.from(input.files || []).slice(0, 3 - feedbackPhotos.length);
-                input.value = '';
-                const reads = await Promise.all(files.map((file) => new Promise<string>((resolve, reject) => {
-                  const reader = new FileReader();
-                  reader.onload = () => resolve(String(reader.result));
-                  reader.onerror = () => reject(reader.error);
-                  reader.readAsDataURL(file);
-                })));
-                setFeedbackPhotos((current) => [...current, ...reads].slice(0, 3));
-              }}
-              disabled={feedbackPhotos.length >= 3 || submitting}
-            />
-          </label>
-          {feedbackPhotos.length > 0 && (
-            <div className="feedback-photo-previews">
-              {feedbackPhotos.map((photo, index) => (
-                <div className="feedback-photo-preview" key={`${photo.slice(0, 30)}-${index}`}>
-                  <img src={photo} alt={`Feedback attachment ${index + 1}`} />
-                  <button type="button" onClick={() => setFeedbackPhotos((current) => current.filter((_, photoIndex) => photoIndex !== index))} aria-label={`Remove photo ${index + 1}`}>×</button>
-                </div>
-              ))}
-            </div>
-          )}
-
-          <button type="button" onClick={submitFeedback} disabled={submitting} className="feedback-submit">
-            {submitting ? t('saving') : t('submitFeedback')}
-          </button>
-
-          {feedbackMessage && <p className="feedback-message">{feedbackMessage}</p>}
+          <FeedbackForm
+            slug={destination.slug}
+            t={t as any}
+            prompt=""
+            onSubmitted={(submitted) => {
+              setRatingCount((count) => count + 1);
+              setAverageRating((prev) => (prev ? Math.round(((prev * ratingCount + submitted) / (ratingCount + 1)) * 10) / 10 : submitted));
+            }}
+          />
         </section>
 
         {related.length > 0 && (

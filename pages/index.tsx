@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useDestinationTranslations, DestinationTranslation } from '../lib/useDestinationTranslation';
 import QRCode from 'qrcode';
 import SmartAssistant from '../components/SmartAssistant';
-import SiteFeedbackForm from '../components/SiteFeedbackForm';
+import FeedbackForm from '../components/FeedbackForm';
 import supabase from '../lib/supabaseClient';
 import { GetServerSideProps } from 'next';
 import { getPublishedDestinations } from '../lib/destinations';
@@ -418,7 +418,10 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
               </div>
             </section>
           )}
-          <SiteFeedbackForm />
+          <section className="dest-section feedback-panel site-feedback-panel">
+            <h2>Share your feedback</h2>
+            <FeedbackForm slug="travelogue" t={t as any} prompt="How would you rate the Travelogue?" />
+          </section>
           {lightboxPhoto && (
             <div className="image-lightbox" role="dialog" aria-modal="true" onClick={() => setLightboxPhoto(null)}>
               <img src={lightboxPhoto} alt="Visitor photo" style={{ maxWidth: '100%', maxHeight: '90vh', borderRadius: 12 }} onClick={(e) => e.stopPropagation()} />

@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import fs from 'fs';
 import path from 'path';
 import getSupabaseAdmin from '../../../../lib/supabaseAdmin';
+import { uploadToStorage } from '../../../../lib/supabaseStorage';
 
 export const config = { api: { bodyParser: { sizeLimit: '22mb' } } };
 
@@ -52,12 +53,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const photoUrls: string[] = [];
     if (photoFiles.length) {
-      const directory = path.join(process.cwd(), 'public', 'feedback');
-      fs.mkdirSync(directory, { recursive: true });
       for (const file of photoFiles) {
         const filename = `feedback-${Date.now()}-${Math.random().toString(36).slice(2, 9)}.${file.extension}`;
-        fs.writeFileSync(path.join(directory, filename), file.image);
-        photoUrls.push(`/feedback/${filename}`);
+        const contentType = `image/${file.extension === 'jpg' ? 'jpeg' : file.extension}`;
+        try {
+          photoUrls.push(await uploadToStorage(`feedback/${filename}`, file.image, contentType));
+        } catch (storageError) {
+          try {
+            const directory = path.join(process.cwd(), 'public', 'feedback');
+            fs.mkdirSync(directory, { recursive: true });
+            fs.writeFileSync(path.join(directory, filename), file.image);
+            photoUrls.push(`/feedback/${filename}`);
+          } catch {
+            console.error('Feedback photo upload error', storageError);
+            return res.status(500).json({ error: 'Could not upload your photo. Please try a smaller image.' });
+          }
+        }
       }
     }
 
