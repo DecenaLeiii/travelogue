@@ -94,6 +94,19 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     };
   }, [router.events, router.pathname]);
 
+  // Supabase access tokens expire after about an hour, so renew the admin session while an admin page is open.
+  useEffect(() => {
+    if (!router.pathname.startsWith('/admin') || router.pathname === '/admin/login') return;
+    const refresh = () => { void fetch('/api/admin/refresh', { method: 'POST' }); };
+    const timer = window.setInterval(refresh, 20 * 60 * 1000);
+    const onVisible = () => { if (document.visibilityState === 'visible') refresh(); };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener('visibilitychange', onVisible);
+    };
+  }, [router.pathname]);
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
 

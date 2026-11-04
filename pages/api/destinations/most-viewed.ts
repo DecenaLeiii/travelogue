@@ -1,18 +1,15 @@
-import fs from 'fs';
-import path from 'path';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getPublishedDestinations } from '../../../lib/destinations';
 import { getDestinationViewCounts } from '../../../lib/destinationViews';
+import { readSetting } from '../../../lib/settingsStore';
 
-const SELECTION_PATH = path.join(process.cwd(), 'db', 'homepage_most_viewed.json');
-
-function readSelectedSlugs(): string[] | null {
-  if (!fs.existsSync(SELECTION_PATH)) return null;
-  const parsed: unknown = JSON.parse(fs.readFileSync(SELECTION_PATH, 'utf8'));
+async function readSelectedSlugs(): Promise<string[] | null> {
+  const parsed = await readSetting<unknown>('homepage_most_viewed');
+  if (parsed === null) return null;
   if (!Array.isArray(parsed) || parsed.some((slug) => typeof slug !== 'string')) {
     throw new Error('Homepage destination selection is invalid.');
   }
-  return [...new Set(parsed.map((slug) => slug.trim().toLowerCase()).filter(Boolean))];
+  return [...new Set((parsed as string[]).map((slug) => slug.trim().toLowerCase()).filter(Boolean))];
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -29,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     .sort((a, b) => b.view_count - a.view_count || a.name.localeCompare(b.name));
 
   try {
-    const selectedSlugs = readSelectedSlugs();
+    const selectedSlugs = await readSelectedSlugs();
     if (!selectedSlugs) return res.json({ destinations: rankedDestinations.slice(0, 6) });
 
     const destinationsBySlug = new Map(rankedDestinations.map((destination) => [destination.slug.toLowerCase(), destination]));
