@@ -22,7 +22,7 @@ export default function DestinationPage({ destination, related }: Props) {
         <div className="dest-detail-inner">
           <h1>{t('destinationNotFound')}</h1>
           <p>{t('destinationInvalid')}</p>
-          <a className="read-more" href="/">{t('backToTravelogue')}</a>
+          <a className="cta" href="/">{t('backToTravelogue')}</a>
         </div>
       </main>
     );
@@ -177,9 +177,9 @@ export default function DestinationPage({ destination, related }: Props) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'center' }}>
               <img src={qrPreview} alt={`${destination.name} QR code`} style={{ width: 260, height: 260 }} />
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
-                <a href={qrPreview} download={`qr-${destination.slug}.png`} className="read-more">Download QR</a>
+                <a href={qrPreview} download={`qr-${destination.slug}.png`}                 className="cta">Download QR</a>
                 <button
-                  className="details-btn"
+                                  className="secondary-cta"
                   onClick={async () => {
                     try {
                       await navigator.clipboard.writeText(`${window.location.origin}/r/${encodeURIComponent(destination.qr_code || destination.slug)}`);

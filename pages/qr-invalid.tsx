@@ -11,7 +11,7 @@ export default function QrInvalidPage() {
         <p style={{ color: 'var(--muted)', maxWidth: 480, margin: '12px auto 24px' }}>
           This QR link is not recognized. Please scan a valid Philippines Travelogue QR code or visit the homepage directly.
         </p>
-        <a className="read-more" href="/">Go to Travelogue</a>
+        <a className="cta" href="/">Go to Travelogue</a>
       </div>
     </main>
   );

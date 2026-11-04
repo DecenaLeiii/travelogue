@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useDestinationTranslations, DestinationTranslation } from '../lib/useDestinationTranslation';
 import QRCode from 'qrcode';
 import SmartAssistant from '../components/SmartAssistant';
+import SiteFeedbackForm from '../components/SiteFeedbackForm';
 import supabase from '../lib/supabaseClient';
 import { GetServerSideProps } from 'next';
 import { getPublishedDestinations } from '../lib/destinations';
@@ -33,6 +34,7 @@ type FeaturedReview = {
   comment: string | null;
   photo_urls: string[] | null;
   created_at: string;
+  nickname?: string | null;
 };
 
 type HomepageCultureContent = {
@@ -61,6 +63,7 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
     (initialDestinations || []).slice(0, 6).map((destination) => ({ ...destination, view_count: 0 }))
   );
   const [featuredReviews, setFeaturedReviews] = useState<FeaturedReview[]>([]);
+  const [lightboxPhoto, setLightboxPhoto] = useState<string | null>(null);
   const [promoSpots, setPromoSpots] = useState<PromoSpot[]>(DEFAULT_PROMO_SPOTS);
   const [heroDescription, setHeroDescription] = useState('');
   const [heroVideo, setHeroVideo] = useState('/TOURISM%20VIDEO.mp4');
@@ -366,8 +369,8 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
                 <div style={{display:'flex',flexDirection:'column',gap:12,alignItems:'center'}}>
                   {mainQr ? <img src={mainQr} alt="QR Travelogue Large" style={{width:320,height:320}} /> : <div style={{width:320,height:320}} />}
                   <div style={{display:'flex',gap:8}}>
-                    <a href={mainQr || undefined} download="travelogue-qr.png" className="read-more">Download QR</a>
-                    <button className="details-btn" onClick={async ()=>{ try{ await navigator.clipboard.writeText(shareUrl); alert('Share URL copied to clipboard') }catch(e){ alert('Copy failed') } }}>Copy link</button>
+                    <a href={mainQr || undefined}                     download="travelogue-qr.png" className="cta">Download QR</a>
+                                        <button className="secondary-cta" onClick={async ()=>{ try{ await navigator.clipboard.writeText(shareUrl); alert('Share URL copied to clipboard') }catch(e){ alert('Copy failed') } }}>Copy link</button>
                   </div>
                   <div style={{fontSize:13,color:'#64748b',textAlign:'center'}}>Scan this QR to open the travelogue on mobile, or download to print/share.</div>
                 </div>
@@ -388,23 +391,39 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
               <div className="home-testimonial-grid">
                 {featuredReviews.map((review) => (
                   <article className="home-testimonial" key={review.id}>
-                    <div className="home-testimonial-topline">
-                      <span className="home-testimonial-stars" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}</span>
-                      <time>{new Date(review.created_at).toLocaleDateString()}</time>
+                    <div className="home-testimonial-person">
+                      <div>
+                        <strong>{review.nickname || 'Anonymous Tourist'}</strong>
+                        <a href={`/destination/${review.destination_slug}`} className="home-testimonial-destination">{review.destination_name}</a>
+                      </div>
                     </div>
                     <p className="home-testimonial-quote">{review.comment || 'A visitor rated this destination.'}</p>
                     {review.photo_urls?.length ? (
                       <div className="home-testimonial-photos">
                         {review.photo_urls.slice(0, 3).map((photo, index) => (
-                          <img key={`${review.id}-${index}`} src={photo} alt={`${review.destination_name} visitor photo ${index + 1}`} loading="lazy" />
+                          <button type="button" key={`${review.id}-${index}`} className="home-testimonial-photo" onClick={() => setLightboxPhoto(photo)} aria-label="View photo larger">
+                            <img src={photo} alt={`${review.destination_name} visitor photo ${index + 1}`} loading="lazy" />
+                          </button>
                         ))}
                       </div>
                     ) : null}
-                    <a href={`/destination/${review.destination_slug}`} className="home-testimonial-destination">{review.destination_name}</a>
+                    <div className="home-testimonial-footer">
+                      <span className="home-testimonial-stars" aria-label={`${review.rating} out of 5 stars`}>
+                        <b>{Number(review.rating).toFixed(1)}</b> {'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}
+                      </span>
+                      <time className="home-testimonial-date">{new Date(review.created_at).toLocaleDateString(undefined, { day: '2-digit', month: 'short' }).toUpperCase()}</time>
+                    </div>
                   </article>
                 ))}
               </div>
             </section>
+          )}
+          <SiteFeedbackForm />
+          {lightboxPhoto && (
+            <div className="image-lightbox" role="dialog" aria-modal="true" onClick={() => setLightboxPhoto(null)}>
+              <img src={lightboxPhoto} alt="Visitor photo" style={{ maxWidth: '100%', maxHeight: '90vh', borderRadius: 12 }} onClick={(e) => e.stopPropagation()} />
+              <button type="button" className="secondary-cta" style={{ position: 'absolute', top: 18, right: 18 }} onClick={() => setLightboxPhoto(null)}>Close</button>
+            </div>
           )}
         </div>
       </main>
@@ -525,8 +544,12 @@ function SearchableDestinations({ initial: rawInitial }: { initial: Destination[
                   </div>
                 </div>
                 <div className="card-body">
-                  <div style={{ display: 'flex', gap: 10, alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
                     <div className="dest-title">{d.name}</div>
+                  </div>
+                  <div className="meta">{d.short_description}</div>
+                  <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginTop: 8, flexWrap: 'wrap' }}>
+                    <a className="cta" href={`/destination/${d.slug}`} onClick={(e)=>e.stopPropagation()}>{t('readMore')}</a>
                     {d.slug ? (
                       qrImages[d.id] ? (
                         <button
@@ -550,13 +573,6 @@ function SearchableDestinations({ initial: rawInitial }: { initial: Destination[
                       )
                     ) : null}
                   </div>
-                  <div className="meta">{d.short_description}</div>
-                  <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 8, flexWrap: 'wrap' }}>
-                    <a className="cta" href={`/destination/${d.slug}`} onClick={(e)=>e.stopPropagation()}>{t('readMore')}</a>
-                    {d.slug ? (
-                      <a href={`/r/${encodeURIComponent(d.qr_code || d.slug)}`} target="_blank" rel="noreferrer" className="secondary-cta">{t('qrCode')}</a>
-                    ) : null}
-                  </div>
                 </div>
               </div>
               <button className="fav-btn" title={t('toggleFavorite')} onClick={(e) => { e.stopPropagation(); toggleFav(d.id as string); }} style={{ position: 'absolute', right: 12, top: 12 }}>
@@ -573,8 +589,8 @@ function SearchableDestinations({ initial: rawInitial }: { initial: Destination[
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'center' }}>
               <img src={qrModal.image || `https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${encodeURIComponent(`${window.location.origin}/r/${encodeURIComponent(qrModal.destination.qr_code || qrModal.destination.slug)}`)}`} alt={`${qrModal.destination.name} QR code`} style={{ width: 260, height: 260 }} />
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
-                <a href={qrModal.image || `https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${encodeURIComponent(`${window.location.origin}/r/${encodeURIComponent(qrModal.destination.qr_code || qrModal.destination.slug)}`)}`} download={`qr-${qrModal.destination.slug}.png`} className="read-more">Download QR</a>
-                <button className="details-btn" onClick={async () => { try { await navigator.clipboard.writeText(`${window.location.origin}/r/${encodeURIComponent(qrModal.destination.qr_code || qrModal.destination.slug)}`); alert('QR link copied to clipboard'); } catch (e) { alert('Copy failed'); } }}>Copy link</button>
+                <a href={qrModal.image || `https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${encodeURIComponent(`${window.location.origin}/r/${encodeURIComponent(qrModal.destination.qr_code || qrModal.destination.slug)}`)}`} download={`qr-${qrModal.destination.slug}.png`}                 className="cta">Download QR</a>
+                                <button className="secondary-cta" onClick={async () => { try { await navigator.clipboard.writeText(`${window.location.origin}/r/${encodeURIComponent(qrModal.destination.qr_code || qrModal.destination.slug)}`); alert('QR link copied to clipboard'); } catch (e) { alert('Copy failed'); } }}>Copy link</button>
               </div>
             </div>
           </div>
@@ -598,8 +614,8 @@ function Modal({ dest, onClose }: { dest: Destination; onClose: () => void }) {
         <p className="modal-content">{dest.short_description}</p>
         <div className="modal-content" style={{ marginTop: 12 }}>{(dest as any).content || t('noAdditionalDetails')}</div>
         <div style={{ marginTop: 18, display: 'flex', gap: 12, alignItems: 'center' }}>
-          <a className="read-more" href={`/destination/${dest.slug}`} onClick={(e)=>{ /* allow navigation */ }}>{t('viewFullPage')}</a>
-          <button className="details-btn" onClick={onClose}>{t('close')}</button>
+          <a className="cta" href={`/destination/${dest.slug}`}>{t('viewFullPage')}</a>
+                    <button className="secondary-cta modal-close-cta" type="button" onClick={onClose}>{t('close')}</button>
         </div>
       </div>
     </div>

@@ -70,7 +70,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       created_at: new Date().toISOString(),
     };
 
-    const { error } = await supabaseAdmin.from('destination_feedback').insert([row]);
+    let nickname = typeof req.body?.nickname === 'string' ? req.body.nickname.replace(/\s+/g, ' ').trim().slice(0, 40) : '';
+    if (!nickname) {
+      const { count } = await supabaseAdmin.from('destination_feedback').select('id', { count: 'exact', head: true });
+      nickname = `Anonymous Tourist ${String((count || 0) + 1).padStart(2, '0')}`;
+    }
+    let { error } = await supabaseAdmin.from('destination_feedback').insert([{ ...row, nickname }]);
+    // Older databases without the nickname column (migration v8) still accept the feedback.
+    if (error && /nickname/i.test(error.message || '')) {
+      ({ error } = await supabaseAdmin.from('destination_feedback').insert([row]));
+    }
     if (error) {
       console.error('Feedback POST error', error);
       return res.status(500).json({ error: 'Database error' });

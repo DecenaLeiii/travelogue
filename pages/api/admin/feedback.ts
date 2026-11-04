@@ -12,17 +12,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'GET') {
     const { data: feedback, error } = await supabaseAdmin
       .from('destination_feedback')
-      .select('id,destination_slug,rating,comment,photo_urls,featured,created_at')
+      .select('*')
       .order('created_at', { ascending: false });
     if (error) return res.status(500).json({ error: error.message });
 
-    const slugs = Array.from(new Set((feedback || []).map((item: any) => item.destination_slug).filter(Boolean)));
+    const slugs = Array.from(new Set((feedback || []).map((item: any) => item.destination_slug).filter((slug: string) => slug && slug !== 'travelogue')));
     const { data: destinations, error: destinationsError } = slugs.length
       ? await supabaseAdmin.from('destinations').select('slug,name').in('slug', slugs)
       : { data: [], error: null };
     if (destinationsError) return res.status(500).json({ error: destinationsError.message });
     const names = new Map((destinations || []).map((destination: any) => [destination.slug, destination.name]));
-    return res.json({ feedback: (feedback || []).map((item: any) => ({ ...item, destination_name: names.get(item.destination_slug) || item.destination_slug })) });
+    return res.json({ feedback: (feedback || []).map((item: any) => ({ ...item, destination_name: names.get(item.destination_slug) || (item.destination_slug === 'travelogue' ? 'Whole Travelogue (general feedback)' : item.destination_slug) })) });
   }
 
   if (req.method === 'PUT') {
