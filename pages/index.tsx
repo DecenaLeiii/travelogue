@@ -153,7 +153,7 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
     <div>
       <div className="hero has-nav">
         <video key={heroVideo} autoPlay muted loop playsInline className="hero-video" poster="/hero.svg">
-          <source src={heroVideo} type={heroVideo.toLowerCase().endsWith('.webm') ? 'video/webm' : 'video/mp4'} />
+          <source src={heroVideo} type={heroVideo.toLowerCase().includes('.webm') ? 'video/webm' : heroVideo.toLowerCase().includes('.mp4') ? 'video/mp4' : undefined} />
           Your browser does not support the video tag.
         </video>
         <div className="overlay">

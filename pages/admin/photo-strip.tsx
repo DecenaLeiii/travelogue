@@ -322,7 +322,7 @@ export default function AdminPhotoStrip() {
             </div>
           ))}
           <label className="site-logo-url">
-            <span>Add video URL (MP4 or WebM)</span>
+            <span>Add video URL (direct link to an MP4 or WebM file; YouTube, Facebook and Google Drive page links won't play)</span>
             <input value={newVideoUrl} onChange={(event) => setNewVideoUrl(event.target.value)} placeholder="/videos/my-video.mp4 or https://..." />
           </label>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
