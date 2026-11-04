@@ -3,6 +3,7 @@ import { useDestinationTranslations, DestinationTranslation } from '../lib/useDe
 import QRCode from 'qrcode';
 import SmartAssistant from '../components/SmartAssistant';
 import FeedbackForm from '../components/FeedbackForm';
+import TestimonialCard from '../components/TestimonialCard';
 import supabase from '../lib/supabaseClient';
 import { GetServerSideProps } from 'next';
 import { getPublishedDestinations } from '../lib/destinations';
@@ -63,7 +64,6 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
     (initialDestinations || []).slice(0, 6).map((destination) => ({ ...destination, view_count: 0 }))
   );
   const [featuredReviews, setFeaturedReviews] = useState<FeaturedReview[]>([]);
-  const [lightboxPhoto, setLightboxPhoto] = useState<string | null>(null);
   const [promoSpots, setPromoSpots] = useState<PromoSpot[]>(DEFAULT_PROMO_SPOTS);
   const [heroDescription, setHeroDescription] = useState('');
   const [heroVideo, setHeroVideo] = useState('/TOURISM%20VIDEO.mp4');
@@ -81,6 +81,7 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
   const translations = useDestinationTranslations(lang);
   const [qrOpen, setQrOpen] = useState(false)
   const [assistantOpen, setAssistantOpen] = useState(false)
+  const [feedbackOpen, setFeedbackOpen] = useState(false)
 
   const shareUrl = typeof window !== 'undefined' ? `${window.location.origin}/r/travelogue` : ''
   const [mainQr, setMainQr] = useState('')
@@ -210,6 +211,18 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
         >
           <span className="assistant-bubble">AI</span>
         </button>
+
+        {feedbackOpen && (
+          <div className="modal-backdrop feedback-modal-backdrop" onClick={() => setFeedbackOpen(false)}>
+            <div className="feedback-modal" onClick={(e) => e.stopPropagation()}>
+              <button type="button" className="feedback-modal-close" onClick={() => setFeedbackOpen(false)} aria-label="Close feedback">
+                ×
+              </button>
+              <h2>Share your feedback</h2>
+              <FeedbackForm slug="travelogue" t={t as any} prompt="How would you rate the Travelogue?" onSubmitted={() => setFeedbackOpen(false)} />
+            </div>
+          </div>
+        )}
 
         {assistantOpen && (
           <div className="assistant-panel open assistant-floating-panel" onClick={(e) => e.stopPropagation()}>
@@ -390,44 +403,16 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
               </div>
               <div className="home-testimonial-grid">
                 {featuredReviews.map((review) => (
-                  <article className="home-testimonial" key={review.id}>
-                    <div className="home-testimonial-person">
-                      <div>
-                        <strong>{review.nickname || 'Anonymous Tourist'}</strong>
-                        <a href={`/destination/${review.destination_slug}`} className="home-testimonial-destination">{review.destination_name}</a>
-                      </div>
-                    </div>
-                    <p className="home-testimonial-quote">{review.comment || 'A visitor rated this destination.'}</p>
-                    {review.photo_urls?.length ? (
-                      <div className="home-testimonial-photos">
-                        {review.photo_urls.slice(0, 3).map((photo, index) => (
-                          <button type="button" key={`${review.id}-${index}`} className="home-testimonial-photo" onClick={() => setLightboxPhoto(photo)} aria-label="View photo larger">
-                            <img src={photo} alt={`${review.destination_name} visitor photo ${index + 1}`} loading="lazy" />
-                          </button>
-                        ))}
-                      </div>
-                    ) : null}
-                    <div className="home-testimonial-footer">
-                      <span className="home-testimonial-stars" aria-label={`${review.rating} out of 5 stars`}>
-                        <b>{Number(review.rating).toFixed(1)}</b> {'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}
-                      </span>
-                      <time className="home-testimonial-date">{new Date(review.created_at).toLocaleDateString(undefined, { day: '2-digit', month: 'short' }).toUpperCase()}</time>
-                    </div>
-                  </article>
+                  <TestimonialCard key={review.id} review={review} />
                 ))}
               </div>
             </section>
           )}
-          <section className="dest-section feedback-panel site-feedback-panel">
-            <h2>Share your feedback</h2>
-            <FeedbackForm slug="travelogue" t={t as any} prompt="How would you rate the Travelogue?" />
-          </section>
-          {lightboxPhoto && (
-            <div className="image-lightbox" role="dialog" aria-modal="true" onClick={() => setLightboxPhoto(null)}>
-              <img src={lightboxPhoto} alt="Visitor photo" style={{ maxWidth: '100%', maxHeight: '90vh', borderRadius: 12 }} onClick={(e) => e.stopPropagation()} />
-              <button type="button" className="secondary-cta" style={{ position: 'absolute', top: 18, right: 18 }} onClick={() => setLightboxPhoto(null)}>Close</button>
-            </div>
-          )}
+          <div className="feedback-bar-wrap">
+            <button type="button" className="feedback-bar" onClick={() => setFeedbackOpen(true)}>
+              Give Feedback
+            </button>
+          </div>
         </div>
       </main>
     </div>

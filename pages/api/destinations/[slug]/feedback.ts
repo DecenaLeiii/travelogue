@@ -40,7 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const photoInputs = Array.isArray(photoData) ? photoData : photoData ? [photoData] : [];
-    if (photoInputs.length > 3) return res.status(400).json({ error: 'You can attach up to 3 photos.' });
+    if (photoInputs.length > 5) return res.status(400).json({ error: 'You can attach up to 5 photos.' });
     const photoFiles: { extension: string; image: Buffer }[] = [];
     for (const photo of photoInputs) {
       const match = String(photo).match(/^data:image\/(png|jpeg|jpg|webp);base64,([A-Za-z0-9+/=]+)$/);

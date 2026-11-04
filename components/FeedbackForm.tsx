@@ -14,7 +14,8 @@ const FALLBACK: Record<string, string> = {
   failedToLoad: 'Could not send your feedback. Please try again.',
 };
 
-const MAX_PHOTOS = 3;
+const MAX_PHOTOS = 5;
+const MAX_PHOTO_MB = 15;
 
 // Resize big phone photos in the browser so the upload stays under the hosting body limit.
 function shrinkImage(file: File): Promise<string> {
@@ -122,7 +123,7 @@ export default function FeedbackForm({ slug, t, heading, prompt, onSubmitted }: 
       </label>
 
       <label className="feedback-field feedback-photo-field">
-        Add reference photos (up to {MAX_PHOTOS})
+        Add reference photos (1–{MAX_PHOTOS} photos, {photos.length}/{MAX_PHOTOS} added, up to {MAX_PHOTO_MB} MB each)
         <input
           type="file"
           accept="image/png,image/jpeg,image/webp"
@@ -130,10 +131,17 @@ export default function FeedbackForm({ slug, t, heading, prompt, onSubmitted }: 
           disabled={photos.length >= MAX_PHOTOS || submitting}
           onChange={async (event) => {
             const input = event.currentTarget;
-            const files = Array.from(input.files || []).slice(0, MAX_PHOTOS - photos.length);
+            const picked = Array.from(input.files || []);
             input.value = '';
+            const room = MAX_PHOTOS - photos.length;
+            const tooBig = picked.filter((file) => file.size > MAX_PHOTO_MB * 1024 * 1024);
+            const notes: string[] = [];
+            if (tooBig.length) notes.push(`${tooBig.length} photo(s) skipped: each photo must be ${MAX_PHOTO_MB} MB or smaller.`);
+            const files = picked.filter((file) => file.size <= MAX_PHOTO_MB * 1024 * 1024);
+            if (files.length > room) notes.push(`Limit reached: you can attach up to ${MAX_PHOTOS} photos. Only the first ${room} were added.`);
+            setMessage(notes.join(' '));
             try {
-              const reads = await Promise.all(files.map(shrinkImage));
+              const reads = await Promise.all(files.slice(0, room).map(shrinkImage));
               setPhotos((current) => [...current, ...reads].slice(0, MAX_PHOTOS));
             } catch (error) {
               setMessage(error instanceof Error ? error.message : 'Could not read that image.');

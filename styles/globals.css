@@ -662,3 +662,45 @@ main.dest-detail{max-width:none;margin:0;padding:0}
 .home-testimonial-photo:hover img{transform:scale(1.04)}
 .feedback-field input[type=text]{padding:12px;border:1px solid #d1d5db;border-radius:12px;font-size:14px}
 .site-feedback-panel{max-width:760px;margin:48px auto 24px}
+.home-testimonial-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+@media(max-width:900px){.home-testimonial-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:600px){.home-testimonial-grid{grid-template-columns:1fr!important}}
+.tcard{position:relative;min-height:340px;border-radius:18px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0ea5e9,#2563eb 60%,#1e3a8a);box-shadow:0 14px 40px rgba(37,99,235,.14)}
+.tcard-track{position:absolute;inset:0;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tcard-track::-webkit-scrollbar{display:none}
+.tcard-track img{flex:0 0 100%;width:100%;height:100%;object-fit:cover;scroll-snap-align:start}
+.tcard-glass{position:relative;z-index:1;width:calc(100% - 32px);box-sizing:border-box;padding:18px 16px;border-radius:16px;background:rgba(255,255,255,.78);backdrop-filter:blur(6px);text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;pointer-events:none;color:#172033}
+.tcard-glass a{pointer-events:auto}
+.tcard-plain .tcard-glass{background:rgba(255,255,255,.88)}
+.tcard-quote{margin:0 0 8px;font-style:italic;line-height:1.5;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.tcard-name{font-size:16px}
+.tcard-destination{color:#2563eb;font-size:13px;font-weight:700}
+.tcard-date{font-size:12px;color:#475569;font-weight:600}
+.tcard-stars{color:#f59e0b;font-size:20px;letter-spacing:2px}
+.tcard-dots{position:absolute;bottom:10px;left:0;right:0;z-index:2;display:flex;justify-content:center;gap:6px;pointer-events:none}
+.tcard-dots span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.55)}
+.tcard-dots span.on{background:#fff}
+.tcard-track img{cursor:zoom-in}
+.tcard-glass{background:rgba(255,255,255,.5)!important;backdrop-filter:blur(3px)!important}
+.tcard-plain{background:#fff;border:1px solid #e2e8f0}
+.tcard-plain .tcard-glass{background:transparent!important;backdrop-filter:none!important}
+.tcard-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,255,255,.9);font-size:28px;cursor:pointer}
+.tcard-prev{left:16px}
+.tcard-next{right:16px}
+.tcard{min-height:210px!important;border-radius:14px!important}
+.tcard-glass{padding:10px 12px!important;width:calc(100% - 20px)!important;gap:2px!important}
+.tcard-quote{font-size:13px;line-height:1.4;margin:0 0 4px;-webkit-line-clamp:4}
+.tcard-name{font-size:14px}
+.tcard-destination,.tcard-date{font-size:11px}
+.tcard-stars{font-size:16px;letter-spacing:1px}
+.tcard-nav{width:32px;height:32px;font-size:20px}
+.home-testimonial-grid{gap:12px!important}
+.floating-feedback-button{position:fixed;right:18px;bottom:150px;z-index:900;isolation:isolate;padding:12px 22px;border-radius:999px;border:1px solid rgba(255,255,255,.45);background:rgba(37,99,235,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 10px 30px rgba(15,23,42,.25);transition:transform .2s ease}
+.floating-feedback-button:hover{transform:translateY(-3px);background:rgba(37,99,235,.7)}
+.feedback-modal-backdrop{z-index:1100}
+.feedback-modal{position:relative;background:#fff;border-radius:18px;padding:22px;width:min(560px,94vw);max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(2,6,23,.35)}
+.feedback-modal h2{margin:0 0 10px;font-size:22px}
+.feedback-modal-close{position:absolute;top:10px;right:12px;width:34px;height:34px;border-radius:50%;border:none;background:#f1f5f9;font-size:22px;cursor:pointer}
+.feedback-bar-wrap{display:flex;justify-content:center;margin:20px 0 28px}
+.feedback-bar{width:min(520px,100%);padding:9px 20px;border-radius:999px;border:1px solid rgba(255,255,255,.5);background:rgba(37,99,235,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(37,99,235,.22);transition:transform .2s ease,background .2s ease}
+.feedback-bar:hover{transform:translateY(-2px);background:rgba(37,99,235,.78)}

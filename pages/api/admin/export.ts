@@ -204,9 +204,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return;
     }
 
-    const [{ data: scans }, { data: engagements }, { data: qrCodes }, { data: destinations }] = await Promise.all([
-      supabaseAdmin.from('scans').select('scanned_at,visitor_id,ip_address,id,qr_id').order('scanned_at', { ascending: true }).limit(10000),
-      supabaseAdmin.from('engagements').select('event_type,created_at,scan_id,payload').order('created_at', { ascending: true }).limit(20000),
+    // Supabase returns at most 1000 rows per request, so page through the table to get every row.
+    const fetchAll = async (table: string, columns: string, orderBy: string, maxRows: number) => {
+      const rows: any[] = [];
+      for (let start = 0; start < maxRows; start += 1000) {
+        const { data, error } = await supabaseAdmin.from(table).select(columns).order(orderBy, { ascending: true }).range(start, start + 999);
+        if (error) throw new Error(error.message);
+        rows.push(...(data || []));
+        if (!data || data.length < 1000) break;
+      }
+      return rows;
+    };
+
+    const [scans, engagements, { data: qrCodes }, { data: destinations }] = await Promise.all([
+      fetchAll('scans', 'scanned_at,visitor_id,ip_address,id,qr_id', 'scanned_at', 20000),
+      fetchAll('engagements', 'event_type,created_at,scan_id,payload', 'created_at', 50000),
       supabaseAdmin.from('qr_codes').select('id,destination_id'),
       supabaseAdmin.from('destinations').select('id,name,slug'),
     ]);
