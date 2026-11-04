@@ -41,6 +41,9 @@ table{font-size:14px}
 .hero.has-nav .overlay{padding-top:120px}
 .hero{position:relative;width:100%;min-height:420px;height:auto;display:flex;align-items:center;overflow:hidden}
 .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.hero-slideshow{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.hero-slideshow img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease}
+.hero-slideshow img.active{opacity:1}
 .hero .overlay{position:relative;z-index:1;width:100%;background:linear-gradient(90deg, rgba(255,255,255,0.04), rgba(0,0,0,0.12));padding:40px}
 .hero h1{color:#fff;font-size:44px;margin:0 0 8px}
 .hero p{color:rgba(255,255,255,0.95);margin:0 0 12px}
@@ -132,8 +135,8 @@ main.home-main{max-width:none;margin:24px 0;padding:0 clamp(16px,4vw,64px)}
   .site-header .home-header-nav a{margin:0!important;font-size:15px;white-space:nowrap}
   .home-header-tools>div{position:absolute;right:0;top:50%;transform:translateY(-50%)}
   .home-header-tools>div img{width:36px!important;height:36px!important}
-  .hero{min-height:320px}
-  .hero .overlay{padding:24px}
+  .hero{min-height:88vh;min-height:88svh}
+  .hero .overlay{padding:24px 24px 64px}
   .hero.has-nav .overlay{padding-top:170px}
   .site-header.on-hero{padding:10px 10px 0}
   .site-header.on-hero .inner{border-radius:22px;padding:10px 14px}

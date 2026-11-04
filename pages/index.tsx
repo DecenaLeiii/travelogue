@@ -64,6 +64,14 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
   const [promoSpots, setPromoSpots] = useState<PromoSpot[]>(DEFAULT_PROMO_SPOTS);
   const [heroDescription, setHeroDescription] = useState('');
   const [heroVideo, setHeroVideo] = useState('/TOURISM%20VIDEO.mp4');
+  const [heroMode, setHeroMode] = useState<'video' | 'slideshow'>('video');
+  const [heroImages, setHeroImages] = useState<string[]>([]);
+  const [slideIndex, setSlideIndex] = useState(0);
+  useEffect(() => {
+    if (heroMode !== 'slideshow' || heroImages.length < 2) return;
+    const timer = setInterval(() => setSlideIndex((i) => i + 1), 5000);
+    return () => clearInterval(timer);
+  }, [heroMode, heroImages.length]);
   const [cultureContent, setCultureContent] = useState<HomepageCultureContent>(EMPTY_HOMEPAGE_CULTURE);
   const siteLogo = useSiteLogo();
   const { t, lang } = useTranslation();
@@ -91,6 +99,8 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
       .then((branding) => {
         setHeroDescription(typeof branding.hero_description === 'string' ? branding.hero_description : '')
         if (typeof branding.hero_video === 'string' && branding.hero_video) setHeroVideo(branding.hero_video)
+        setHeroMode(branding.hero_mode === 'slideshow' ? 'slideshow' : 'video')
+        setHeroImages(Array.isArray(branding.hero_images) ? branding.hero_images : [])
       })
       .catch(() => {});
     fetch('/api/site-branding')
@@ -152,10 +162,18 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
   return (
     <div>
       <div className="hero has-nav">
-        <video key={heroVideo} autoPlay muted loop playsInline className="hero-video" poster="/hero.svg">
-          <source src={heroVideo} type={heroVideo.toLowerCase().includes('.webm') ? 'video/webm' : heroVideo.toLowerCase().includes('.mp4') ? 'video/mp4' : undefined} />
-          Your browser does not support the video tag.
-        </video>
+        {heroMode === 'slideshow' && heroImages.length ? (
+          <div className="hero-slideshow" aria-hidden="true">
+            {heroImages.map((src, index) => (
+              <img key={src} src={src} alt="" className={index === slideIndex % heroImages.length ? 'active' : ''} />
+            ))}
+          </div>
+        ) : (
+          <video key={heroVideo} autoPlay muted loop playsInline className="hero-video" poster="/hero.svg">
+            <source src={heroVideo} type={heroVideo.toLowerCase().includes('.webm') ? 'video/webm' : heroVideo.toLowerCase().includes('.mp4') ? 'video/mp4' : undefined} />
+            Your browser does not support the video tag.
+          </video>
+        )}
         <div className="overlay">
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 18 }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, maxWidth: 860, textAlign: 'center' }}>

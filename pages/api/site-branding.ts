@@ -32,6 +32,11 @@ function cleanVideos(list: unknown, active: string): string[] {
   return unique;
 }
 
+function cleanImages(list: unknown): string[] {
+  const items = Array.isArray(list) ? list.map((v) => String(v || '').trim()).filter((v) => VIDEO_URL.test(v)) : [];
+  return Array.from(new Set(items)).slice(0, 10);
+}
+
 async function readBranding(): Promise<SiteBranding> {
   try {
     const value = await readSetting<any>('site_branding');
@@ -41,6 +46,8 @@ async function readBranding(): Promise<SiteBranding> {
       logo: typeof value.logo === 'string' && value.logo ? value.logo : DEFAULT_SITE_BRANDING.logo,
       hero_video: activeVideo,
       hero_videos: cleanVideos(value.hero_videos, activeVideo),
+      hero_mode: value.hero_mode === 'slideshow' ? 'slideshow' : 'video',
+      hero_images: cleanImages(value.hero_images),
       culture_hidden: cleanHidden(value.culture_hidden),
       culture_blocks: cleanBlocks(value.culture_blocks),
       hero_description: typeof value.hero_description === 'string' && value.hero_description ? value.hero_description : DEFAULT_SITE_BRANDING.hero_description,
@@ -88,7 +95,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const hero_videos = cleanVideos(req.body?.hero_videos === undefined ? current.hero_videos : req.body.hero_videos, hero_video);
   const culture_hidden = req.body?.culture_hidden === undefined ? current.culture_hidden : cleanHidden(req.body.culture_hidden);
   const culture_blocks = req.body?.culture_blocks === undefined ? current.culture_blocks : cleanBlocks(req.body.culture_blocks);
-  const branding = { logo, hero_video, hero_videos, hero_description, ...content, key_programs, culture_hidden, culture_blocks };
+  const hero_mode: 'video' | 'slideshow' = req.body?.hero_mode === undefined ? current.hero_mode : req.body.hero_mode === 'slideshow' ? 'slideshow' : 'video';
+  const hero_images = req.body?.hero_images === undefined ? current.hero_images : cleanImages(req.body.hero_images);
+  if (hero_mode === 'slideshow' && !hero_images.length) return res.status(400).json({ error: 'Add at least one image to use the slideshow.' });
+  const branding = { logo, hero_video, hero_videos, hero_mode, hero_images, hero_description, ...content, key_programs, culture_hidden, culture_blocks };
   try {
     await writeSetting('site_branding', branding);
   } catch (error) {
@@ -97,6 +107,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const describe: string[] = [];
   if (logo !== current.logo) describe.push('Changed the site logo');
+  if (hero_mode !== current.hero_mode) describe.push(hero_mode === 'slideshow' ? 'Switched the homepage to an image slideshow' : 'Switched the homepage to a video');
+  if (JSON.stringify(hero_images) !== JSON.stringify(current.hero_images)) describe.push('Updated the homepage slideshow images');
   if (hero_video !== current.hero_video) describe.push('Changed the homepage video');
   if (hero_videos.length !== current.hero_videos.length) describe.push(hero_videos.length > current.hero_videos.length ? 'Added a homepage video' : 'Removed a homepage video');
   if (hero_description !== current.hero_description) describe.push('Edited the homepage hero text');

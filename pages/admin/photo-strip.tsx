@@ -40,6 +40,9 @@ export default function AdminPhotoStrip() {
   const [heroVideo, setHeroVideo] = useState(DEFAULT_SITE_BRANDING.hero_video);
   const [heroVideos, setHeroVideos] = useState<string[]>(DEFAULT_SITE_BRANDING.hero_videos);
   const [newVideoUrl, setNewVideoUrl] = useState('');
+  const [heroMode, setHeroMode] = useState<'video' | 'slideshow'>('video');
+  const [heroImages, setHeroImages] = useState<string[]>([]);
+  const [slideUploading, setSlideUploading] = useState(false);
   const [videoStatus, setVideoStatus] = useState('');
   const [videoUploading, setVideoUploading] = useState(false);
   const [heroStatus, setHeroStatus] = useState('');
@@ -64,6 +67,8 @@ export default function AdminPhotoStrip() {
         if (typeof branding.logo === 'string') setLogo(branding.logo);
         if (typeof branding.hero_video === 'string') setHeroVideo(branding.hero_video);
         if (Array.isArray(branding.hero_videos) && branding.hero_videos.length) setHeroVideos(branding.hero_videos);
+        setHeroMode(branding.hero_mode === 'slideshow' ? 'slideshow' : 'video');
+        setHeroImages(Array.isArray(branding.hero_images) ? branding.hero_images : []);
         setCultureHidden(Array.isArray(branding.culture_hidden) ? branding.culture_hidden : []);
         setCultureBlocks(Array.isArray(branding.culture_blocks) ? branding.culture_blocks : []);
         if (typeof branding.hero_description === 'string') setHeroDescription(branding.hero_description);
@@ -122,8 +127,89 @@ export default function AdminPhotoStrip() {
     void saveHeroVideos(next, url === heroVideo ? next[0] : heroVideo, 'Video removed.');
   };
 
+  const MAX_VIDEO_MB = 50;
+  const MAX_VIDEO_SECONDS = 30;
+  const MAX_SLIDES = 10;
+
+  const videoDuration = (file: File) => new Promise<number>((resolve) => {
+    const probe = document.createElement('video');
+    const url = URL.createObjectURL(file);
+    probe.preload = 'metadata';
+    probe.onloadedmetadata = () => { URL.revokeObjectURL(url); resolve(probe.duration); };
+    probe.onerror = () => { URL.revokeObjectURL(url); resolve(0); };
+    probe.src = url;
+  });
+
+  const saveHeroDisplay = async (mode: 'video' | 'slideshow', images: string[], message: string) => {
+    setVideoStatus('Saving...');
+    const response = await fetch('/api/site-branding', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ hero_mode: mode, hero_images: images }),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (response.ok) {
+      setHeroMode(result.hero_mode);
+      setHeroImages(result.hero_images);
+    }
+    setVideoStatus(response.ok ? message : result.error || 'Unable to save.');
+    return response.ok;
+  };
+
+  // Photos are shrunk in the browser first so they stay well under the host's upload size limit.
+  const shrinkImage = (file: File) => new Promise<string>((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, 1920 / Math.max(img.width, img.height));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(img.width * scale);
+      canvas.height = Math.round(img.height * scale);
+      canvas.getContext('2d')?.drawImage(img, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(url);
+      resolve(canvas.toDataURL('image/jpeg', 0.82));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Could not read that image.')); };
+    img.src = url;
+  });
+
+  const addSlides = async (files: File[]) => {
+    const room = MAX_SLIDES - heroImages.length;
+    if (room <= 0) { setVideoStatus(`You can add up to ${MAX_SLIDES} images.`); return; }
+    setSlideUploading(true);
+    try {
+      const added: string[] = [];
+      for (const file of files.filter((f) => f.type.startsWith('image/')).slice(0, room)) {
+        setVideoStatus(`Uploading image ${added.length + 1}...`);
+        const dataUrl = await shrinkImage(file);
+        const response = await fetch('/api/admin/promo-upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ dataUrl, category: 'promo-spots' }),
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.error || 'Image upload failed.');
+        added.push(result.url);
+      }
+      if (added.length) await saveHeroDisplay(heroMode, [...heroImages, ...added], `${added.length} image(s) added.`);
+      else setVideoStatus('Choose PNG, JPG or WebP images.');
+    } catch (error) {
+      setVideoStatus(error instanceof Error ? error.message : 'Image upload failed.');
+    } finally {
+      setSlideUploading(false);
+    }
+  };
+
+  const removeSlide = (url: string) => {
+    const next = heroImages.filter((image) => image !== url);
+    if (heroMode === 'slideshow' && !next.length) { setVideoStatus('Add another image or switch back to video before removing the last one.'); return; }
+    void saveHeroDisplay(heroMode, next, 'Image removed.');
+  };
+
   const uploadHeroVideo = async (file: File) => {
-    if (file.size > 100 * 1024 * 1024) { setVideoStatus('Videos must be 100 MB or smaller.'); return; }
+    if (file.size > MAX_VIDEO_MB * 1024 * 1024) { setVideoStatus(`Videos must be ${MAX_VIDEO_MB} MB or smaller.`); return; }
+    const seconds = await videoDuration(file);
+    if (seconds > MAX_VIDEO_SECONDS) { setVideoStatus(`Videos must be ${MAX_VIDEO_SECONDS} seconds or shorter (this one is ${Math.round(seconds)}s).`); return; }
     setVideoUploading(true);
     setVideoStatus('Uploading video...');
     try {
@@ -250,18 +336,19 @@ export default function AdminPhotoStrip() {
     if (!file.type.startsWith('image/')) return setStatus('Please choose an image file.');
     setUploadingIndex(index);
     setStatus('Uploading image...');
-    const dataUrl = await new Promise<string>((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(String(reader.result));
-      reader.onerror = () => reject(reader.error);
-      reader.readAsDataURL(file);
-    });
+    let dataUrl: string;
+    try {
+      dataUrl = await shrinkImage(file);
+    } catch (error) {
+      setUploadingIndex(null);
+      return setStatus(error instanceof Error ? error.message : 'Could not read that image.');
+    }
     const response = await fetch('/api/admin/promo-upload', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ dataUrl }),
     });
-    const json = await response.json();
+    const json = await response.json().catch(() => ({}));
     setUploadingIndex(null);
     if (!response.ok) return setStatus(json.error || 'Unable to upload image.');
     setPromoSpots((current) => current.map((spot, spotIndex) => spotIndex === index ? { ...spot, image: json.url } : spot));
@@ -305,10 +392,39 @@ export default function AdminPhotoStrip() {
       <section className="admin-panel site-logo-editor">
         <div>
           <p className="panel-label">Homepage</p>
-          <h2>Homepage video</h2>
+          <h2>Homepage video or slideshow</h2>
         </div>
         <div className="site-logo-controls" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
-          <p>Add as many videos as you like and choose which one plays on the homepage. At least one video is required.</p>
+          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+            <label style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+              <input type="radio" name="hero-mode" checked={heroMode === 'video'} onChange={() => void saveHeroDisplay('video', heroImages, 'The homepage now plays a video.')} />
+              Play a video
+            </label>
+            <label style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+              <input type="radio" name="hero-mode" checked={heroMode === 'slideshow'} onChange={() => void saveHeroDisplay('slideshow', heroImages, 'The homepage now shows an image slideshow.')} />
+              Show an image slideshow
+            </label>
+          </div>
+          <h3>Slideshow images ({heroImages.length}/{MAX_SLIDES})</h3>
+          <p>Add 5 to 10 photos. They change every 5 seconds. Large photos are resized automatically.</p>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            {heroImages.map((image) => (
+              <div key={image} style={{ width: 140 }}>
+                <div className="site-logo-preview" style={{ width: 140, height: 80 }}>
+                  <img src={image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 8 }} />
+                </div>
+                <button type="button" className="details-btn danger-button" style={{ marginTop: 6, width: '100%' }} onClick={() => removeSlide(image)}>Remove</button>
+              </div>
+            ))}
+          </div>
+          <div>
+            <label className="promo-upload-button">
+              {slideUploading ? 'Uploading...' : 'Add images'}
+              <input type="file" multiple accept="image/png,image/jpeg,image/webp" disabled={slideUploading || heroImages.length >= MAX_SLIDES} onChange={(event) => { const files = Array.from(event.target.files || []); if (files.length) void addSlides(files); event.currentTarget.value = ''; }} />
+            </label>
+          </div>
+          <h3>Videos</h3>
+          <p>Add as many videos as you like and choose which one plays when "Play a video" is selected. Uploads can be up to {MAX_VIDEO_MB} MB and {MAX_VIDEO_SECONDS} seconds.</p>
           {heroVideos.map((video) => (
             <div key={video} style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
               <div className="site-logo-preview" style={{ width: 160, height: 90 }}>
