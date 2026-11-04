@@ -34,6 +34,16 @@ const en: AssistantDict = {
   admin: 'I can help with public Philippines Travelogue information, but not admin dashboards, logins, or private system data.',
   loadError: 'I could not load the public Travelogue information right now. Please try again later.',
   tipsHeader: 'Travel tips for {n}:', noTips: "{n}'s page has no travel tips listed yet.", foodHeader: 'Local foods to try in {n}:', noFood: "{n}'s page has no local foods listed yet.",
+  q_loc: 'Where is {n} located?', q_known: 'What is {n} known for?', q_fee: 'Is there an entrance fee?', q_hours: 'What are the operating hours?',
+  q_how: 'How can I get there?', q_activities: 'What activities can I do here?', q_halal: 'Are there halal restaurants nearby?',
+  q_prayer: 'Are there prayer rooms or mosques nearby?', q_nearby: 'Are there other tourist attractions nearby?',
+  a_loc: '{n} is located in {l}.', a_known: '{n} is known for:', a_activities: 'Things you can do in {n}:', a_nearby: 'Other attractions near {n}:',
+  a_nearbyNone: "I couldn't find other attractions listed near {n} in the Travelogue.", a_found: 'From the Travelogue page for {n}:',
+  a_fee: "The Travelogue doesn't list entrance fees for {n}. Fees can change, so please confirm with the local tourism office or the Department of Tourism before you go.",
+  a_hours: "The Travelogue doesn't list operating hours for {n}. Hours can change, so please confirm with the local tourism office or the Department of Tourism before you go.",
+  a_how: "The Travelogue doesn't have detailed directions for {n}. Please check with the local tourism office or the Department of Tourism for current transport options.",
+  a_halal: "The Travelogue doesn't have verified halal restaurant listings near {n}. For reliable information, ask the local tourism office or look for halal-certified establishments.",
+  a_prayer: "The Travelogue doesn't list prayer rooms or mosques near {n}. For reliable information, ask the local tourism office or your accommodation.",
 }
 
 const tl: AssistantDict = {
@@ -68,6 +78,16 @@ const tl: AssistantDict = {
   admin: 'Makakatulong ako sa pampublikong impormasyon ng Philippines Travelogue, hindi sa admin dashboard, login o pribadong datos.',
   loadError: 'Hindi ko ma-load ang impormasyon ngayon. Pakisubukan ulit mamaya.',
   tipsHeader: 'Travel tips para sa {n}:', noTips: 'Wala pang nakalistang travel tips ang {n}.', foodHeader: 'Mga lokal na pagkain sa {n}:', noFood: 'Wala pang nakalistang lokal na pagkain ang {n}.',
+  q_loc: 'Saan matatagpuan ang {n}?', q_known: 'Ano ang kilala sa {n}?', q_fee: 'May entrance fee ba?', q_hours: 'Anong oras ito bukas?',
+  q_how: 'Paano pumunta rito?', q_activities: 'Anong mga puwedeng gawin dito?', q_halal: 'May halal na kainan ba sa malapit?',
+  q_prayer: 'May prayer room o mosque ba sa malapit?', q_nearby: 'May iba pa bang tourist attraction sa malapit?',
+  a_loc: 'Matatagpuan ang {n} sa {l}.', a_known: 'Kilala ang {n} sa:', a_activities: 'Mga puwedeng gawin sa {n}:', a_nearby: 'Iba pang atraksyon malapit sa {n}:',
+  a_nearbyNone: 'Wala akong makitang ibang atraksyon malapit sa {n} sa Travelogue.', a_found: 'Mula sa pahina ng {n} sa Travelogue:',
+  a_fee: 'Walang nakalistang entrance fee para sa {n} sa Travelogue. Nagbabago ang mga bayarin, kaya mangyaring kumpirmahin sa lokal na tourism office o sa Department of Tourism bago pumunta.',
+  a_hours: 'Walang nakalistang oras ng operasyon para sa {n} sa Travelogue. Nagbabago ang oras, kaya mangyaring kumpirmahin sa lokal na tourism office o sa Department of Tourism bago pumunta.',
+  a_how: 'Walang detalyadong direksyon para sa {n} sa Travelogue. Magtanong sa lokal na tourism office o sa Department of Tourism para sa kasalukuyang transportasyon.',
+  a_halal: 'Walang beripikadong listahan ng halal na kainan malapit sa {n} sa Travelogue. Para sa maaasahang impormasyon, magtanong sa lokal na tourism office o maghanap ng halal-certified na establisyemento.',
+  a_prayer: 'Walang nakalistang prayer room o mosque malapit sa {n} sa Travelogue. Para sa maaasahang impormasyon, magtanong sa lokal na tourism office o sa tinutuluyan mo.',
 }
 
 const es: AssistantDict = {

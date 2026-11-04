@@ -9,9 +9,10 @@ import type { Lang } from '../../lib/i18n';
 import { atext, monthLabel, normalizeLang } from '../../lib/assistantI18n';
 import { getDestinationViewCounts } from '../../lib/destinationViews';
 import { DestinationTranslationEntry, findTranslation, loadTranslationMap } from '../../lib/destinationTranslations';
+import { QuestionKey, QUESTION_KEYS, answerQuestion, detectQuestion } from '../../lib/destinationQA';
 
 type DestinationCard = { name: string; slug: string; image?: string; region?: string; blurb?: string };
-type FollowUp = { intent: 'plan' | 'month' | 'contact' | 'timing' | 'tips' | 'food' | 'popular'; slug?: string; name?: string };
+type FollowUp = { intent: 'plan' | 'month' | 'contact' | 'timing' | 'tips' | 'food' | 'popular' | 'ask'; slug?: string; name?: string; q?: QuestionKey };
 type Data = { reply: string; destinations?: DestinationCard[]; followUps?: FollowUp[] };
 type HistoryItem = { role: 'user' | 'assistant'; text: string };
 type TripPlan = { companions?: string; days?: string; budget?: string; interests?: string[]; month?: string };
@@ -115,14 +116,28 @@ function lastMentionedDestination(history: HistoryItem[], destinations: Destinat
 function followUpsFor(destination: Destination | undefined, lang: Lang): FollowUp[] {
   if (destination) {
     const name = localizedDestination(destination, lang).name || destination.name;
+    const ask = (q: QuestionKey): FollowUp => ({ intent: 'ask', q, slug: destination.slug, name });
     return [
+      ask('loc'), ask('known'), ask('fee'), ask('hours'), ask('how'), ask('activities'), ask('halal'), ask('prayer'),
       { intent: 'timing', slug: destination.slug, name },
+      ask('nearby'),
       { intent: 'tips', slug: destination.slug, name },
       { intent: 'food', slug: destination.slug, name },
       { intent: 'plan' },
     ];
   }
   return [{ intent: 'plan' }, { intent: 'popular' }, { intent: 'month' }, { intent: 'contact' }];
+}
+
+function answerAsk(q: QuestionKey, destination: Destination, destinations: Destination[], lang: Lang) {
+  const local = localizedDestination(destination, lang);
+  const bySlug = new Map(destinations.map((d) => [d.slug, d]));
+  let related = (destination.related_slugs || []).map((slug) => bySlug.get(slug)).filter((d): d is Destination => !!d && d.slug !== destination.slug);
+  if (!related.length && destination.region) {
+    related = destinations.filter((d) => d.slug !== destination.slug && d.region === destination.region);
+  }
+  const relatedInfo = related.slice(0, 5).map((d) => ({ name: localizedDestination(d, lang).name || d.name, slug: d.slug }));
+  return answerQuestion(q, destination, local, relatedInfo, lang);
 }
 
 const POPULAR_WORDS = /\b(popular|trending|most viewed|top destinations?|patok|sikat|pinakasikat|tanyag|famoso|populares|m[aá]s visitad\w*)\b|热门|最受欢迎|लोकप्रिय|رواج|الأكثر/i;
@@ -411,6 +426,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     const intentSlug = typeof req.body?.slug === 'string' ? req.body.slug : '';
     const intentDestination = intentSlug ? destinations.find((d) => d.slug === intentSlug) : undefined;
+    if (intentDestination && intent === 'ask' && QUESTION_KEYS.includes(req.body?.q)) {
+      return res.status(200).json({ reply: answerAsk(req.body.q, intentDestination, destinations, lang), destinations: [toCard(intentDestination, lang)], followUps: followUpsFor(intentDestination, lang) });
+    }
     if (intentDestination && (intent === 'timing' || intent === 'tips' || intent === 'food')) {
       const reply = intent === 'timing'
         ? answerDestinationTiming(intentDestination, requestedMonth(String(req.body?.month || '')) || MONTHS[new Date().getMonth()], lang)
@@ -429,6 +447,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const contextDestination = contextSlug ? destinations.find((d) => d.slug === contextSlug) : undefined;
     const destination = mentioned || (!month || !isMonthRecommendation(message) ? (lastMentionedDestination(history, destinations) || contextDestination) : undefined);
     const followUps = followUpsFor(destination, lang);
+    const typedQuestion = destination ? detectQuestion(message) : null;
+    if (destination && typedQuestion) {
+      return res.status(200).json({ reply: answerAsk(typedQuestion, destination, destinations, lang), destinations: [toCard(destination, lang)], followUps });
+    }
     if (destination && isTimingQuestion(message)) {
       return res.status(200).json({ reply: answerDestinationTiming(destination, month || MONTHS[new Date().getMonth()], lang), destinations: [toCard(destination, lang)], followUps });
     }

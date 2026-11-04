@@ -5,7 +5,8 @@ import { atext, monthLabel } from '../lib/assistantI18n'
 import { sendEngagement } from '../lib/engagement'
 
 type Card = { name: string; slug: string; image?: string; region?: string; blurb?: string }
-type FollowUp = { intent: 'plan' | 'month' | 'contact' | 'timing' | 'tips' | 'food' | 'popular'; slug?: string; name?: string }
+type QuestionKey = 'loc' | 'known' | 'fee' | 'hours' | 'how' | 'activities' | 'halal' | 'prayer' | 'nearby'
+type FollowUp = { intent: 'plan' | 'month' | 'contact' | 'timing' | 'tips' | 'food' | 'popular' | 'ask'; slug?: string; name?: string; q?: QuestionKey }
 type Message = {
   id: string
   role: 'user' | 'assistant' | 'system'
@@ -41,8 +42,12 @@ export default function SmartAssistant({ destinationSlug, destinationName }: { d
   const { lang } = useTranslation()
   const tr = (key: string, vars: Record<string, string> = {}) => atext(lang, key, vars)
   const optionLabel = (o: PlanOption) => (o.label.startsWith('m:') ? monthLabel(lang, o.label.slice(2)) : tr(o.label))
+  const destinationQuestions = (slug: string, name: string): FollowUp[] => {
+    const ask = (q: QuestionKey): FollowUp => ({ intent: 'ask', q, slug, name })
+    return [ask('loc'), ask('known'), ask('fee'), ask('hours'), ask('how'), ask('activities'), ask('halal'), ask('prayer'), { intent: 'timing', slug, name }, ask('nearby'), { intent: 'tips', slug, name }, { intent: 'food', slug, name }, { intent: 'plan' }]
+  }
   const initialMessage = (): Message => destinationSlug && destinationName
-    ? { id: 'm0', role: 'assistant', text: '', textKey: 'askAbout', followUps: [{ intent: 'timing', slug: destinationSlug, name: destinationName }, { intent: 'tips', slug: destinationSlug, name: destinationName }, { intent: 'food', slug: destinationSlug, name: destinationName }, { intent: 'plan' }] }
+    ? { id: 'm0', role: 'assistant', text: '', textKey: 'askAbout', followUps: destinationQuestions(destinationSlug, destinationName) }
     : { id: 'm0', role: 'assistant', text: '', textKey: 'greeting', followUps: [{ intent: 'plan' }, { intent: 'popular' }, { intent: 'month' }, { intent: 'contact' }] }
   const [messages, setMessages] = useState<Message[]>([initialMessage()])
   const [input, setInput] = useState('')
@@ -227,6 +232,7 @@ export default function SmartAssistant({ destinationSlug, destinationName }: { d
       case 'contact': return tr('contact')
       case 'timing': return tr('bestTimeFor', { n })
       case 'tips': return tr('tipsFor', { n })
+      case 'ask': return tr(`q_${f.q}`, { n })
       default: return tr('foodIn', { n })
     }
   }
@@ -246,7 +252,7 @@ export default function SmartAssistant({ destinationSlug, destinationName }: { d
         ...lastFollowUps.map((f, i) => ({
           key: `${f.intent}-${f.slug || i}`,
           label: followUpLabel(f),
-          onClick: () => sendIntent(followUpLabel(f), f.intent, { slug: f.slug }),
+          onClick: () => sendIntent(followUpLabel(f), f.intent, { slug: f.slug, q: f.q }),
         })),
         ...(messages.length === 1 ? dynamicSuggestions.map(d => ({ key: `d-${d.name}`, label: d.name, onClick: () => postMessage(d.name) })) : []),
       ]

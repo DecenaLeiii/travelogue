@@ -1,28 +1,19 @@
-import fs from 'fs';
-import path from 'path';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { verifyAdmin } from '../../../lib/auth';
 import { logAudit } from '../../../lib/audit';
 import { DEFAULT_PROMO_SPOTS, PromoSpot } from '../../../lib/promoSpots';
+import { readSetting, writeSetting } from '../../../lib/settingsStore';
 
-const PROMO_PATH = path.join(process.cwd(), 'db', 'promo_spots.json');
-
-function readSpots(): PromoSpot[] {
-  try {
-    if (!fs.existsSync(PROMO_PATH)) return DEFAULT_PROMO_SPOTS;
-    const parsed = JSON.parse(fs.readFileSync(PROMO_PATH, 'utf8'));
-    return Array.isArray(parsed) ? parsed : DEFAULT_PROMO_SPOTS;
-  } catch {
-    return DEFAULT_PROMO_SPOTS;
-  }
-}
-
-function writeSpots(spots: PromoSpot[]) {
-  fs.writeFileSync(PROMO_PATH, JSON.stringify(spots, null, 2));
+async function readSpots(): Promise<PromoSpot[]> {
+  const parsed = await readSetting<PromoSpot[]>('promo_spots');
+  return Array.isArray(parsed) ? parsed : DEFAULT_PROMO_SPOTS;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'GET') return res.json({ spots: readSpots() });
+  if (req.method === 'GET') {
+    res.setHeader('Cache-Control', 'no-store');
+    return res.json({ spots: await readSpots() });
+  }
   if (req.method !== 'PUT') return res.status(405).json({ error: 'Method not allowed' });
 
   const admin = await verifyAdmin(req);
@@ -35,8 +26,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     : null;
   if (!spots) return res.status(400).json({ error: 'spots must be an array' });
 
-  const previous = readSpots();
-  writeSpots(spots);
+  const previous = await readSpots();
+  try {
+    await writeSetting('promo_spots', spots);
+  } catch (error) {
+    return res.status(500).json({ error: error instanceof Error ? error.message : 'Unable to save the photo strip.' });
+  }
   const titles = (list: PromoSpot[]) => list.map((s) => s.title);
   const removed = titles(previous).filter((t) => !titles(spots).includes(t));
   const added = titles(spots).filter((t) => !titles(previous).includes(t));

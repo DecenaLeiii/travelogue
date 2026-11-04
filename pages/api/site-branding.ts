@@ -1,11 +1,8 @@
-import fs from 'fs';
-import path from 'path';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { verifyAdmin } from '../../lib/auth';
 import { logAudit } from '../../lib/audit';
+import { readSetting, writeSetting } from '../../lib/settingsStore';
 import { DEFAULT_SITE_BRANDING, SiteBranding, CultureBlock, CultureBuiltIn, CULTURE_BUILT_INS } from '../../lib/siteBranding';
-
-const BRANDING_PATH = path.join(process.cwd(), 'db', 'site_branding.json');
 
 function cleanHidden(value: unknown): CultureBuiltIn[] {
   return Array.isArray(value) ? CULTURE_BUILT_INS.filter((key) => value.includes(key)) : [];
@@ -35,10 +32,10 @@ function cleanVideos(list: unknown, active: string): string[] {
   return unique;
 }
 
-function readBranding(): SiteBranding {
+async function readBranding(): Promise<SiteBranding> {
   try {
-    if (!fs.existsSync(BRANDING_PATH)) return DEFAULT_SITE_BRANDING;
-    const value = JSON.parse(fs.readFileSync(BRANDING_PATH, 'utf8'));
+    const value = await readSetting<any>('site_branding');
+    if (!value) return DEFAULT_SITE_BRANDING;
     const activeVideo = typeof value.hero_video === 'string' && value.hero_video ? value.hero_video : DEFAULT_SITE_BRANDING.hero_video;
     return {
       logo: typeof value.logo === 'string' && value.logo ? value.logo : DEFAULT_SITE_BRANDING.logo,
@@ -63,13 +60,16 @@ function readBranding(): SiteBranding {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'GET') return res.json(readBranding());
+  if (req.method === 'GET') {
+    res.setHeader('Cache-Control', 'no-store');
+    return res.json(await readBranding());
+  }
   if (req.method !== 'PUT') return res.status(405).json({ error: 'Method not allowed' });
 
   const admin = await verifyAdmin(req);
   if (!admin) return res.status(401).json({ error: 'Unauthorized' });
 
-  const current = readBranding();
+  const current = await readBranding();
   const logo = req.body?.logo === undefined ? current.logo : String(req.body.logo || '').trim();
   const hero_description = req.body?.hero_description === undefined
     ? current.hero_description
@@ -89,7 +89,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const culture_hidden = req.body?.culture_hidden === undefined ? current.culture_hidden : cleanHidden(req.body.culture_hidden);
   const culture_blocks = req.body?.culture_blocks === undefined ? current.culture_blocks : cleanBlocks(req.body.culture_blocks);
   const branding = { logo, hero_video, hero_videos, hero_description, ...content, key_programs, culture_hidden, culture_blocks };
-  fs.writeFileSync(BRANDING_PATH, JSON.stringify(branding, null, 2));
+  try {
+    await writeSetting('site_branding', branding);
+  } catch (error) {
+    return res.status(500).json({ error: error instanceof Error ? error.message : 'Unable to save settings.' });
+  }
 
   const describe: string[] = [];
   if (logo !== current.logo) describe.push('Changed the site logo');
