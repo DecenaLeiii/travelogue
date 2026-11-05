@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next';
+import Link from 'next/link';
 import QRCode from 'qrcode';
 import { useEffect, useState } from 'react';
 import { useTranslation } from '../../lib/i18n';
@@ -167,7 +168,7 @@ export default function DestinationPage({ destination, related }: Props) {
         <img className="dest-detail-hero-image" src={selectedImage} alt={`${destination.name} cover`} onError={(event) => { event.currentTarget.src = '/hero.svg'; }} />
         <div className="dest-detail-hero-shade" />
         <div className="dest-detail-hero-inner">
-          <a href="/" className="dest-back">{t('back')}</a>
+          <Link href="/" className="dest-back">{t('back')}</Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
             <div>
               <h1>{translated?.name || destination.name}</h1>
@@ -305,7 +306,7 @@ export default function DestinationPage({ destination, related }: Props) {
             <h2>{t('relatedDestinationsLabel')}</h2>
             <div className="related-grid">
               {related.map((r) => (
-                <a key={r.slug} href={`/destination/${r.slug}`} className="related-card" data-track="related-destination">
+                <Link key={r.slug} href={`/destination/${r.slug}`} className="related-card" data-track="related-destination">
                   <div className="related-card-media">
                     <img src={(r.images && r.images.find((image) => image?.trim())) || '/hero.svg'} alt={`${r.name} cover`} onError={(event) => { event.currentTarget.src = '/hero.svg'; }} />
                   </div>
@@ -313,7 +314,7 @@ export default function DestinationPage({ destination, related }: Props) {
                     <strong>{translations[r.slug]?.name || r.name}</strong>
                     <span>{translations[r.slug]?.short_description || r.short_description}</span>
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
           </section>

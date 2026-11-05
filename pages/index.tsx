@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useDestinationTranslations, DestinationTranslation } from '../lib/useDestinationTranslation';
+import Link from 'next/link';
 import QRCode from 'qrcode';
 import SmartAssistant from '../components/SmartAssistant';
 import FeedbackForm from '../components/FeedbackForm';
@@ -252,7 +253,7 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
               {mostViewedDestinations.map((destination) => {
                 const image = destination.images?.find((src) => typeof src === 'string' && src.trim()) || '/hero.svg';
                 return (
-                  <a
+                  <Link
                     className="most-viewed-card"
                     href={`/destination/${destination.slug}`}
                     key={destination.id || destination.slug}
@@ -266,7 +267,7 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
                       }}
                     />
                     <span>{(translations[destination.slug]?.name) || destination.name}</span>
-                  </a>
+                  </Link>
                 );
               })}
             </div>
@@ -537,7 +538,7 @@ function SearchableDestinations({ initial: rawInitial }: { initial: Destination[
                   </div>
                   <div className="meta">{d.short_description}</div>
                   <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginTop: 8, flexWrap: 'wrap' }}>
-                    <a className="cta" href={`/destination/${d.slug}`} onClick={(e)=>e.stopPropagation()}>{t('readMore')}</a>
+                    <Link className="cta" href={`/destination/${d.slug}`} onClick={(e)=>e.stopPropagation()}>{t('readMore')}</Link>
                     {d.slug ? (
                       qrImages[d.id] ? (
                         <button
@@ -602,7 +603,7 @@ function Modal({ dest, onClose }: { dest: Destination; onClose: () => void }) {
         <p className="modal-content">{dest.short_description}</p>
         <div className="modal-content" style={{ marginTop: 12 }}>{(dest as any).content || t('noAdditionalDetails')}</div>
         <div style={{ marginTop: 18, display: 'flex', gap: 12, alignItems: 'center' }}>
-          <a className="cta" href={`/destination/${dest.slug}`}>{t('viewFullPage')}</a>
+          <Link className="cta" href={`/destination/${dest.slug}`}>{t('viewFullPage')}</Link>
                     <button className="secondary-cta modal-close-cta" type="button" onClick={onClose}>{t('close')}</button>
         </div>
       </div>

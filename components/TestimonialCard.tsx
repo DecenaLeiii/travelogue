@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import Link from 'next/link';
 
 type Review = {
   id: string;
@@ -38,7 +39,7 @@ export default function TestimonialCard({ review }: { review: Review }) {
       <div className="tcard-glass">
         <p className="tcard-quote">“{review.comment || 'A visitor rated this destination.'}”</p>
         <strong className="tcard-name">{review.nickname || 'Anonymous Tourist'}</strong>
-        <a href={`/destination/${review.destination_slug}`} className="tcard-destination">{review.destination_name}</a>
+        <Link href={`/destination/${review.destination_slug}`} className="tcard-destination">{review.destination_name}</Link>
         <span className="tcard-date">{date}</span>
         <span className="tcard-stars" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}</span>
       </div>

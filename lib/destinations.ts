@@ -190,6 +190,18 @@ export async function getPublishedDestinations(): Promise<Destination[]> {
 
 export async function getRelatedDestinations(slugs: string[]): Promise<Destination[]> {
   if (!slugs.length) return [];
+  const supabaseAdmin = getSupabaseAdmin();
+  if (supabaseAdmin) {
+    const { data, error } = await supabaseAdmin
+      .from('destinations')
+      .select('*')
+      .eq('published', true)
+      .in('slug', slugs);
+    if (!error && data?.length) {
+      const found = await attachQrCodesToDestinations(data.map(enrichDestination));
+      return slugs.map((s) => found.find((d) => d.slug === s)).filter(Boolean) as Destination[];
+    }
+  }
   const all = await getPublishedDestinations();
   return slugs.map((s) => all.find((d) => d.slug === s)).filter(Boolean) as Destination[];
 }

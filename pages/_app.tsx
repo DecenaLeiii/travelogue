@@ -179,7 +179,70 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     };
   }, [router.events]);
 
-  function Header() {
+  return (
+    <I18nProvider>
+      <AppContent Component={Component} pageProps={pageProps} />
+    </I18nProvider>
+  );
+}
+
+type GlassGroup = { label: string; items: { value: string; label: string }[] };
+
+function GlassSelect({ label, groups, value, onSelect, ariaLabel }: {
+  label: string;
+  groups: GlassGroup[];
+  value?: string;
+  onSelect: (value: string) => void;
+  ariaLabel: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+  return (
+    <div className="glass-select" ref={rootRef}>
+      <button type="button" className="glass-select-trigger" aria-label={ariaLabel} aria-haspopup="listbox" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+        <span>{label}</span>
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      </button>
+      {open && (
+        <div className="glass-select-menu" role="listbox" aria-label={ariaLabel}>
+          {groups.map((group, gi) => (
+            <div key={`${group.label}-${gi}`}>
+              {group.label && <div className="glass-select-group">{group.label}</div>}
+              {group.items.map((item) => (
+                <button
+                  type="button"
+                  role="option"
+                  aria-selected={item.value === value}
+                  key={item.value}
+                  className={`glass-select-option${item.value === value ? ' selected' : ''}`}
+                  onClick={() => { setOpen(false); onSelect(item.value); }}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Header() {
+    const router = useRouter();
     const { t, lang, setLang } = useTranslation();
     const siteLogo = useSiteLogo();
     const isAdminRoute = router.pathname.startsWith('/admin') && router.pathname !== '/admin/login';
@@ -213,50 +276,34 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           <div className="global-header-controls" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             {isHome && (
               <nav className="home-header-nav">
-                <a href="/">{t('home')}</a>
-                <a href="/contact">{t('contact')}</a>
+                <Link href="/">{t('home')}</Link>
+                <Link href="/contact">{t('contact')}</Link>
               </nav>
             )}
             <nav style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <select
-                aria-label="Destinations"
-                onChange={(e) => {
-                  const slug = (e.target as HTMLSelectElement).value
-                  if (!slug) return
-                  router.push(`/destination/${slug}`)
-                }}
-                style={{ padding: '6px 8px', borderRadius: 6, border: '1px solid #ddd', background: '#fff', color: '#1f2937' }}
-                defaultValue=""
-              >
-                <option value="">{t('destinations')}</option>
-                {dests.map((d) => (
-                  <option key={d.slug} value={d.slug}>{d.name}</option>
-                ))}
-              </select>
+              <GlassSelect
+                ariaLabel="Destinations"
+                label={t('destinations')}
+                groups={[{ label: '', items: dests.map((d) => ({ value: d.slug, label: d.name })) }]}
+                onSelect={(slug) => router.push(`/destination/${slug}`)}
+              />
             </nav>
 
-            <select
+            <GlassSelect
+              ariaLabel="Language selector"
+              label={LANG_GROUPS.flatMap((g) => g.langs).find((l) => l.code === lang)?.label || lang}
               value={lang}
-              onChange={(e) => setLang(e.target.value as any)}
-              style={{ padding: '6px 8px', borderRadius: 6, border: '1px solid #ddd', background: '#fff', color: '#1f2937' }}
-              aria-label="Language selector"
-            >
-              {LANG_GROUPS.map((group) => (
-                <optgroup key={group.label} label={group.label}>
-                  {group.langs.map((l) => (
-                    <option key={l.code} value={l.code}>{l.label}</option>
-                  ))}
-                </optgroup>
-              ))}
-            </select>
+              groups={LANG_GROUPS.map((g) => ({ label: g.label, items: g.langs.map((l) => ({ value: l.code, label: l.label })) }))}
+              onSelect={(code) => setLang(code as any)}
+            />
           </div>
         </div>
       </header>
     );
   }
 
-  function AppContent() {
-    const { t } = useTranslation();
+function AppContent({ Component, pageProps }: Pick<AppProps, 'Component' | 'pageProps'>) {
+    const router = useRouter();
     const isAdminPage = router.pathname.startsWith('/admin') && router.pathname !== '/admin/login';
     const adminLinks = [
       { href: '/admin', label: 'Dashboard', active: router.pathname === '/admin' },
@@ -301,11 +348,4 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         </footer>}
       </>
     );
-  }
-
-  return (
-    <I18nProvider>
-      <AppContent />
-    </I18nProvider>
-  );
 }
