@@ -149,9 +149,9 @@ main.home-main{max-width:none;margin:24px 0;padding:0 clamp(16px,4vw,64px)}
   .site-header .home-header-nav a{margin:0!important;font-size:15px;white-space:nowrap}
   .home-header-tools>div{position:absolute;right:0;top:50%;transform:translateY(-50%)}
   .home-header-tools>div img{width:36px!important;height:36px!important}
-  .hero{min-height:88vh;min-height:88svh}
-  .hero .overlay{padding:24px 24px 64px}
-  .hero.has-nav .overlay{padding-top:170px}
+  .hero{min-height:100vh;min-height:100svh}
+  .hero .overlay{padding:16px 16px 20px;display:flex;flex-direction:column;justify-content:center;align-items:center;box-sizing:border-box;min-height:100%}
+  .hero.has-nav .overlay{padding-top:100px}
   .site-header.on-hero{padding:10px 10px 0}
   .site-header.on-hero .inner{border-radius:22px;padding:10px 14px}
   .site-header.on-hero .home-header-nav{justify-content:center;padding:0;order:-1;grid-column:1/-1}
@@ -717,3 +717,28 @@ main.dest-detail{max-width:none;margin:0;padding:0}
 .feedback-bar-wrap{display:flex;justify-content:center;margin:20px 0 28px}
 .feedback-bar{width:min(520px,100%);padding:9px 20px;border-radius:999px;border:1px solid rgba(255,255,255,.5);background:rgba(37,99,235,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(37,99,235,.22);transition:transform .2s ease,background .2s ease}
 .feedback-bar:hover{transform:translateY(-2px);background:rgba(37,99,235,.78)}
+
+/* Mobile hero content optimization for full-screen layout */
+@media (max-width: 640px) {
+  .hero .overlay > div > div:first-child {
+    max-width: calc(100vw - 32px);
+    width: 100%;
+  }
+  .hero .overlay > div > div:first-child > img {
+    max-width: 90vw !important;
+    width: auto;
+  }
+  .hero .overlay > div > div:first-child > p {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  .hero .overlay > div > div:nth-child(2) {
+    width: 100%;
+    max-width: calc(100vw - 32px);
+  }
+  .hero .overlay > div > div:nth-child(3) {
+    width: 100%;
+    padding: 0 16px;
+    max-width: calc(100vw - 32px);
+  }
+}
