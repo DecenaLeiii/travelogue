@@ -5,6 +5,7 @@ import QRCode from 'qrcode';
 import SmartAssistant from '../components/SmartAssistant';
 import FeedbackForm from '../components/FeedbackForm';
 import TestimonialCard from '../components/TestimonialCard';
+import FeaturedCategoriesSection from '../components/FeaturedCategoriesSection';
 import supabase from '../lib/supabaseClient';
 import { GetServerSideProps } from 'next';
 import { getPublishedDestinations } from '../lib/destinations';
@@ -12,6 +13,7 @@ import { useTranslation } from '../lib/i18n';
 import { DEFAULT_PROMO_SPOTS, PromoSpot } from '../lib/promoSpots';
 import { useSiteLogo } from '../lib/useSiteBranding';
 import type { CultureBlock } from '../lib/siteBranding';
+import { getFeaturedCategoriesForHomepage, type DestinationCategoryData } from '../lib/destinationCategoryUtils';
 
 type Destination = {
   id: string;
@@ -59,7 +61,7 @@ const EMPTY_HOMEPAGE_CULTURE: HomepageCultureContent = {
   culture_hidden: [], culture_blocks: [],
 };
 
-export default function Home({ initialDestinations }: { initialDestinations?: Destination[] }) {
+export default function Home({ initialDestinations, initialFeaturedCategories = [] }: { initialDestinations?: Destination[]; initialFeaturedCategories?: DestinationCategoryData[] }) {
   const [destinations, setDestinations] = useState<Destination[]>(initialDestinations || []);
   const [mostViewedDestinations, setMostViewedDestinations] = useState<MostViewedDestination[]>(
     (initialDestinations || []).slice(0, 6).map((destination) => ({ ...destination, view_count: 0 }))
@@ -71,6 +73,7 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
   const [heroMode, setHeroMode] = useState<'video' | 'slideshow'>('video');
   const [heroImages, setHeroImages] = useState<string[]>([]);
   const [slideIndex, setSlideIndex] = useState(0);
+  const [featuredCategories, setFeaturedCategories] = useState<DestinationCategoryData[]>(initialFeaturedCategories);
   useEffect(() => {
     if (heroMode !== 'slideshow' || heroImages.length < 2) return;
     const timer = setInterval(() => setSlideIndex((i) => i + 1), 5000);
@@ -364,6 +367,8 @@ export default function Home({ initialDestinations }: { initialDestinations?: De
             </div>
           </section>
 
+          <FeaturedCategoriesSection categories={featuredCategories} t={t} />
+
           <div className="promo-marquee" aria-label="Featured travel spots">
             <div className="promo-track">
               {promoSpots.concat(promoSpots).map((spot, index) => (
@@ -632,5 +637,31 @@ function Modal({ dest, onClose }: { dest: Destination; onClose: () => void }) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const initialDestinations = await getPublishedDestinations();
-  return { props: { initialDestinations } };
+  
+  let initialFeaturedCategories: DestinationCategoryData[] = [];
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    const destinationsPath = path.join(process.cwd(), 'db', 'destinations_full.json');
+    const siteBrandingPath = path.join(process.cwd(), 'db', 'site_branding.json');
+    
+    if (fs.existsSync(destinationsPath) && fs.existsSync(siteBrandingPath)) {
+      const destinationsData = JSON.parse(fs.readFileSync(destinationsPath, 'utf-8'));
+      const siteBrandingData = JSON.parse(fs.readFileSync(siteBrandingPath, 'utf-8'));
+      
+      const destinations = Array.isArray(destinationsData) ? destinationsData : 
+                          Array.isArray(destinationsData.destinations) ? destinationsData.destinations : [];
+      const featured_categories = Array.isArray(siteBrandingData.featured_categories)
+        ? siteBrandingData.featured_categories
+        : [];
+      
+      if (featured_categories.length) {
+        initialFeaturedCategories = getFeaturedCategoriesForHomepage(destinations, featured_categories);
+      }
+    }
+  } catch (error) {
+    console.error('Error loading featured categories in getServerSideProps:', error);
+  }
+  
+  return { props: { initialDestinations, initialFeaturedCategories } };
 };

@@ -12,7 +12,46 @@
     "images": ["/boracay homepage.jpg", "/boracay1.jpg", "/boracay2.jpg", "/boracay3.jpg", "/boracay4.jpg", "/boracay5.jpg", "/boracay6.jpg"],
     "related_slugs": ["siargao", "panglao", "el-nido"],
     "featured": true,
-    "published": true
+    "published": true,
+    "local_foods": [
+      {
+        "name": "Grilled Tuna",
+        "description": "Fresh grilled tuna with salt and lemon, a Boracay beach staple",
+        "image": "/hero.svg"
+      },
+      {
+        "name": "Kinilaw",
+        "description": "Raw fish marinated in vinegar and coconut milk, a refreshing local delicacy",
+        "image": "/hero.svg"
+      }
+    ],
+    "destination_categories": [
+      {
+        "title": "activities",
+        "items": [
+          {
+            "name": "Parasailing",
+            "description": "Soar over the turquoise waters with views of White Beach",
+            "image": "/hero.svg"
+          },
+          {
+            "name": "Scuba Diving",
+            "description": "Explore coral reefs and marine life around the island",
+            "image": "/hero.svg"
+          }
+        ]
+      },
+      {
+        "title": "festivals",
+        "items": [
+          {
+            "name": "Ati-Atihan Festival",
+            "description": "Celebrated in nearby Kalibo, a vibrant tribal festival",
+            "image": "/hero.svg"
+          }
+        ]
+      }
+    ]
   },
   {
     "name": "Palawan (El Nido)",
@@ -57,7 +96,36 @@
     "images": ["/hero.svg"],
     "related_slugs": ["kawasan-falls", "boracay", "bohol"],
     "featured": true,
-    "published": true
+    "published": true,
+    "local_foods": [
+      {
+        "name": "Lechon",
+        "description": "Roasted suckling pig, Cebu's most famous dish",
+        "image": "/hero.svg"
+      },
+      {
+        "name": "Dried Mangoes",
+        "description": "Sweet and chewy mango treats, perfect as souvenirs",
+        "image": "/hero.svg"
+      }
+    ],
+    "destination_categories": [
+      {
+        "title": "activities",
+        "items": [
+          {
+            "name": "Canyoneering at Kawasan Falls",
+            "description": "Adventure through turquoise waterfalls and natural pools",
+            "image": "/hero.svg"
+          },
+          {
+            "name": "Whale Shark Watching",
+            "description": "Swim with gentle whale sharks in Oslob",
+            "image": "/hero.svg"
+          }
+        ]
+      }
+    ]
   },
   {
     "name": "Bohol",

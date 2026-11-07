@@ -9,6 +9,11 @@ export type CultureBlock = {
   archived: boolean;
 };
 
+export type FeaturedCategoryConfig = {
+  category_name: string;
+  display_name: string;
+};
+
 export type CultureBuiltIn = 'mission' | 'programs' | 'contact';
 export const CULTURE_BUILT_INS: CultureBuiltIn[] = ['mission', 'programs', 'contact'];
 
@@ -30,6 +35,7 @@ export type SiteBranding = {
   contact_heading: string;
   contact_email: string;
   contact_phone: string;
+  featured_categories?: FeaturedCategoryConfig[];
 };
 
 export const DEFAULT_SITE_BRANDING: SiteBranding = {
@@ -55,4 +61,5 @@ export const DEFAULT_SITE_BRANDING: SiteBranding = {
   contact_heading: 'Contact',
   contact_email: 'dot-feedback@tourism.gov.ph',
   contact_phone: '+63 (2) 8459-5200',
+  featured_categories: [],
 };

@@ -28,5 +28,15 @@
       "email": "",
       "archived": true
     }
+  ],
+  "featured_categories": [
+    {
+      "category_name": "local_foods",
+      "display_name": "Local Foods to Try"
+    },
+    {
+      "category_name": "activities",
+      "display_name": "Must-Do Activities"
+    }
   ]
 }

@@ -236,6 +236,7 @@ export default function AdminDashboard({ analytics, error: initialError }: Props
         <h1>{t('adminDashboard')}</h1>
         <div className="admin-nav">
           <Link href="/admin/destinations">{t('manageDestinations')}</Link>
+          <Link href="/admin/featured-categories">Featured Categories</Link>
           <Link href="/admin/activity">Activity</Link>
           <Link href="/admin/feedback">Tourist feedback</Link>
           <Link href="/admin/contacts">Contacts</Link>
@@ -563,6 +564,17 @@ export default function AdminDashboard({ analytics, error: initialError }: Props
             ) : (
               <p className="most-viewed-empty">No assistant feedback yet.</p>
             )}
+          </section>
+
+          <section className="admin-panel">
+            <div className="panel-header compact">
+              <div>
+                <p className="panel-label">Homepage Media</p>
+                <h2>Featured Categories & Experiences</h2>
+              </div>
+            </div>
+            <p style={{ margin: '0 0 15px 0', color: '#666' }}>Manage the "Discover Destination Experiences" section shown on the homepage with categories like "Local Foods to Try" and "Must-Do Activities".</p>
+            <Link className="details-btn" href="/admin/featured-categories">Manage Featured Categories</Link>
           </section>
 
           <section className="admin-panel activity-link-panel">
