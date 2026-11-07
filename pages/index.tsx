@@ -591,7 +591,26 @@ function SearchableDestinations({ initial: rawInitial }: { initial: Destination[
 }
 
 function Modal({ dest, onClose }: { dest: Destination; onClose: () => void }) {
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
+  const [translatedContent, setTranslatedContent] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!dest || lang === 'en') {
+      setTranslatedContent(null);
+      return;
+    }
+
+    const slug = dest.slug;
+    fetch(`/api/translations/destination?slug=${encodeURIComponent(slug)}&lang=${encodeURIComponent(lang)}`)
+      .then(async (res) => {
+        if (!res.ok) throw new Error('no translation');
+        const j = await res.json();
+        const entry = j.translation || {};
+        setTranslatedContent(entry.content || null);
+      })
+      .catch(() => setTranslatedContent(null));
+  }, [dest, lang]);
+
   if (!dest) return null;
   const img = (dest.images && dest.images.length && dest.images[0]) || '/hero.svg';
   return (
@@ -601,7 +620,7 @@ function Modal({ dest, onClose }: { dest: Destination; onClose: () => void }) {
         <div className="modal-media"><img src={img} alt={`${dest.name} cover`} onError={(event) => { event.currentTarget.src = '/hero.svg'; }} /></div>
         <h3>{dest.name}</h3>
         <p className="modal-content">{dest.short_description}</p>
-        <div className="modal-content" style={{ marginTop: 12 }}>{(dest as any).content || t('noAdditionalDetails')}</div>
+        <div className="modal-content" style={{ marginTop: 12 }}>{translatedContent || (dest as any).content || t('noAdditionalDetails')}</div>
         <div style={{ marginTop: 18, display: 'flex', gap: 12, alignItems: 'center' }}>
           <Link className="cta" href={`/destination/${dest.slug}`}>{t('viewFullPage')}</Link>
                     <button className="secondary-cta modal-close-cta" type="button" onClick={onClose}>{t('close')}</button>
