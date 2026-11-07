@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import getSupabaseAdmin from '../../../../lib/supabaseAdmin';
 import { verifyAdmin } from '../../../../lib/auth';
 import { logAudit } from '../../../../lib/audit';
+import { addTranslationPlaceholder, removeTranslationEntry } from '../../../../lib/translationSync';
 
 function slugify(name: string) {
   return name
@@ -91,6 +92,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       await ensureQrForDestination(supabaseAdmin, updatedDestination.id, updatedDestination.slug || body.slug || 'destination');
     }
 
+    // Sync translations for updated destination
+    if (updatedDestination) {
+      addTranslationPlaceholder(updatedDestination.slug, {
+        name: updatedDestination.name,
+        short_description: updatedDestination.short_description,
+        content: updatedDestination.content,
+        highlights: updatedDestination.highlights,
+        travel_tips: updatedDestination.travel_tips,
+        region: updatedDestination.region,
+        location: updatedDestination.location,
+        best_time_to_visit: updatedDestination.best_time_to_visit,
+      });
+    }
+
     const updatedFields = Object.keys(updates).filter((key) => key !== 'updated_at' && (!before || JSON.stringify(before[key]) !== JSON.stringify(updates[key])));
     const label = String(updatedDestination?.name || before?.name || id);
     const wasPublished = before?.published;
@@ -115,8 +130,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method === 'DELETE') {
     const archive = req.query.archive === 'true';
-    const { data: nameRows } = await supabaseAdmin.from('destinations').select('name').eq('id', id).limit(1);
+    const { data: nameRows } = await supabaseAdmin.from('destinations').select('name, slug').eq('id', id).limit(1);
     const label = String(nameRows?.[0]?.name || id);
+    const slug = nameRows?.[0]?.slug;
 
     if (archive) {
       const { data, error } = await supabaseAdmin
@@ -142,6 +158,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const { error } = await supabaseAdmin.from('destinations').delete().eq('id', id);
     if (error) return res.status(500).json({ error: error.message });
+
+    // Remove translation entries for deleted destination
+    if (slug) {
+      removeTranslationEntry(slug);
+    }
 
     await logAudit({
       adminId: admin.id,

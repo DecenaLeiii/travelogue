@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import getSupabaseAdmin from '../../../../lib/supabaseAdmin';
 import { verifyAdmin } from '../../../../lib/auth';
 import { logAudit } from '../../../../lib/audit';
+import { addTranslationPlaceholder, removeTranslationEntry } from '../../../../lib/translationSync';
 
 function slugify(name: string) {
   return name
@@ -97,6 +98,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const createdDestination = data?.[0];
     if (createdDestination?.id) {
       await ensureQrForDestination(supabaseAdmin, createdDestination.id, createdDestination.slug || slug);
+    }
+
+    // Auto-generate placeholder translations for new destination
+    if (createdDestination) {
+      addTranslationPlaceholder(slug, {
+        name: createdDestination.name,
+        short_description: createdDestination.short_description,
+        content: createdDestination.content,
+        highlights: createdDestination.highlights,
+        travel_tips: createdDestination.travel_tips,
+        region: createdDestination.region,
+        location: createdDestination.location,
+        best_time_to_visit: createdDestination.best_time_to_visit,
+      });
     }
 
     await logAudit({
