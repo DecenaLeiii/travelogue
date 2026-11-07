@@ -72,14 +72,14 @@ table{font-size:14px}
 .floating-assistant-button:hover{transform:translateY(-3px);box-shadow:0 22px 52px rgba(255,111,97,0.42)}
 .assistant-bubble{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,0.24);font-size:10px;font-weight:900;border:1px solid rgba(255,255,255,0.28)}
 .assistant-floating-panel{position:fixed;left:0;top:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;z-index:999;opacity:1;pointer-events:auto;background:rgba(15,23,42,0.14);backdrop-filter:blur(2px);box-shadow:none}
-.assistant-floating-shell{width:min(760px, 100%);max-width:760px;border:none;border-radius:24px;overflow:hidden;box-shadow:0 30px 80px rgba(15,23,42,0.2);background:#fff;position:relative;margin:0 auto}
+.assistant-floating-shell{width:min(760px, 100%);max-width:760px;border:none;border-radius:24px;overflow:hidden;box-shadow:none;background:#fff;position:relative;margin:0 auto}
 .assistant-floating-chat{background:#fff;border-radius:24px;overflow:hidden}
 .assistant-close-button{position:absolute;top:12px;right:16px;z-index:3;width:42px;height:42px;border:none;border-radius:50%;background:rgba(255,255,255,0.9);box-shadow:0 8px 24px rgba(15,23,42,0.12);cursor:pointer;font-size:28px;line-height:1;color:#111}
 .assistant-floating-panel .chat-shell{flex:1;display:flex;flex-direction:column;height:min(72vh, 620px);max-height:min(72vh, 620px)}
 .assistant-floating-panel [data-chat-body]{height:calc(100% - 130px) !important;max-height:none !important}
 .assistant-chat-shell{background:#fff}
 @media (max-width:640px){
-  .assistant-floating-panel{box-sizing:border-box;width:100%;padding:8px;align-items:flex-end;overflow:hidden}
+  .assistant-floating-panel{box-sizing:border-box;width:100%;padding:8px;align-items:center;overflow:hidden}
   .assistant-floating-shell{box-sizing:border-box;width:100%;max-width:100%;min-width:0;border-radius:16px;overflow:hidden}
   .assistant-floating-panel .chat-shell{box-sizing:border-box;width:100%;min-width:0;height:min(78dvh,680px);max-height:min(78dvh,680px);padding:12px!important;overflow:hidden}
   .assistant-floating-panel [data-chat-body]{box-sizing:border-box;width:100%;min-width:0;overflow-x:hidden;padding:6px!important}
