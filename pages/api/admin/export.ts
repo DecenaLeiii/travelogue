@@ -41,6 +41,57 @@ function toCSV(rows: any[], columns: string[]) {
   return [columns.join(','), ...lines].join('\r\n');
 }
 
+function csvToPdfTable(csv: string): string {
+  const lines = csv.split('\r\n').filter((line) => line.trim());
+  if (lines.length === 0) return '';
+
+  const rows = lines.map((line) => {
+    const cells: string[] = [];
+    let cell = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === ',' && !inQuotes) {
+        cells.push(cell);
+        cell = '';
+      } else {
+        cell += char;
+      }
+    }
+    cells.push(cell);
+    return cells;
+  });
+
+  if (rows.length === 0) return '';
+
+  const headers = rows[0];
+  const data = rows.slice(1);
+
+  // Generate HTML table
+  let html = '<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; font-family: Arial, sans-serif; font-size: 11px;">';
+  html += '<thead style="background-color: #f0f0f0; font-weight: bold;">';
+  html += '<tr>';
+  headers.forEach((header) => {
+    html += `<td style="border: 1px solid #333; padding: 8px;">${header}</td>`;
+  });
+  html += '</tr>';
+  html += '</thead>';
+  html += '<tbody>';
+  data.forEach((row) => {
+    html += '<tr>';
+    row.forEach((cell) => {
+      html += `<td style="border: 1px solid #ddd; padding: 8px;">${cell}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody>';
+  html += '</table>';
+
+  return html;
+}
+
 type SummaryRow = {
   destination: string;
   period: string;
@@ -183,6 +234,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const from = String(req.query.from || '').trim() || undefined;
   const to = String(req.query.to || '').trim() || undefined;
   const selectedSlugs = String(req.query.destinations || '').split(',').map((slug) => slug.trim().toLowerCase()).filter(Boolean).slice(0, 5);
+  const format = String(req.query.format || 'csv').trim().toLowerCase();
+
+  // Validate format parameter
+  if (!['csv', 'pdf'].includes(format)) {
+    return res.status(400).json({ error: 'Invalid format parameter. Use csv or pdf.' });
+  }
 
   try {
     const supabaseAdmin = getSupabaseAdmin();
@@ -198,9 +255,37 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const config = EXPORT_CONFIG[selectedTable as keyof typeof EXPORT_CONFIG];
       const { data } = await config.query(supabaseAdmin);
       const csv = toCSV(data || [], config.columns);
-      res.setHeader('Content-Type', 'text/csv; charset=utf-8');
-      res.setHeader('Content-Disposition', `attachment; filename="travelogue_${selectedTable}.csv"`);
-      res.send(`\uFEFF${csv}`);
+      
+      if (format === 'pdf') {
+        const table = csvToPdfTable(csv);
+        const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Travelogue ${selectedTable} Export</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { font-size: 18px; margin-bottom: 20px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #333; padding: 8px; text-align: left; }
+    th { background-color: #f0f0f0; font-weight: bold; }
+    @media print { body { margin: 0; } }
+  </style>
+</head>
+<body>
+  <h1>Travelogue ${selectedTable} Export</h1>
+  <p>Generated on: ${new Date().toISOString()}</p>
+  ${table}
+</body>
+</html>`;
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        res.setHeader('Content-Disposition', `attachment; filename="travelogue_${selectedTable}.html"`);
+        res.send(html);
+      } else {
+        res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+        res.setHeader('Content-Disposition', `attachment; filename="travelogue_${selectedTable}.csv"`);
+        res.send(`\uFEFF${csv}`);
+      }
       return;
     }
 
@@ -242,9 +327,41 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       'time_on_site_seconds',
       'time_on_site_minutes',
     ]);
-    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
-    res.setHeader('Content-Disposition', 'attachment; filename="travelogue_analytics_summary.csv"');
-    res.send(`\uFEFF${csv}`);
+    
+    if (format === 'pdf') {
+      const table = csvToPdfTable(csv);
+      const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Travelogue Analytics Export</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { font-size: 18px; margin-bottom: 10px; }
+    .info { font-size: 12px; color: #666; margin-bottom: 20px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #333; padding: 8px; text-align: left; font-size: 11px; }
+    th { background-color: #f0f0f0; font-weight: bold; }
+    @media print { body { margin: 0; } }
+  </style>
+</head>
+<body>
+  <h1>Travelogue Analytics Summary</h1>
+  <div class="info">
+    <p>Report Period: ${effectiveFrom} to ${effectiveTo}</p>
+    <p>Generated on: ${new Date().toISOString()}</p>
+  </div>
+  ${table}
+</body>
+</html>`;
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      res.setHeader('Content-Disposition', 'attachment; filename="travelogue_analytics_summary.html"');
+      res.send(html);
+    } else {
+      res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+      res.setHeader('Content-Disposition', 'attachment; filename="travelogue_analytics_summary.csv"');
+      res.send(`\uFEFF${csv}`);
+    }
   } catch (e) {
     console.error('Export error', e);
     res.status(500).json({ error: 'export failed' });

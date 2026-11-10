@@ -6,6 +6,7 @@ import '../styles/globals.css';
 import { I18nProvider, useTranslation, LANG_GROUPS } from '../lib/i18n';
 import { sendEngagement, getScanId } from '../lib/engagement';
 import { useSiteLogo } from '../lib/useSiteBranding';
+import LoadingNotification from '../components/LoadingNotification';
 
 function WelcomeOverlay() {
   const [show, setShow] = useState(false);
@@ -337,6 +338,7 @@ function AppContent({ Component, pageProps }: Pick<AppProps, 'Component' | 'page
     );
     return (
       <>
+        <LoadingNotification />
         <Header />
         <WelcomeOverlay />
         <BackToTop />

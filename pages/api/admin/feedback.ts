@@ -30,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!Array.isArray(ids) || ids.some((id) => typeof id !== 'string')) {
       return res.status(400).json({ error: 'featuredIds must be an array of feedback ids.' });
     }
-    if (ids.length > 6) return res.status(400).json({ error: 'You can feature up to 6 reviews.' });
+    if (ids.length > 15) return res.status(400).json({ error: 'You can feature up to 15 reviews.' });
     const { error: clearError } = await supabaseAdmin.from('destination_feedback').update({ featured: false }).eq('featured', true);
     if (clearError) return res.status(500).json({ error: clearError.message });
 

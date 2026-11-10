@@ -42,6 +42,9 @@ const INTEREST_KEYWORDS: Record<string, RegExp> = {
   adventure: /surf|dive|trek|climb|zipline|canyon|kayak|hike|adventure|island hopping/i,
 };
 
+// Greeting detection for conversational replies
+const GREETING_WORDS = /^\s*(hello|hi|hey|mabuhay|kumusta|kusta|good morning|good afternoon|good evening|konnichiwa|hola|namaste|salaam|بسلام)\b/i;
+
 function toCard(destination: Destination, lang: Lang = 'en'): DestinationCard {
   const local = localizedDestination(destination, lang);
   return {
@@ -370,22 +373,32 @@ function answerContactQuestion(message: string, contacts: PublicContact[], lang:
   return `${atext(lang, 'contactIntro')}\n${details}\n\n${atext(lang, 'moreContacts')} /contact`;
 }
 
+function isGreeting(message: string) {
+  return GREETING_WORDS.test(message);
+}
+
 function fallbackReply(message: string, destinations: Destination[], contacts: PublicContact[], lang: Lang) {
   if (ADMIN_ONLY_QUESTION.test(message)) return atext(lang, 'admin');
+  if (isGreeting(message)) return atext(lang, 'greeting');
   if (CONTACT_WORDS.test(message)) return answerContactQuestion(message, contacts, lang);
   const month = requestedMonth(message);
   const destination = findDestination(message, destinations);
   if (destination && isTimingQuestion(message)) {
     return answerDestinationTiming(destination, month || MONTHS[new Date().getMonth()], lang);
   }
+  if (destination && /\bfood|cuisine|eat|delic\b/i.test(message)) {
+    return answerDestinationFood(destination, lang);
+  }
+  if (destination && /\btip|advice|guide\b/i.test(message)) {
+    return answerDestinationTips(destination, lang);
+  }
   if (month && isMonthRecommendation(message)) return recommendForMonth(month, destinations, lang);
   if (destination) {
-    if (lang === 'en') return `${destinationContext(destination)}\n\n${atext(lang, 'moreDetails')}: /destination/${destination.slug}`;
     const local = localizedDestination(destination, lang);
+    const blurb = local.short_description || destination.short_description;
     return [
       local.name || destination.name,
-      local.short_description || destination.short_description,
-      destination.best_time_to_visit && `${atext(lang, 'bestTime')}: ${local.best_time_to_visit || destination.best_time_to_visit}`,
+      blurb && clean(blurb, 200),
       `${atext(lang, 'moreDetails')}: /destination/${destination.slug}`,
     ].filter(Boolean).join('\n');
   }
@@ -400,6 +413,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   const lang = normalizeLang(req.body?.lang);
   const intent = typeof req.body?.intent === 'string' ? req.body.intent : '';
+
+  // Quick response for greetings (no need to load destinations)
+  if (!intent && isGreeting(message)) {
+    return res.status(200).json({ reply: atext(lang, 'greeting'), followUps: [{ intent: 'plan' }, { intent: 'popular' }, { intent: 'contact' }] });
+  }
 
   if (ADMIN_ONLY_QUESTION.test(message) && !intent) {
     return res.status(200).json({ reply: atext(lang, 'admin') });

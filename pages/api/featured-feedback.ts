@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     .select('*')
     .eq('featured', true)
     .order('created_at', { ascending: false })
-    .limit(6);
+    .limit(15);
   if (error) return res.status(500).json({ error: error.message });
 
   const slugs = Array.from(new Set((feedback || []).map((item: any) => item.destination_slug).filter((slug: string) => slug && slug !== 'travelogue')));
@@ -22,18 +22,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const names = new Map<string, string>((destinations || []).map((destination: any) => [destination.slug, destination.name]));
   names.set('travelogue', 'Philippines Travelogue');
+  
+  const filtered = (feedback || [])
+    .filter((item: any) => names.has(item.destination_slug))
+    .map((item: any) => ({
+      id: item.id,
+      destination_slug: item.destination_slug,
+      rating: item.rating,
+      comment: item.comment,
+      photo_urls: item.photo_urls,
+      created_at: item.created_at,
+      nickname: item.nickname || null,
+      destination_name: names.get(item.destination_slug),
+    }));
+  
+  // Auto-adjust to show even rows (multiples of 5: 5, 10, or 15)
+  let displayCount = filtered.length;
+  if (displayCount > 0) {
+    if (displayCount <= 5) displayCount = Math.min(5, displayCount);
+    else if (displayCount <= 10) displayCount = Math.min(10, displayCount);
+    else displayCount = Math.min(15, displayCount);
+  }
+  
   return res.json({
-    feedback: (feedback || [])
-      .filter((item: any) => names.has(item.destination_slug))
-      .map((item: any) => ({
-        id: item.id,
-        destination_slug: item.destination_slug,
-        rating: item.rating,
-        comment: item.comment,
-        photo_urls: item.photo_urls,
-        created_at: item.created_at,
-        nickname: item.nickname || null,
-        destination_name: names.get(item.destination_slug),
-      })),
+    feedback: filtered.slice(0, displayCount),
   });
 }

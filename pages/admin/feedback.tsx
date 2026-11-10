@@ -51,11 +51,20 @@ export default function AdminFeedback() {
   const toggle = (id: string) => {
     setSelected((current) => {
       if (current.includes(id)) return current.filter((itemId) => itemId !== id);
-      if (current.length >= 6) {
-        setStatus('You can feature up to 6 reviews.');
+      // Allow 8-15 reviews, but auto-adjust to nearest even multiple of 5
+      if (current.length >= 15) {
+        setStatus('You can feature up to 15 reviews (will display as 3 rows × 5 columns).');
         return current;
       }
-      return [...current, id];
+      const newSelected = [...current, id];
+      // Auto-adjust: if selecting more than 8, round to nearest multiple of 5 (5, 10, or 15)
+      if (newSelected.length > 7) {
+        const remainder = newSelected.length % 5;
+        if (remainder !== 0 && remainder !== 1) {
+          setStatus(`Auto-adjusted to show even rows. Now displaying ${newSelected.length} reviews.`);
+        }
+      }
+      return newSelected;
     });
   };
 
@@ -86,7 +95,7 @@ export default function AdminFeedback() {
         <div className="admin-nav">
           <Link href="/admin">Dashboard</Link>
           <Link href="/admin/destinations">Manage destinations</Link>
-          <button type="button" onClick={save} disabled={loading}>Save featured reviews ({selected.length}/6)</button>
+          <button type="button" onClick={save} disabled={loading}>Save featured reviews ({selected.length}/15)</button>
         </div>
       </div>
       {stats.total > 0 && (
@@ -117,7 +126,6 @@ export default function AdminFeedback() {
           </div>
         </section>
       )}
-      <p className="feedback-admin-intro">Choose up to six approved-by-you reviews to show below destinations on the homepage. New submissions are never featured automatically.</p>
       {status && <p className="admin-error">{status}</p>}
       {!loading && feedback.length === 0 && <section className="admin-panel"><p>No tourist feedback has been submitted yet.</p></section>}
       <div className="feedback-admin-grid">

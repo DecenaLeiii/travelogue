@@ -503,10 +503,10 @@ function SearchableDestinations({ initial: rawInitial }: { initial: Destination[
     <div>
       <div style={{ marginBottom: 12 }}>
         <input
+          className="search-destinations-input"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={t('searchDestinations')}
-          style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid #eee' }}
         />
       </div>
       <div className="card-row">

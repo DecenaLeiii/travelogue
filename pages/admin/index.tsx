@@ -311,14 +311,24 @@ export default function AdminDashboard({ analytics, error: initialError }: Props
                 </div>
               </div>
             </div>
-            <a
-              className={`details-btn export-download${exportDatesMissing || exportRangeTooLong || exportScopeInvalid ? ' disabled' : ''}`}
-              href={exportDatesMissing || exportRangeTooLong || exportScopeInvalid ? undefined : exportHref}
-              download={!exportDatesMissing && !exportRangeTooLong && !exportScopeInvalid}
-              onClick={(event) => { if (exportDatesMissing || exportRangeTooLong || exportScopeInvalid) event.preventDefault(); }}
-            >
-              Download CSV
-            </a>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <a
+                className={`details-btn export-download${exportDatesMissing || exportRangeTooLong || exportScopeInvalid ? ' disabled' : ''}`}
+                href={exportDatesMissing || exportRangeTooLong || exportScopeInvalid ? undefined : exportHref + '&format=csv'}
+                download={!exportDatesMissing && !exportRangeTooLong && !exportScopeInvalid}
+                onClick={(event) => { if (exportDatesMissing || exportRangeTooLong || exportScopeInvalid) event.preventDefault(); }}
+              >
+                Download CSV
+              </a>
+              <a
+                className={`details-btn export-download${exportDatesMissing || exportRangeTooLong || exportScopeInvalid ? ' disabled' : ''}`}
+                href={exportDatesMissing || exportRangeTooLong || exportScopeInvalid ? undefined : exportHref + '&format=pdf'}
+                download={!exportDatesMissing && !exportRangeTooLong && !exportScopeInvalid}
+                onClick={(event) => { if (exportDatesMissing || exportRangeTooLong || exportScopeInvalid) event.preventDefault(); }}
+              >
+                Download PDF
+              </a>
+            </div>
             {exportDatesMissing && <span className="export-warning">Select both From and To dates before downloading.</span>}
             {exportRangeTooLong && <span className="export-warning">Choose a maximum of 31 days.</span>}
             {exportScopeInvalid && <span className="export-warning">Choose All destinations or at least one destination.</span>}
