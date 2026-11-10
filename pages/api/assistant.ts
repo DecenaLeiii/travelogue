@@ -116,6 +116,28 @@ function lastMentionedDestination(history: HistoryItem[], destinations: Destinat
   return undefined;
 }
 
+function generateSuggestionsForUnanswered(destination: Destination, lang: Lang): FollowUp[] {
+  const name = localizedDestination(destination, lang).name || destination.name;
+  const ask = (q: QuestionKey): FollowUp => ({ intent: 'ask', q, slug: destination.slug, name });
+  const allSuggestions: FollowUp[] = [
+    ask('loc'),
+    ask('known'),
+    ask('fee'),
+    ask('hours'),
+    ask('how'),
+    ask('activities'),
+    ask('halal'),
+    ask('prayer'),
+    { intent: 'timing', slug: destination.slug, name },
+    ask('nearby'),
+    { intent: 'tips', slug: destination.slug, name },
+    { intent: 'food', slug: destination.slug, name },
+  ];
+  // Limit to 3-4 suggestions to avoid overwhelming the user
+  const suggestionCount = Math.min(4, Math.ceil(allSuggestions.length / 3));
+  return allSuggestions.slice(0, suggestionCount);
+}
+
 function followUpsFor(destination: Destination | undefined, lang: Lang): FollowUp[] {
   if (destination) {
     const name = localizedDestination(destination, lang).name || destination.name;
@@ -314,9 +336,10 @@ function recommendForMonth(month: string, destinations: Destination[], lang: Lan
   if (!matches.length) return atext(lang, 'monthNone', { m: label });
   const recommendations = matches.map((destination) => {
     const local = localizedDestination(destination, lang);
-    return `• ${local.name || destination.name}: ${local.short_description || destination.short_description || ''}\n  ${atext(lang, 'bestTime')}: ${local.best_time_to_visit || destination.best_time_to_visit}\n  /destination/${destination.slug}`;
+    return `${local.name || destination.name} (${local.short_description || destination.short_description || ''})`;
   });
-  return `${atext(lang, 'monthHeader', { m: label })}\n\n${recommendations.join('\n\n')}`;
+  const recommendationsSentence = recommendations.join(', ');
+  return `${atext(lang, 'monthHeader', { m: label })}\n${recommendationsSentence}.\n\nMore details: ${matches.map((d) => `/destination/${d.slug}`).join(', ')}`;
 }
 
 function isMonthRecommendation(message: string) {
@@ -340,7 +363,8 @@ function answerDestinationTips(destination: Destination, lang: Lang) {
   const name = local.name || destination.name;
   const tips = (local.travel_tips?.length ? local.travel_tips : destination.travel_tips) || [];
   if (!tips.length) return `${atext(lang, 'noTips', { n: name })}\n/destination/${destination.slug}`;
-  return `${atext(lang, 'tipsHeader', { n: name })}\n${tips.slice(0, 6).map((tip) => `• ${clean(tip, 220)}`).join('\n')}\n\n/destination/${destination.slug}`;
+  const tipsSentence = tips.slice(0, 6).map((tip) => clean(tip, 220)).join(' ');
+  return `${atext(lang, 'tipsHeader', { n: name })}\n${tipsSentence}\n\n/destination/${destination.slug}`;
 }
 
 function answerDestinationFood(destination: Destination, lang: Lang) {
@@ -350,7 +374,8 @@ function answerDestinationFood(destination: Destination, lang: Lang) {
     ...(destination.destination_categories || []).filter((category) => /food|cuisine|eat|delic/i.test(category.title)).flatMap((category) => category.items.map((item) => item.name)),
   ].filter(Boolean);
   if (!foods.length) return `${atext(lang, 'noFood', { n: name })}\n/destination/${destination.slug}`;
-  return `${atext(lang, 'foodHeader', { n: name })}\n${foods.slice(0, 8).map((food) => `• ${food}`).join('\n')}\n\n/destination/${destination.slug}`;
+  const foodList = foods.slice(0, 8).join(', ');
+  return `${atext(lang, 'foodHeader', { n: name })}\n${foodList}.\n\n/destination/${destination.slug}`;
 }
 
 function answerContactQuestion(message: string, contacts: PublicContact[], lang: Lang) {
@@ -480,7 +505,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const focus = destination ? `The traveler is currently discussing: ${destination.name}.` : '';
     try {
       const reply = await callOpenAI(message.trim(), `${publicContext}${focus ? `\n\n${focus}` : ''}`, history, plan, lang);
-      if (reply) return res.status(200).json({ reply, destinations: destination ? [toCard(destination, lang)] : undefined, followUps });
+      if (reply) return res.status(200).json({ reply, destinations: destination ? [toCard(destination, lang)] : undefined, followUps: destination ? generateSuggestionsForUnanswered(destination, lang) : followUps });
     } catch (error) {
       console.warn('Assistant model unavailable; answering from public Travelogue data.', error);
     }
@@ -488,10 +513,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     if (ruleReply === atext(lang, 'fallback')) {
       return res.status(200).json({
         reply: `${atext(lang, 'noAnswer')}\n/contact`,
-        followUps: [{ intent: 'plan' }, { intent: 'popular' }, { intent: 'contact' }],
+        followUps: destination ? generateSuggestionsForUnanswered(destination, lang) : [{ intent: 'plan' }, { intent: 'popular' }, { intent: 'contact' }],
       });
     }
-    return res.status(200).json({ reply: ruleReply, destinations: mentioned ? [toCard(mentioned, lang)] : undefined, followUps });
+    return res.status(200).json({ reply: ruleReply, destinations: mentioned ? [toCard(mentioned, lang)] : undefined, followUps: destination ? generateSuggestionsForUnanswered(destination, lang) : followUps });
   } catch (error) {
     console.error('Public assistant context unavailable', error);
     return res.status(200).json({ reply: atext(lang, 'loadError') });

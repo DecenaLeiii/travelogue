@@ -8,6 +8,7 @@ import { parseContentSections } from '../../lib/content';
 import { Destination } from '../../lib/destinations';
 import FloatingAssistant from '../../components/FloatingAssistant';
 import FeedbackForm from '../../components/FeedbackForm';
+import DestinationMap from '../../components/DestinationMap';
 
 type Props = {
   destination: Destination | null;
@@ -206,6 +207,8 @@ export default function DestinationPage({ destination, related }: Props) {
             </div>
           )}
         </div>
+
+        <DestinationMap destination={destination} />
 
         {(translated?.full || translated?.content || destination.content) && (
           <section className="dest-section">

@@ -26,6 +26,8 @@ export type Destination = {
   published?: boolean;
   created_at?: string;
   updated_at?: string;
+  latitude?: number;
+  longitude?: number;
 };
 
 export const DESCRIPTION_MAP: Record<string, string> = {
