@@ -13,6 +13,12 @@ export type DestinationCategoryData = {
   items: (CategoryItem & { destination_name: string; destination_slug: string })[];
 };
 
+export type FeaturedItemsConfig = {
+  [destination_slug: string]: {
+    [category_name: string]: string[]; // array of selected item names
+  };
+};
+
 /**
  * Extract all items from a specific category across all destinations
  * @param destinations - Array of destinations
@@ -101,7 +107,7 @@ export function getAvailableCategoryNames(destinations: Destination[]): Set<stri
 }
 
 /**
- * Get featured categories data for homepage display
+ * Get featured categories data for homepage display (legacy format)
  */
 export function getFeaturedCategoriesForHomepage(
   destinations: Destination[],
@@ -117,4 +123,77 @@ export function getFeaturedCategoriesForHomepage(
       };
     })
     .filter((cat) => cat.items.length > 0); // Only include categories with items
+}
+
+/**
+ * Get featured items data for homepage display (new destination-centric format)
+ * Returns featured items organized by destination and category
+ */
+export function getFeaturedItemsForHomepage(
+  destinations: Destination[],
+  featuredItems: FeaturedItemsConfig = {},
+): DestinationCategoryData[] {
+  const result: DestinationCategoryData[] = [];
+  const destinationMap = new Map(destinations.map(d => [d.slug, d]));
+
+  // Process featured items organized by destination
+  for (const [destSlug, categories] of Object.entries(featuredItems)) {
+    const destination = destinationMap.get(destSlug);
+    if (!destination || !destination.published) continue;
+
+    for (const [categoryName, selectedItemNames] of Object.entries(categories)) {
+      if (!Array.isArray(selectedItemNames) || selectedItemNames.length === 0) continue;
+
+      // Find items from this destination and category
+      const categoryItems: DestinationCategoryData['items'] = [];
+
+      // Check local_foods
+      if (categoryName === 'local_foods' && destination.local_foods?.length) {
+        for (const food of destination.local_foods) {
+          if (selectedItemNames.includes(food.name)) {
+            categoryItems.push({
+              name: food.name,
+              description: food.description,
+              image: food.image,
+              destination_name: destination.name,
+              destination_slug: destination.slug,
+            });
+          }
+        }
+      }
+
+      // Check destination_categories
+      if (destination.destination_categories?.length) {
+        for (const cat of destination.destination_categories) {
+          if (
+            cat.title?.toLowerCase() === categoryName.toLowerCase() ||
+            cat.title?.toLowerCase().replace(/\s+/g, '_') === categoryName.toLowerCase()
+          ) {
+            for (const item of cat.items) {
+              if (selectedItemNames.includes(item.name)) {
+                categoryItems.push({
+                  name: item.name,
+                  description: item.description,
+                  image: item.image,
+                  destination_name: destination.name,
+                  destination_slug: destination.slug,
+                });
+              }
+            }
+          }
+        }
+      }
+
+      // Add to results if we found matching items
+      if (categoryItems.length > 0) {
+        result.push({
+          category_name: categoryName,
+          display_name: categoryName.charAt(0).toUpperCase() + categoryName.slice(1).replace(/_/g, ' '),
+          items: categoryItems,
+        });
+      }
+    }
+  }
+
+  return result;
 }

@@ -5,8 +5,14 @@ import { verifyAdmin } from '../../../lib/auth';
 
 type ResponseData = {
   success?: boolean;
-  featured_categories?: any[];
+  featured_items?: any;
   error?: string;
+};
+
+type FeaturedItemsConfig = {
+  [destination_slug: string]: {
+    [category_name: string]: string[];
+  };
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
@@ -17,22 +23,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
 
     if (req.method === 'PUT') {
-      const { featured_categories } = req.body;
+      const { featured_items } = req.body;
 
-      if (!Array.isArray(featured_categories)) {
-        return res.status(400).json({ error: 'featured_categories must be an array' });
+      if (typeof featured_items !== 'object' || featured_items === null || Array.isArray(featured_items)) {
+        return res.status(400).json({ error: 'featured_items must be an object' });
       }
 
-      // Validate each category
-      for (const cat of featured_categories) {
-        if (!cat.category_name || !cat.display_name) {
-          return res.status(400).json({ error: 'Each category must have category_name and display_name' });
+      // Validate structure: {destination_slug: {category_name: [item_names]}}
+      for (const [destSlug, categories] of Object.entries(featured_items)) {
+        if (typeof categories !== 'object' || categories === null || Array.isArray(categories)) {
+          return res.status(400).json({ error: `featured_items["${destSlug}"] must be an object` });
         }
-      }
-
-      // Max 5 categories
-      if (featured_categories.length > 5) {
-        return res.status(400).json({ error: 'Maximum 5 featured categories allowed' });
+        for (const [categoryName, items] of Object.entries(categories)) {
+          if (!Array.isArray(items)) {
+            return res.status(400).json({ error: `featured_items["${destSlug}"]["${categoryName}"] must be an array` });
+          }
+          for (const item of items) {
+            if (typeof item !== 'string') {
+              return res.status(400).json({ error: `featured_items["${destSlug}"]["${categoryName}"] must contain only strings` });
+            }
+          }
+        }
       }
 
       // Read current site branding
@@ -43,16 +54,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         siteBrandingData = JSON.parse(fs.readFileSync(siteBrandingPath, 'utf-8'));
       }
 
-      // Update featured categories
+      // Update featured items (remove old featured_categories if present)
       siteBrandingData = {
         ...siteBrandingData,
-        featured_categories,
+        featured_items: featured_items as FeaturedItemsConfig,
       };
+      
+      // Remove legacy featured_categories
+      delete (siteBrandingData as any).featured_categories;
 
       // Write back to file
       fs.writeFileSync(siteBrandingPath, JSON.stringify(siteBrandingData, null, 2));
 
-      return res.status(200).json({ success: true, featured_categories });
+      return res.status(200).json({ success: true, featured_items });
     }
 
     return res.status(405).json({ error: 'Method not allowed' });

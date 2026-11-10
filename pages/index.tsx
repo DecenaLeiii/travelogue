@@ -13,7 +13,7 @@ import { useTranslation } from '../lib/i18n';
 import { DEFAULT_PROMO_SPOTS, PromoSpot } from '../lib/promoSpots';
 import { useSiteLogo } from '../lib/useSiteBranding';
 import type { CultureBlock } from '../lib/siteBranding';
-import { getFeaturedCategoriesForHomepage, type DestinationCategoryData } from '../lib/destinationCategoryUtils';
+import { getFeaturedCategoriesForHomepage, getFeaturedItemsForHomepage, type DestinationCategoryData } from '../lib/destinationCategoryUtils';
 
 type Destination = {
   id: string;
@@ -276,6 +276,59 @@ export default function Home({ initialDestinations, initialFeaturedCategories = 
             </div>
           </section>
 
+          <FeaturedCategoriesSection categories={featuredCategories} t={t} />
+
+          <div className="promo-marquee" aria-label="Featured travel spots">
+            <div className="promo-track">
+              {promoSpots.concat(promoSpots).map((spot, index) => (
+                  <div className="promo-card" key={`${spot.title}-${index}`}>
+                    <div className="promo-image" style={{ backgroundImage: `url(${spot.image})` }} />
+                    <div className="promo-overlay" />
+                    <div className="promo-label">{spot.title}</div>
+                  </div>
+                ))}
+            </div>
+          </div>
+
+          {qrOpen && (
+            <div className="modal-backdrop" onClick={() => setQrOpen(false)}>
+              <div className="modal" onClick={(e)=>e.stopPropagation()} style={{maxWidth:420}}>
+                <button className="close" onClick={()=>setQrOpen(false)}>✕</button>
+                <div style={{display:'flex',flexDirection:'column',gap:12,alignItems:'center'}}>
+                  {mainQr ? <img src={mainQr} alt="QR Travelogue Large" style={{width:320,height:320}} /> : <div style={{width:320,height:320}} />}
+                  <div style={{display:'flex',gap:8}}>
+                    <a href={mainQr || undefined}                     download="travelogue-qr.png" className="cta">Download QR</a>
+                                        <button className="secondary-cta" onClick={async ()=>{ try{ await navigator.clipboard.writeText(shareUrl); alert('Share URL copied to clipboard') }catch(e){ alert('Copy failed') } }}>Copy link</button>
+                  </div>
+                  <div style={{fontSize:13,color:'#64748b',textAlign:'center'}}>Scan this QR to open the travelogue on mobile, or download to print/share.</div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <h2 id="destinations">{t('featuredDestinations')}</h2>
+          <div>
+            <SearchableDestinations initial={destinations} />
+          </div>
+          {featuredReviews.length > 0 && (
+            <section className="home-testimonials" aria-labelledby="home-testimonials-title">
+              <div className="home-testimonials-heading">
+                <p className="panel-label">Traveler stories</p>
+                <h2 id="home-testimonials-title">What visitors are saying</h2>
+              </div>
+              <div className="home-testimonial-grid">
+                {featuredReviews.map((review) => (
+                  <TestimonialCard key={review.id} review={review} />
+                ))}
+              </div>
+            </section>
+          )}
+          <div className="feedback-bar-wrap">
+            <button type="button" className="feedback-bar" onClick={() => setFeedbackOpen(true)}>
+              Give Feedback
+            </button>
+          </div>
+
           <section className="tourism-culture-section" aria-labelledby="tourism-culture-title">
             <h2 id="tourism-culture-title">
               {lang === 'en' && cultureContent.tourism_heading ? cultureContent.tourism_heading : t('tourismHeading')}
@@ -366,59 +419,6 @@ export default function Home({ initialDestinations, initialFeaturedCategories = 
               </div>
             </div>
           </section>
-
-          <FeaturedCategoriesSection categories={featuredCategories} t={t} />
-
-          <div className="promo-marquee" aria-label="Featured travel spots">
-            <div className="promo-track">
-              {promoSpots.concat(promoSpots).map((spot, index) => (
-                  <div className="promo-card" key={`${spot.title}-${index}`}>
-                    <div className="promo-image" style={{ backgroundImage: `url(${spot.image})` }} />
-                    <div className="promo-overlay" />
-                    <div className="promo-label">{spot.title}</div>
-                  </div>
-                ))}
-            </div>
-          </div>
-
-          {qrOpen && (
-            <div className="modal-backdrop" onClick={() => setQrOpen(false)}>
-              <div className="modal" onClick={(e)=>e.stopPropagation()} style={{maxWidth:420}}>
-                <button className="close" onClick={()=>setQrOpen(false)}>✕</button>
-                <div style={{display:'flex',flexDirection:'column',gap:12,alignItems:'center'}}>
-                  {mainQr ? <img src={mainQr} alt="QR Travelogue Large" style={{width:320,height:320}} /> : <div style={{width:320,height:320}} />}
-                  <div style={{display:'flex',gap:8}}>
-                    <a href={mainQr || undefined}                     download="travelogue-qr.png" className="cta">Download QR</a>
-                                        <button className="secondary-cta" onClick={async ()=>{ try{ await navigator.clipboard.writeText(shareUrl); alert('Share URL copied to clipboard') }catch(e){ alert('Copy failed') } }}>Copy link</button>
-                  </div>
-                  <div style={{fontSize:13,color:'#64748b',textAlign:'center'}}>Scan this QR to open the travelogue on mobile, or download to print/share.</div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          <h2 id="destinations">{t('featuredDestinations')}</h2>
-          <div>
-            <SearchableDestinations initial={destinations} />
-          </div>
-          {featuredReviews.length > 0 && (
-            <section className="home-testimonials" aria-labelledby="home-testimonials-title">
-              <div className="home-testimonials-heading">
-                <p className="panel-label">Traveler stories</p>
-                <h2 id="home-testimonials-title">What visitors are saying</h2>
-              </div>
-              <div className="home-testimonial-grid">
-                {featuredReviews.map((review) => (
-                  <TestimonialCard key={review.id} review={review} />
-                ))}
-              </div>
-            </section>
-          )}
-          <div className="feedback-bar-wrap">
-            <button type="button" className="feedback-bar" onClick={() => setFeedbackOpen(true)}>
-              Give Feedback
-            </button>
-          </div>
         </div>
       </main>
     </div>
@@ -642,21 +642,20 @@ export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const fs = require('fs');
     const path = require('path');
-    const destinationsPath = path.join(process.cwd(), 'db', 'destinations_full.json');
     const siteBrandingPath = path.join(process.cwd(), 'db', 'site_branding.json');
     
-    if (fs.existsSync(destinationsPath) && fs.existsSync(siteBrandingPath)) {
-      const destinationsData = JSON.parse(fs.readFileSync(destinationsPath, 'utf-8'));
+    if (fs.existsSync(siteBrandingPath)) {
       const siteBrandingData = JSON.parse(fs.readFileSync(siteBrandingPath, 'utf-8'));
       
-      const destinations = Array.isArray(destinationsData) ? destinationsData : 
-                          Array.isArray(destinationsData.destinations) ? destinationsData.destinations : [];
-      const featured_categories = Array.isArray(siteBrandingData.featured_categories)
-        ? siteBrandingData.featured_categories
-        : [];
-      
-      if (featured_categories.length) {
-        initialFeaturedCategories = getFeaturedCategoriesForHomepage(destinations, featured_categories);
+      // Try new featured_items format first
+      if (siteBrandingData.featured_items && typeof siteBrandingData.featured_items === 'object') {
+        const { getFeaturedItemsForHomepage } = require('../lib/destinationCategoryUtils');
+        // Use initialDestinations which has full data from Supabase/database
+        initialFeaturedCategories = getFeaturedItemsForHomepage(initialDestinations, siteBrandingData.featured_items);
+      } 
+      // Fall back to legacy featured_categories format
+      else if (Array.isArray(siteBrandingData.featured_categories)) {
+        initialFeaturedCategories = getFeaturedCategoriesForHomepage(initialDestinations, siteBrandingData.featured_categories);
       }
     }
   } catch (error) {

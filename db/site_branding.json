@@ -29,11 +29,24 @@
       "archived": true
     }
   ],
-  "featured_categories": [
-    {
-      "category_name": "local_foods",
-      "display_name": "Local Delicacies",
-      "items_count": 3
+  "featured_items": {
+    "baguio": {
+      "featured_foods": [
+        "Strawberry"
+      ],
+      "best_pasalubong_shops": []
+    },
+    "tagaytay": {
+      "local_food": [
+        "Bulalo",
+        "Buko Pie"
+      ]
+    },
+    "hundred-islands": {
+      "activities": [
+        "Island Hopping"
+      ],
+      "local_food": []
     }
-  ]
+  }
 }

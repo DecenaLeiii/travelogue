@@ -5,98 +5,67 @@ import Link from 'next/link';
 import { useTranslation } from '../../lib/i18n';
 import { verifyAdmin } from '../../lib/auth';
 import { getPublishedDestinations, type Destination } from '../../lib/destinations';
-import { extractDestinationCategory } from '../../lib/destinationCategoryUtils';
-
-type FeaturedCategoryConfig = {
-  category_name: string;
-  display_name: string;
-  items_count?: number;
-};
 
 type CategoryItem = {
   name: string;
   description?: string;
   image?: string;
-  destination_name: string;
-  destination_slug: string;
 };
 
-type AvailableCategory = {
-  category_name: string;
-  destination_name: string;
-  destination_slug: string;
-  items_count: number;
+type DestinationCategory = {
+  title: string;
+  items: CategoryItem[];
+};
+
+type DestinationWithCategories = {
+  name: string;
+  slug: string;
+  destination_categories?: DestinationCategory[];
+  local_foods?: CategoryItem[];
+};
+
+type FeaturedItemsConfig = {
+  [destination_slug: string]: {
+    [category_name: string]: string[]; // array of selected item names
+  };
 };
 
 type Props = {
-  availableCategories: AvailableCategory[];
-  initialFeaturedCategories: FeaturedCategoryConfig[];
-  allDestinations: Destination[];
+  allDestinations: DestinationWithCategories[];
+  initialFeaturedItems: FeaturedItemsConfig;
 };
 
-export default function FeaturedCategoriesAdmin({ availableCategories, initialFeaturedCategories, allDestinations }: Props) {
+export default function FeaturedCategoriesAdmin({ allDestinations, initialFeaturedItems }: Props) {
   const router = useRouter();
   const { t } = useTranslation();
-  const [featuredCategories, setFeaturedCategories] = useState<FeaturedCategoryConfig[]>(initialFeaturedCategories);
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [newDisplayName, setNewDisplayName] = useState('');
-  const [newItemsCount, setNewItemsCount] = useState('3');
+  const [selectedDestination, setSelectedDestination] = useState('');
+  const [featuredItems, setFeaturedItems] = useState<FeaturedItemsConfig>(initialFeaturedItems);
   const [status, setStatus] = useState('');
   const [saving, setSaving] = useState(false);
-  const [selectedCategoryItems, setSelectedCategoryItems] = useState<CategoryItem[]>([]);
 
-  // Get items for selected category
-  useEffect(() => {
-    if (!selectedCategory) {
-      setSelectedCategoryItems([]);
-      return;
-    }
+  const currentDestination = selectedDestination 
+    ? allDestinations.find(d => d.slug === selectedDestination)
+    : null;
 
-    const categoryData = extractDestinationCategory(allDestinations, selectedCategory, 'temp');
-    setSelectedCategoryItems(categoryData.items);
-  }, [selectedCategory, allDestinations]);
-
-  const handleAddCategory = () => {
-    if (!selectedCategory.trim() || !newDisplayName.trim()) {
-      setStatus('Please select a category and enter a display name');
-      return;
-    }
-
-    if (featuredCategories.some((cat) => cat.category_name === selectedCategory)) {
-      setStatus('This category is already featured');
-      return;
-    }
-
-    if (featuredCategories.length >= 5) {
-      setStatus('Maximum 5 categories allowed');
-      return;
-    }
-
-    const itemsCount = Math.max(1, Math.min(parseInt(newItemsCount) || 3, 10));
-    setFeaturedCategories([...featuredCategories, { category_name: selectedCategory, display_name: newDisplayName, items_count: itemsCount }]);
-    
-    // Reset form
-    setSelectedCategory('');
-    setNewDisplayName('');
-    setNewItemsCount('3');
-    setStatus('');
+  const getSelectedItemsForCategory = (destSlug: string, categoryName: string): string[] => {
+    return featuredItems?.[destSlug]?.[categoryName] || [];
   };
 
-  const handleRemoveCategory = (categoryName: string) => {
-    setFeaturedCategories(featuredCategories.filter((cat) => cat.category_name !== categoryName));
-  };
-
-  const handleDisplayNameChange = (categoryName: string, newDisplayName: string) => {
-    setFeaturedCategories(
-      featuredCategories.map((cat) => (cat.category_name === categoryName ? { ...cat, display_name: newDisplayName } : cat))
-    );
-  };
-
-  const handleItemsCountChange = (categoryName: string, newCount: string) => {
-    const count = Math.max(1, Math.min(parseInt(newCount) || 3, 10));
-    setFeaturedCategories(
-      featuredCategories.map((cat) => (cat.category_name === categoryName ? { ...cat, items_count: count } : cat))
-    );
+  const toggleItemSelection = (destSlug: string, categoryName: string, itemName: string) => {
+    setFeaturedItems(prev => {
+      const newConfig = { ...prev };
+      if (!newConfig[destSlug]) newConfig[destSlug] = {};
+      if (!newConfig[destSlug][categoryName]) newConfig[destSlug][categoryName] = [];
+      
+      const items = newConfig[destSlug][categoryName];
+      if (items.includes(itemName)) {
+        newConfig[destSlug][categoryName] = items.filter(i => i !== itemName);
+      } else {
+        newConfig[destSlug][categoryName] = [...items, itemName];
+      }
+      
+      return newConfig;
+    });
   };
 
   const handleSave = async () => {
@@ -107,33 +76,33 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
       const response = await fetch('/api/admin/site-branding', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ featured_categories: featuredCategories }),
+        body: JSON.stringify({ featured_items: featuredItems }),
       });
 
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to save featured categories');
+        throw new Error(result.error || 'Failed to save featured items');
       }
 
-      setStatus('✅ Featured categories saved successfully! They will appear on the homepage now.');
+      setStatus('✅ Featured items saved successfully! They will appear on the homepage now.');
       setTimeout(() => setStatus(''), 5000);
     } catch (error) {
       console.error(error);
-      setStatus('❌ ' + (error instanceof Error ? error.message : 'Failed to save featured categories'));
+      setStatus('❌ ' + (error instanceof Error ? error.message : 'Failed to save featured items'));
     } finally {
       setSaving(false);
     }
   };
 
-  const getCategorySource = (categoryName: string): string => {
-    const category = availableCategories.find(cat => cat.category_name === categoryName);
-    return category ? category.destination_name : 'Unknown';
-  };
-
-  const getItemsForFeaturedCategory = (categoryName: string): CategoryItem[] => {
-    const categoryData = extractDestinationCategory(allDestinations, categoryName, 'temp');
-    return categoryData.items;
+  const getTotalSelectedItems = (): number => {
+    let total = 0;
+    Object.values(featuredItems).forEach(destCategories => {
+      Object.values(destCategories).forEach(items => {
+        total += items.length;
+      });
+    });
+    return total;
   };
 
   return (
@@ -152,261 +121,210 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
 
       <div className="admin-content" style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
         <p style={{ color: '#666', marginBottom: '30px' }}>
-          Manage the "Discover Destination Experiences" section on the homepage. Select categories from your destinations, 
-          preview items, and customize how many to display.
+          Select a destination and then choose which categories and items to feature on the homepage. 
+          You can feature items from multiple categories per destination.
         </p>
 
-        {/* Add Featured Category Section */}
+        {/* Destination Selection */}
         <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #e5e7eb', marginBottom: '30px' }}>
-          <h2 style={{ marginTop: 0, marginBottom: '20px' }}>Add Featured Category</h2>
-
-          {/* Step 1: Select Category */}
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 600 }}>
-              Step 1: Select a Category
-            </label>
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px' }}
-            >
-              <option value="">-- Choose a category --</option>
-              {availableCategories
-                .filter((cat) => !featuredCategories.some((fc) => fc.category_name === cat.category_name))
-                .map((cat) => (
-                  <option key={`${cat.destination_name}-${cat.category_name}`} value={cat.category_name}>
-                    {cat.category_name} ({cat.destination_name}) - {cat.items_count} item{cat.items_count !== 1 ? 's' : ''}
-                  </option>
-                ))}
-            </select>
-          </div>
-
-          {/* Step 2: Display Name */}
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 600 }}>
-              Step 2: What Name Should Users See?
-            </label>
-            <input
-              type="text"
-              value={newDisplayName}
-              onChange={(e) => setNewDisplayName(e.target.value)}
-              placeholder="e.g., Featured Foods, Must-Do Activities"
-              style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', boxSizing: 'border-box' }}
-            />
-          </div>
-
-          {/* Step 3: Items to Show */}
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 600 }}>
-              Step 3: How Many Items to Display?
-            </label>
-            <input
-              type="number"
-              min="1"
-              max="10"
-              value={newItemsCount}
-              onChange={(e) => setNewItemsCount(e.target.value)}
-              style={{ width: '150px', padding: '10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px' }}
-            />
-            <span style={{ marginLeft: '10px', color: '#666', fontSize: '14px' }}>items (1-10)</span>
-          </div>
-
-          {/* Step 4: Preview Items if Category Selected */}
-          {selectedCategory && selectedCategoryItems.length > 0 && (
-            <div style={{ marginBottom: '20px' }}>
-              <div style={{ marginBottom: '10px', fontWeight: 600, color: '#1f2937' }}>
-                Step 4: Preview All Available Items (first {Math.min(newItemsCount ? parseInt(newItemsCount) : 3, selectedCategoryItems.length)} will show)
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '15px' }}>
-                {selectedCategoryItems.map((item, idx) => (
-                  <div
-                    key={idx}
-                    style={{
-                      border: `2px solid ${idx < (newItemsCount ? parseInt(newItemsCount) : 3) ? '#4f46e5' : '#e5e7eb'}`,
-                      borderRadius: '8px',
-                      overflow: 'hidden',
-                      backgroundColor: '#fff',
-                      transition: 'all 0.2s',
-                    }}
-                  >
-                    {item.image && (
-                      <div style={{ position: 'relative' }}>
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          style={{ width: '100%', height: '140px', objectFit: 'cover', display: 'block' }}
-                        />
-                        {idx < (newItemsCount ? parseInt(newItemsCount) : 3) && (
-                          <div style={{
-                            position: 'absolute',
-                            top: '8px',
-                            right: '8px',
-                            backgroundColor: '#4f46e5',
-                            color: '#fff',
-                            width: '24px',
-                            height: '24px',
-                            borderRadius: '50%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: '12px',
-                            fontWeight: 'bold',
-                          }}>
-                            ✓
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    <div style={{ padding: '10px' }}>
-                      <div style={{ fontWeight: 600, fontSize: '13px', marginBottom: '4px' }}>{item.name}</div>
-                      {item.description && (
-                        <div style={{ fontSize: '11px', color: '#666', marginBottom: '6px', lineHeight: '1.3' }}>
-                          {item.description.substring(0, 60)}...
-                        </div>
-                      )}
-                      <div style={{ fontSize: '11px', color: '#999' }}>{item.destination_name}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {selectedCategory && selectedCategoryItems.length === 0 && (
-            <div style={{ padding: '15px', backgroundColor: '#fef3c7', borderRadius: '6px', color: '#92400e', marginBottom: '20px' }}>
-              No items found in this category. Add items to this category in Manage Destinations first.
-            </div>
-          )}
-
-          <button
-            type="button"
-            onClick={handleAddCategory}
-            disabled={!selectedCategory || !newDisplayName || selectedCategoryItems.length === 0}
-            style={{
-              padding: '12px 24px',
-              backgroundColor: '#4f46e5',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontWeight: 600,
-              fontSize: '16px',
-              opacity: !selectedCategory || !newDisplayName || selectedCategoryItems.length === 0 ? 0.5 : 1,
-            }}
+          <h2 style={{ marginTop: 0, marginBottom: '20px' }}>Step 1: Select a Destination</h2>
+          
+          <select
+            value={selectedDestination}
+            onChange={(e) => setSelectedDestination(e.target.value)}
+            style={{ width: '100%', maxWidth: '400px', padding: '12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '16px' }}
           >
-            ✓ Add This Category
-          </button>
+            <option value="">-- Choose a destination --</option>
+            {allDestinations.map((dest) => (
+              <option key={dest.slug} value={dest.slug}>
+                {dest.name}
+              </option>
+            ))}
+          </select>
         </div>
 
-        {/* Featured Categories List */}
-        <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
-          <h2 style={{ marginTop: 0 }}>Featured Categories ({featuredCategories.length}/5)</h2>
+        {/* Categories Selection */}
+        {currentDestination && (
+          <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #e5e7eb', marginBottom: '30px' }}>
+            <h2 style={{ marginTop: 0, marginBottom: '20px' }}>Step 2: Select Items from {currentDestination.name}</h2>
 
-          {featuredCategories.length === 0 ? (
-            <p style={{ color: '#999', marginTop: 0 }}>No featured categories yet. Add one using the form above.</p>
-          ) : (
-            <div style={{ display: 'grid', gap: '20px' }}>
-              {featuredCategories.map((category) => {
-                const items = getItemsForFeaturedCategory(category.category_name);
-                const displayCount = category.items_count || 3;
+            {/* Local Foods */}
+            {currentDestination.local_foods && currentDestination.local_foods.length > 0 && (
+              <div style={{ marginBottom: '30px' }}>
+                <h3 style={{ marginBottom: '15px', color: '#1f2937' }}>🍽️ Local Foods</h3>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '15px' }}>
+                  {currentDestination.local_foods.map((item, idx) => {
+                    const isSelected = getSelectedItemsForCategory(currentDestination.slug, 'local_foods').includes(item.name);
+                    return (
+                      <div
+                        key={idx}
+                        onClick={() => toggleItemSelection(currentDestination.slug, 'local_foods', item.name)}
+                        style={{
+                          cursor: 'pointer',
+                          border: isSelected ? '3px solid #4f46e5' : '2px solid #e5e7eb',
+                          borderRadius: '8px',
+                          overflow: 'hidden',
+                          backgroundColor: isSelected ? '#eef2ff' : '#fff',
+                          transition: 'all 0.2s',
+                        }}
+                      >
+                        {item.image && (
+                          <div style={{ position: 'relative' }}>
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              style={{ width: '100%', height: '150px', objectFit: 'cover', display: 'block' }}
+                            />
+                            {isSelected && (
+                              <div style={{
+                                position: 'absolute',
+                                top: '8px',
+                                right: '8px',
+                                backgroundColor: '#4f46e5',
+                                color: '#fff',
+                                width: '28px',
+                                height: '28px',
+                                borderRadius: '50%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: '16px',
+                                fontWeight: 'bold',
+                              }}>
+                                ✓
+                              </div>
+                            )}
+                          </div>
+                        )}
+                        <div style={{ padding: '12px' }}>
+                          <div style={{ fontWeight: 600, fontSize: '14px', marginBottom: '4px' }}>{item.name}</div>
+                          {item.description && (
+                            <div style={{ fontSize: '12px', color: '#666', marginBottom: '8px', lineHeight: '1.3' }}>
+                              {item.description}
+                            </div>
+                          )}
+                          <div style={{
+                            display: 'inline-block',
+                            padding: '4px 8px',
+                            backgroundColor: isSelected ? '#4f46e5' : '#f0f0f0',
+                            color: isSelected ? '#fff' : '#666',
+                            borderRadius: '4px',
+                            fontSize: '11px',
+                            fontWeight: '500',
+                          }}>
+                            {isSelected ? 'Selected ✓' : 'Click to select'}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Destination Categories */}
+            {currentDestination.destination_categories && currentDestination.destination_categories.map((category) => (
+              <div key={category.title} style={{ marginBottom: '30px' }}>
+                <h3 style={{ marginBottom: '15px', color: '#1f2937' }}>📍 {category.title}</h3>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '15px' }}>
+                  {category.items.map((item, idx) => {
+                    const categoryKey = category.title.toLowerCase().replace(/\s+/g, '_');
+                    const isSelected = getSelectedItemsForCategory(currentDestination.slug, categoryKey).includes(item.name);
+                    return (
+                      <div
+                        key={idx}
+                        onClick={() => toggleItemSelection(currentDestination.slug, categoryKey, item.name)}
+                        style={{
+                          cursor: 'pointer',
+                          border: isSelected ? '3px solid #4f46e5' : '2px solid #e5e7eb',
+                          borderRadius: '8px',
+                          overflow: 'hidden',
+                          backgroundColor: isSelected ? '#eef2ff' : '#fff',
+                          transition: 'all 0.2s',
+                        }}
+                      >
+                        {item.image && (
+                          <div style={{ position: 'relative' }}>
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              style={{ width: '100%', height: '150px', objectFit: 'cover', display: 'block' }}
+                            />
+                            {isSelected && (
+                              <div style={{
+                                position: 'absolute',
+                                top: '8px',
+                                right: '8px',
+                                backgroundColor: '#4f46e5',
+                                color: '#fff',
+                                width: '28px',
+                                height: '28px',
+                                borderRadius: '50%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: '16px',
+                                fontWeight: 'bold',
+                              }}>
+                                ✓
+                              </div>
+                            )}
+                          </div>
+                        )}
+                        <div style={{ padding: '12px' }}>
+                          <div style={{ fontWeight: 600, fontSize: '14px', marginBottom: '4px' }}>{item.name}</div>
+                          {item.description && (
+                            <div style={{ fontSize: '12px', color: '#666', marginBottom: '8px', lineHeight: '1.3' }}>
+                              {item.description}
+                            </div>
+                          )}
+                          <div style={{
+                            display: 'inline-block',
+                            padding: '4px 8px',
+                            backgroundColor: isSelected ? '#4f46e5' : '#f0f0f0',
+                            color: isSelected ? '#fff' : '#666',
+                            borderRadius: '4px',
+                            fontSize: '11px',
+                            fontWeight: '500',
+                          }}>
+                            {isSelected ? 'Selected ✓' : 'Click to select'}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Summary & Save */}
+        <div style={{ backgroundColor: '#f9fafb', padding: '20px', borderRadius: '8px', border: '1px solid #e5e7eb', marginBottom: '20px' }}>
+          <h2 style={{ marginTop: 0 }}>Summary</h2>
+          <p style={{ color: '#666', margin: '0 0 15px 0' }}>
+            Total items selected: <strong>{getTotalSelectedItems()}</strong>
+          </p>
+          
+          {getTotalSelectedItems() > 0 && (
+            <div style={{ backgroundColor: '#fff', padding: '15px', borderRadius: '6px', marginBottom: '15px' }}>
+              {Object.entries(featuredItems).map(([destSlug, categories]) => {
+                const dest = allDestinations.find(d => d.slug === destSlug);
+                if (!dest || Object.values(categories).every(items => items.length === 0)) return null;
                 
                 return (
-                  <div
-                    key={category.category_name}
-                    style={{
-                      padding: '15px',
-                      backgroundColor: '#f9fafb',
-                      borderRadius: '6px',
-                      border: '1px solid #e5e7eb',
-                    }}
-                  >
-                    <div style={{ marginBottom: '12px' }}>
-                      <div style={{ fontWeight: 600, marginBottom: '4px' }}>{category.display_name}</div>
-                      <div style={{ fontSize: '13px', color: '#666', marginBottom: '8px' }}>
-                        From: <strong>{getCategorySource(category.category_name)}</strong> ({items.length} items)
-                      </div>
-                      
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '12px' }}>
-                        <div>
-                          <label style={{ display: 'block', fontSize: '12px', color: '#666', marginBottom: '3px' }}>Display Name:</label>
-                          <input
-                            type="text"
-                            value={category.display_name}
-                            onChange={(e) => handleDisplayNameChange(category.category_name, e.target.value)}
-                            style={{
-                              width: '100%',
-                              padding: '6px',
-                              border: '1px solid #ddd',
-                              borderRadius: '4px',
-                              fontSize: '14px',
-                              boxSizing: 'border-box',
-                            }}
-                          />
+                  <div key={destSlug} style={{ marginBottom: '15px' }}>
+                    <h4 style={{ margin: '0 0 10px 0', color: '#1f2937' }}>{dest.name}</h4>
+                    {Object.entries(categories).map(([categoryName, items]) => {
+                      if (items.length === 0) return null;
+                      return (
+                        <div key={categoryName} style={{ marginLeft: '15px', marginBottom: '8px' }}>
+                          <div style={{ fontSize: '13px', color: '#666' }}>
+                            <strong>{categoryName}:</strong> {items.join(', ')}
+                          </div>
                         </div>
-                        <div>
-                          <label style={{ display: 'block', fontSize: '12px', color: '#666', marginBottom: '3px' }}>Items to Show:</label>
-                          <input
-                            type="number"
-                            min="1"
-                            max="10"
-                            value={displayCount}
-                            onChange={(e) => handleItemsCountChange(category.category_name, e.target.value)}
-                            style={{
-                              width: '100%',
-                              padding: '6px',
-                              border: '1px solid #ddd',
-                              borderRadius: '4px',
-                              fontSize: '14px',
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Show preview of items */}
-                    <div style={{ marginBottom: '12px' }}>
-                      <div style={{ fontSize: '12px', fontWeight: 600, marginBottom: '10px', color: '#374151' }}>
-                        Items that will display on homepage ({displayCount} out of {items.length}):
-                      </div>
-                      {items.length > 0 ? (
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '10px' }}>
-                          {items.slice(0, displayCount).map((item, idx) => (
-                            <div key={idx} style={{ border: '1px solid #e5e7eb', borderRadius: '6px', overflow: 'hidden', backgroundColor: '#fff' }}>
-                              {item.image && (
-                                <img
-                                  src={item.image}
-                                  alt={item.name}
-                                  style={{ width: '100%', height: '100px', objectFit: 'cover' }}
-                                />
-                              )}
-                              <div style={{ padding: '8px' }}>
-                                <div style={{ fontWeight: 600, fontSize: '12px' }}>{item.name}</div>
-                                <div style={{ fontSize: '10px', color: '#999' }}>{item.destination_name}</div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <p style={{ fontSize: '12px', color: '#999', margin: 0 }}>No items in this category</p>
-                      )}
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveCategory(category.category_name)}
-                      style={{
-                        padding: '6px 12px',
-                        backgroundColor: '#fee2e2',
-                        color: '#dc2626',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        fontSize: '12px',
-                        fontWeight: 500,
-                      }}
-                    >
-                      Remove
-                    </button>
+                      );
+                    })}
                   </div>
                 );
               })}
@@ -416,7 +334,7 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
           {status && (
             <div
               style={{
-                marginTop: '20px',
+                marginBottom: '15px',
                 padding: '12px',
                 borderRadius: '6px',
                 backgroundColor: status.includes('❌') ? '#fee2e2' : '#dcfce7',
@@ -431,21 +349,20 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
           <button
             type="button"
             onClick={handleSave}
-            disabled={saving}
+            disabled={saving || getTotalSelectedItems() === 0}
             style={{
-              marginTop: '20px',
               padding: '12px 24px',
               backgroundColor: '#10b981',
               color: '#fff',
               border: 'none',
               borderRadius: '6px',
-              cursor: 'pointer',
+              cursor: getTotalSelectedItems() === 0 ? 'not-allowed' : 'pointer',
               fontWeight: 600,
               fontSize: '16px',
-              opacity: saving ? 0.7 : 1,
+              opacity: saving || getTotalSelectedItems() === 0 ? 0.7 : 1,
             }}
           >
-            {saving ? '⏳ Saving...' : '💾 Save Featured Categories'}
+            {saving ? '⏳ Saving...' : `💾 Save Featured Items (${getTotalSelectedItems()} selected)`}
           </button>
         </div>
       </div>
@@ -459,59 +376,29 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
 
     const destinations = await getPublishedDestinations();
     
-    const availableCategoriesMap = new Map<string, AvailableCategory>();
-    
-    for (const dest of destinations) {
-      if (!dest.published) continue;
-      
-      // Add local_foods category if it exists
-      if (dest.local_foods?.length) {
-        const key = `${dest.name}-local_foods`;
-        if (!availableCategoriesMap.has(key)) {
-          availableCategoriesMap.set(key, {
-            category_name: 'local_foods',
-            destination_name: dest.name,
-            destination_slug: dest.slug,
-            items_count: dest.local_foods.length,
-          });
-        }
-      }
-      
-      // Add destination categories
-      if (dest.destination_categories?.length) {
-        for (const cat of dest.destination_categories) {
-          const key = `${dest.name}-${cat.title}`;
-          if (!availableCategoriesMap.has(key)) {
-            availableCategoriesMap.set(key, {
-              category_name: cat.title?.toLowerCase().replace(/\s+/g, '_') || cat.title || '',
-              destination_name: dest.name,
-              destination_slug: dest.slug,
-              items_count: cat.items?.length || 0,
-            });
-          }
-        }
-      }
-    }
-    
-    const availableCategories = Array.from(availableCategoriesMap.values());
+    const allDests: DestinationWithCategories[] = destinations.map(dest => ({
+      name: dest.name,
+      slug: dest.slug,
+      destination_categories: dest.destination_categories,
+      local_foods: dest.local_foods,
+    }));
 
     const fs = require('fs');
     const path = require('path');
     const siteBrandingPath = path.join(process.cwd(), 'db', 'site_branding.json');
-    let initialFeaturedCategories: FeaturedCategoryConfig[] = [];
+    let initialFeaturedItems: FeaturedItemsConfig = {};
 
     if (fs.existsSync(siteBrandingPath)) {
       const siteBrandingData = JSON.parse(fs.readFileSync(siteBrandingPath, 'utf-8'));
-      if (Array.isArray(siteBrandingData.featured_categories)) {
-        initialFeaturedCategories = siteBrandingData.featured_categories;
+      if (siteBrandingData.featured_items && typeof siteBrandingData.featured_items === 'object') {
+        initialFeaturedItems = siteBrandingData.featured_items;
       }
     }
 
     return {
       props: {
-        availableCategories,
-        initialFeaturedCategories,
-        allDestinations: destinations,
+        allDestinations: allDests,
+        initialFeaturedItems,
       },
     };
   } catch (error) {
