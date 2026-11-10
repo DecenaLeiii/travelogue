@@ -5,11 +5,12 @@ import Link from 'next/link';
 import { useTranslation } from '../../lib/i18n';
 import { verifyAdmin } from '../../lib/auth';
 import { getPublishedDestinations, type Destination } from '../../lib/destinations';
-import { getAvailableCategoryNames, type DestinationCategoryData, extractDestinationCategory } from '../../lib/destinationCategoryUtils';
+import { extractDestinationCategory } from '../../lib/destinationCategoryUtils';
 
 type FeaturedCategoryConfig = {
   category_name: string;
   display_name: string;
+  items_count?: number;
 };
 
 type CategoryItemWithSelection = {
@@ -18,11 +19,17 @@ type CategoryItemWithSelection = {
   image?: string;
   destination_name: string;
   destination_slug: string;
-  selected?: boolean;
+};
+
+type AvailableCategory = {
+  category_name: string;
+  destination_name: string;
+  destination_slug: string;
+  items_count: number;
 };
 
 type Props = {
-  availableCategories: string[];
+  availableCategories: AvailableCategory[];
   initialFeaturedCategories: FeaturedCategoryConfig[];
   allDestinations: Destination[];
 };
@@ -33,12 +40,12 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
   const [featuredCategories, setFeaturedCategories] = useState<FeaturedCategoryConfig[]>(initialFeaturedCategories);
   const [newCategoryName, setNewCategoryName] = useState('');
   const [newDisplayName, setNewDisplayName] = useState('');
+  const [newItemsCount, setNewItemsCount] = useState('3');
   const [status, setStatus] = useState('');
   const [saving, setSaving] = useState(false);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const [categoryItemsMap, setCategoryItemsMap] = useState<Map<string, CategoryItemWithSelection[]>>(new Map());
 
-  // Build map of category items on load
   useEffect(() => {
     const itemsMap = new Map<string, CategoryItemWithSelection[]>();
     
@@ -57,7 +64,7 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
     }
 
     if (featuredCategories.some((cat) => cat.category_name === newCategoryName)) {
-      setStatus('This category is already added');
+      setStatus('This category is already featured');
       return;
     }
 
@@ -66,9 +73,11 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
       return;
     }
 
-    setFeaturedCategories([...featuredCategories, { category_name: newCategoryName, display_name: newDisplayName }]);
+    const itemsCount = Math.max(1, Math.min(parseInt(newItemsCount) || 3, 10));
+    setFeaturedCategories([...featuredCategories, { category_name: newCategoryName, display_name: newDisplayName, items_count: itemsCount }]);
     setNewCategoryName('');
     setNewDisplayName('');
+    setNewItemsCount('3');
     setStatus('');
   };
 
@@ -79,6 +88,13 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
   const handleDisplayNameChange = (categoryName: string, newDisplayName: string) => {
     setFeaturedCategories(
       featuredCategories.map((cat) => (cat.category_name === categoryName ? { ...cat, display_name: newDisplayName } : cat))
+    );
+  };
+
+  const handleItemsCountChange = (categoryName: string, newCount: string) => {
+    const count = Math.max(1, Math.min(parseInt(newCount) || 3, 10));
+    setFeaturedCategories(
+      featuredCategories.map((cat) => (cat.category_name === categoryName ? { ...cat, items_count: count } : cat))
     );
   };
 
@@ -113,10 +129,15 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
     return categoryItemsMap.get(categoryName) || [];
   };
 
+  const getCategorySourceDestination = (categoryName: string): string => {
+    const category = availableCategories.find(cat => cat.category_name === categoryName);
+    return category ? category.destination_name : 'Unknown';
+  };
+
   return (
     <main className="admin-page">
       <div className="admin-header">
-        <h1>Featured Categories</h1>
+        <h1>Featured Categories & Experiences</h1>
         <div className="admin-nav">
           <Link href="/admin/destinations">Manage Destinations</Link>
           <Link href="/admin/activity">Activity</Link>
@@ -127,33 +148,65 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
         </div>
       </div>
 
-      <div className="admin-content" style={{ maxWidth: '900px', margin: '0 auto', padding: '20px' }}>
+      <div className="admin-content" style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
         <div style={{ marginBottom: '30px' }}>
           <p style={{ color: '#666', marginBottom: '20px' }}>
-            Configure which destination categories appear in the "Discover Destination Experiences" section on the homepage.
-            You can feature up to 5 categories.
+            Manage the "Discover Destination Experiences" section on the homepage. First, add destination categories 
+            in <Link href="/admin/destinations" style={{ color: '#4f46e5' }}>Manage Destinations</Link>. 
+            Then select which categories to feature here.
           </p>
 
-          <div style={{ backgroundColor: '#f3f4f6', padding: '15px', borderRadius: '8px', marginBottom: '20px' }}>
-            <h3 style={{ marginTop: 0 }}>Available Categories:</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
-              {availableCategories.length > 0 ? (
-                availableCategories.map((cat) => (
-                  <div key={cat} style={{ padding: '10px', backgroundColor: '#fff', borderRadius: '6px', border: '1px solid #e5e7eb' }}>
-                    {cat.replace(/_/g, ' ')}
+          {/* Available Categories by Destination */}
+          <div style={{ backgroundColor: '#f3f4f6', padding: '20px', borderRadius: '8px', marginBottom: '20px' }}>
+            <h3 style={{ marginTop: 0, marginBottom: '15px' }}>Available Categories (per Destination)</h3>
+            {availableCategories.length > 0 ? (
+              <div style={{ display: 'grid', gap: '15px' }}>
+                {Array.from(
+                  availableCategories.reduce((map, cat) => {
+                    if (!map.has(cat.destination_name)) {
+                      map.set(cat.destination_name, []);
+                    }
+                    map.get(cat.destination_name)!.push(cat);
+                    return map;
+                  }, new Map<string, AvailableCategory[]>())
+                ).map(([destination, categories]) => (
+                  <div key={destination} style={{ backgroundColor: '#fff', padding: '12px', borderRadius: '6px', border: '1px solid #e5e7eb' }}>
+                    <div style={{ fontWeight: 600, marginBottom: '8px', color: '#1f2937' }}>{destination}</div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '8px' }}>
+                      {categories.map((cat) => (
+                        <div
+                          key={`${cat.destination_name}-${cat.category_name}`}
+                          style={{
+                            padding: '8px 12px',
+                            backgroundColor: '#f9fafb',
+                            borderRadius: '4px',
+                            border: '1px solid #e5e7eb',
+                            fontSize: '13px',
+                          }}
+                        >
+                          <div style={{ fontWeight: 500 }}>{cat.category_name}</div>
+                          <div style={{ fontSize: '12px', color: '#666', marginTop: '2px' }}>
+                            {cat.items_count} item{cat.items_count !== 1 ? 's' : ''}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                ))
-              ) : (
-                <p style={{ color: '#999' }}>No categories found. Add items to destination records first.</p>
-              )}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <p style={{ color: '#999', margin: 0 }}>
+                No categories found. Add categories to destinations in Manage Destinations first.
+              </p>
+            )}
           </div>
 
+          {/* Add Featured Category */}
           <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #e5e7eb', marginBottom: '20px' }}>
             <h3 style={{ marginTop: 0 }}>Add Featured Category</h3>
             <div style={{ display: 'grid', gap: '15px' }}>
               <div>
-                <label style={{ display: 'block', marginBottom: '5px', fontWeight: 600 }}>Category Name:</label>
+                <label style={{ display: 'block', marginBottom: '5px', fontWeight: 600 }}>Select Category:</label>
                 <select
                   value={newCategoryName}
                   onChange={(e) => setNewCategoryName(e.target.value)}
@@ -161,10 +214,10 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
                 >
                   <option value="">-- Select a category --</option>
                   {availableCategories
-                    .filter((cat) => !featuredCategories.some((fc) => fc.category_name === cat))
+                    .filter((cat) => !featuredCategories.some((fc) => fc.category_name === cat.category_name))
                     .map((cat) => (
-                      <option key={cat} value={cat}>
-                        {cat.replace(/_/g, ' ')}
+                      <option key={`${cat.destination_name}-${cat.category_name}`} value={cat.category_name}>
+                        {cat.category_name} ({cat.destination_name}) - {cat.items_count} item{cat.items_count !== 1 ? 's' : ''}
                       </option>
                     ))}
                 </select>
@@ -176,9 +229,22 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
                   type="text"
                   value={newDisplayName}
                   onChange={(e) => setNewDisplayName(e.target.value)}
-                  placeholder="e.g., Local Foods to Try, Must-Do Activities"
+                  placeholder="e.g., Featured Foods, Must-Do Activities"
                   style={{ width: '100%', padding: '8px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', boxSizing: 'border-box' }}
                 />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', marginBottom: '5px', fontWeight: 600 }}>Items to Show on Homepage:</label>
+                <input
+                  type="number"
+                  min="1"
+                  max="10"
+                  value={newItemsCount}
+                  onChange={(e) => setNewItemsCount(e.target.value)}
+                  style={{ width: '100px', padding: '8px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px' }}
+                />
+                <div style={{ fontSize: '12px', color: '#666', marginTop: '3px' }}>Default: 3 items</div>
               </div>
 
               <button
@@ -201,6 +267,7 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
             </div>
           </div>
 
+          {/* Featured Categories */}
           <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
             <h3 style={{ marginTop: 0 }}>Featured Categories ({featuredCategories.length}/5)</h3>
 
@@ -211,6 +278,7 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
                 {featuredCategories.map((category) => {
                   const isExpanded = expandedCategory === category.category_name;
                   const items = getCategoryItems(category.category_name);
+                  const sourceDestination = getCategorySourceDestination(category.category_name);
                   
                   return (
                     <div
@@ -224,8 +292,13 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
                     >
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '15px', marginBottom: '15px' }}>
                         <div style={{ flex: 1 }}>
-                          <div style={{ fontWeight: 600, marginBottom: '5px' }}>Category: {category.category_name.replace(/_/g, ' ')}</div>
-                          <div style={{ marginBottom: '8px' }}>
+                          <div style={{ fontWeight: 600, marginBottom: '5px' }}>
+                            Category: {category.category_name}
+                          </div>
+                          <div style={{ fontSize: '13px', color: '#666', marginBottom: '10px' }}>
+                            From: <span style={{ fontWeight: 500 }}>{sourceDestination}</span>
+                          </div>
+                          <div style={{ marginBottom: '10px' }}>
                             <label style={{ display: 'block', fontSize: '12px', color: '#666', marginBottom: '3px' }}>Display Name:</label>
                             <input
                               type="text"
@@ -242,6 +315,23 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
                               }}
                             />
                           </div>
+                          <div style={{ marginBottom: '10px' }}>
+                            <label style={{ display: 'block', fontSize: '12px', color: '#666', marginBottom: '3px' }}>Items to Show:</label>
+                            <input
+                              type="number"
+                              min="1"
+                              max="10"
+                              value={category.items_count || 3}
+                              onChange={(e) => handleItemsCountChange(category.category_name, e.target.value)}
+                              style={{
+                                width: '80px',
+                                padding: '6px',
+                                border: '1px solid #ddd',
+                                borderRadius: '4px',
+                                fontSize: '14px',
+                              }}
+                            />
+                          </div>
                           <div style={{ fontSize: '12px', color: '#666' }}>
                             {items.length} item{items.length !== 1 ? 's' : ''} available
                           </div>
@@ -251,28 +341,30 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
                             type="button"
                             onClick={() => setExpandedCategory(isExpanded ? null : category.category_name)}
                             style={{
-                              padding: '8px 12px',
-                              backgroundColor: '#6366f1',
-                              color: '#fff',
+                              padding: '6px 12px',
+                              backgroundColor: isExpanded ? '#3b82f6' : '#e5e7eb',
+                              color: isExpanded ? '#fff' : '#374151',
                               border: 'none',
                               borderRadius: '4px',
                               cursor: 'pointer',
-                              fontSize: '14px',
+                              fontSize: '12px',
+                              fontWeight: 500,
                             }}
                           >
-                            {isExpanded ? 'Hide Items' : 'View Items'}
+                            {isExpanded ? 'Hide' : 'Preview'} Items
                           </button>
                           <button
                             type="button"
                             onClick={() => handleRemoveCategory(category.category_name)}
                             style={{
-                              padding: '8px 12px',
-                              backgroundColor: '#ef4444',
-                              color: '#fff',
+                              padding: '6px 12px',
+                              backgroundColor: '#fee2e2',
+                              color: '#dc2626',
                               border: 'none',
                               borderRadius: '4px',
                               cursor: 'pointer',
-                              fontSize: '14px',
+                              fontSize: '12px',
+                              fontWeight: 500,
                             }}
                           >
                             Remove
@@ -280,62 +372,38 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
                         </div>
                       </div>
 
-                      {isExpanded && items.length > 0 && (
+                      {/* Expanded Category Items */}
+                      {isExpanded && (
                         <div style={{ marginTop: '15px', paddingTop: '15px', borderTop: '1px solid #e5e7eb' }}>
-                          <div style={{ fontSize: '12px', fontWeight: 600, color: '#666', marginBottom: '10px' }}>
-                            Items in this category:
+                          <div style={{ fontSize: '12px', fontWeight: 600, marginBottom: '10px', color: '#374151' }}>
+                            All Available Items:
                           </div>
-                          <div style={{ display: 'grid', gap: '10px' }}>
-                            {items.map((item, idx) => (
-                              <div
-                                key={`${category.category_name}-${idx}`}
-                                style={{
-                                  padding: '10px',
-                                  backgroundColor: '#fff',
-                                  borderRadius: '4px',
-                                  border: '1px solid #f0f0f0',
-                                  display: 'grid',
-                                  gridTemplateColumns: item.image ? '80px 1fr' : '1fr',
-                                  gap: '12px',
-                                  alignItems: 'start',
-                                }}
-                              >
-                                {item.image && (
-                                  <div
-                                    style={{
-                                      width: '80px',
-                                      height: '80px',
-                                      borderRadius: '4px',
-                                      overflow: 'hidden',
-                                      backgroundColor: '#f0f0f0',
-                                      backgroundImage: `url(${item.image})`,
-                                      backgroundSize: 'cover',
-                                      backgroundPosition: 'center',
-                                    }}
-                                  />
-                                )}
-                                <div>
-                                  <div style={{ fontWeight: 600, fontSize: '14px', marginBottom: '4px' }}>
-                                    {item.name}
-                                  </div>
-                                  {item.description && (
-                                    <div style={{ fontSize: '13px', color: '#666', marginBottom: '6px', lineHeight: 1.4 }}>
-                                      {item.description}
-                                    </div>
+                          {items.length > 0 ? (
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '12px' }}>
+                              {items.map((item, idx) => (
+                                <div key={idx} style={{ border: '1px solid #e5e7eb', borderRadius: '6px', overflow: 'hidden', backgroundColor: '#fff' }}>
+                                  {item.image && (
+                                    <img
+                                      src={item.image}
+                                      alt={item.name}
+                                      style={{ width: '100%', height: '120px', objectFit: 'cover' }}
+                                    />
                                   )}
-                                  <div style={{ fontSize: '12px', color: '#999' }}>
-                                    From: <strong>{item.destination_name}</strong>
+                                  <div style={{ padding: '10px' }}>
+                                    <div style={{ fontWeight: 600, fontSize: '13px', marginBottom: '4px' }}>{item.name}</div>
+                                    {item.description && (
+                                      <div style={{ fontSize: '11px', color: '#666', marginBottom: '6px', lineHeight: '1.3' }}>
+                                        {item.description.substring(0, 80)}...
+                                      </div>
+                                    )}
+                                    <div style={{ fontSize: '11px', color: '#999' }}>{item.destination_name}</div>
                                   </div>
                                 </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {isExpanded && items.length === 0 && (
-                        <div style={{ marginTop: '15px', paddingTop: '15px', borderTop: '1px solid #e5e7eb', color: '#999', fontSize: '13px' }}>
-                          No items found for this category. Make sure destinations have items tagged with this category.
+                              ))}
+                            </div>
+                          ) : (
+                            <p style={{ fontSize: '12px', color: '#999', margin: 0 }}>No items found in this category.</p>
+                          )}
                         </div>
                       )}
                     </div>
@@ -343,42 +411,42 @@ export default function FeaturedCategoriesAdmin({ availableCategories, initialFe
                 })}
               </div>
             )}
-          </div>
 
-          {status && (
-            <div
+            {status && (
+              <div
+                style={{
+                  marginTop: '15px',
+                  padding: '12px',
+                  borderRadius: '6px',
+                  backgroundColor: status.includes('error') || status.includes('Failed') ? '#fee2e2' : '#dcfce7',
+                  color: status.includes('error') || status.includes('Failed') ? '#991b1b' : '#166534',
+                  border: `1px solid ${status.includes('error') || status.includes('Failed') ? '#fca5a5' : '#86efac'}`,
+                }}
+              >
+                {status}
+              </div>
+            )}
+
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={saving}
               style={{
-                marginTop: '15px',
-                padding: '12px',
+                marginTop: '20px',
+                padding: '12px 24px',
+                backgroundColor: '#10b981',
+                color: '#fff',
+                border: 'none',
                 borderRadius: '6px',
-                backgroundColor: status.includes('error') || status.includes('Failed') ? '#fee2e2' : '#dcfce7',
-                color: status.includes('error') || status.includes('Failed') ? '#991b1b' : '#166534',
-                border: `1px solid ${status.includes('error') || status.includes('Failed') ? '#fca5a5' : '#86efac'}`,
+                cursor: 'pointer',
+                fontWeight: 600,
+                fontSize: '16px',
+                opacity: saving ? 0.7 : 1,
               }}
             >
-              {status}
-            </div>
-          )}
-
-          <button
-            type="button"
-            onClick={handleSave}
-            disabled={saving}
-            style={{
-              marginTop: '20px',
-              padding: '12px 24px',
-              backgroundColor: '#10b981',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontWeight: 600,
-              fontSize: '16px',
-              opacity: saving ? 0.7 : 1,
-            }}
-          >
-            {saving ? 'Saving...' : 'Save Featured Categories'}
-          </button>
+              {saving ? 'Saving...' : 'Save Featured Categories'}
+            </button>
+          </div>
         </div>
       </div>
     </main>
@@ -389,9 +457,32 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
   try {
     await verifyAdmin(context.req);
 
-    // Get all destinations to find available categories
+    // Get all published destinations
     const destinations = await getPublishedDestinations();
-    const availableCategories = Array.from(getAvailableCategoryNames(destinations)).sort();
+    
+    // Build availableCategories with destination context
+    const availableCategoriesMap = new Map<string, AvailableCategory>();
+    
+    for (const dest of destinations) {
+      if (!dest.published) continue;
+      
+      // Add destination categories
+      if (dest.destination_categories?.length) {
+        for (const cat of dest.destination_categories) {
+          const key = `${dest.name}-${cat.title}`;
+          if (!availableCategoriesMap.has(key)) {
+            availableCategoriesMap.set(key, {
+              category_name: cat.title?.toLowerCase().replace(/\s+/g, '_') || cat.title || '',
+              destination_name: dest.name,
+              destination_slug: dest.slug,
+              items_count: cat.items?.length || 0,
+            });
+          }
+        }
+      }
+    }
+    
+    const availableCategories = Array.from(availableCategoriesMap.values());
 
     // Get current featured categories from site branding
     const fs = require('fs');
