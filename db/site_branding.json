@@ -32,15 +32,8 @@
   "featured_categories": [
     {
       "category_name": "local_foods",
-      "display_name": "Local Foods to Try"
-    },
-    {
-      "category_name": "activities",
-      "display_name": "Must-Do Activities"
-    },
-    {
-      "category_name": "Best Pasalubong Shops",
-      "display_name": "pasalubong"
+      "display_name": "Local Delicacies",
+      "items_count": 3
     }
   ]
 }

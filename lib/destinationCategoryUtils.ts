@@ -9,6 +9,7 @@ export type CategoryItem = {
 export type DestinationCategoryData = {
   category_name: string;
   display_name: string;
+  items_count?: number;
   items: (CategoryItem & { destination_name: string; destination_slug: string })[];
 };
 
@@ -104,10 +105,16 @@ export function getAvailableCategoryNames(destinations: Destination[]): Set<stri
  */
 export function getFeaturedCategoriesForHomepage(
   destinations: Destination[],
-  featuredCategories: { category_name: string; display_name: string }[] = [],
+  featuredCategories: { category_name: string; display_name: string; items_count?: number }[] = [],
 ): DestinationCategoryData[] {
   return featuredCategories
     .slice(0, 5) // Max 5 categories
-    .map((config) => extractDestinationCategory(destinations, config.category_name, config.display_name))
+    .map((config) => {
+      const categoryData = extractDestinationCategory(destinations, config.category_name, config.display_name);
+      return {
+        ...categoryData,
+        items_count: config.items_count || 3,
+      };
+    })
     .filter((cat) => cat.items.length > 0); // Only include categories with items
 }
