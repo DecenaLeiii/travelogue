@@ -68,20 +68,26 @@ table{font-size:14px}
 .hero-assistant-bar p{margin:0;color:#f4f7fb;opacity:.9;max-width:640px;line-height:1.5}
 .assistant-panel{max-width:980px;margin:18px auto 0;padding:0 16px;opacity:0;transform:translateY(-14px);transition:opacity .28s ease,transform .28s ease;pointer-events:none}
 .assistant-panel.open{opacity:1;transform:translateY(0);pointer-events:auto}
-.floating-assistant-button{position:fixed;right:18px;bottom:82px;z-index:900;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;padding:0;border:none;border-radius:50%;background:linear-gradient(135deg,#ff8a80,#ff6f61);color:#fff;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 18px 42px rgba(255,111,97,0.35);transition:transform .2s ease, box-shadow .2s ease}
-.floating-assistant-button:hover{transform:translateY(-3px);box-shadow:0 22px 52px rgba(255,111,97,0.42)}
-.assistant-bubble{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,0.24);font-size:10px;font-weight:900;border:1px solid rgba(255,255,255,0.28)}
-.assistant-floating-panel{position:fixed;left:0;top:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;z-index:999;opacity:1;pointer-events:auto;background:rgba(15,23,42,0.14);backdrop-filter:blur(2px);box-shadow:none}
-.assistant-floating-shell{width:min(760px, 100%);max-width:760px;border:none;border-radius:24px;overflow:hidden;box-shadow:none;background:#fff;position:relative;margin:0 auto}
-.assistant-floating-chat{background:#fff;border-radius:24px;overflow:hidden}
-.assistant-close-button{position:absolute;top:12px;right:16px;z-index:3;width:42px;height:42px;border:none;border-radius:50%;background:rgba(255,255,255,0.9);box-shadow:0 8px 24px rgba(15,23,42,0.12);cursor:pointer;font-size:28px;line-height:1;color:#111}
-.assistant-floating-panel .chat-shell{flex:1;display:flex;flex-direction:column;height:min(72vh, 620px);max-height:min(72vh, 620px)}
-.assistant-floating-panel [data-chat-body]{height:calc(100% - 130px) !important;max-height:none !important}
+.floating-assistant-button{position:fixed;right:18px;bottom:82px;z-index:900;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;padding:0;border:none;border-radius:50%;background:linear-gradient(135deg,#3b9bff,#1877f2);color:#fff;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 18px 42px rgba(24,119,242,0.35);transition:transform .2s ease, box-shadow .2s ease}
+.floating-assistant-button:hover{transform:translateY(-3px);box-shadow:0 22px 52px rgba(24,119,242,0.42)}
+.assistant-bubble{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px}
+.assistant-floating-panel{position:fixed;right:18px;bottom:84px;left:auto;top:auto;width:min(520px,calc(100vw - 36px));height:min(760px,calc(100vh - 110px));display:flex;flex-direction:column;padding:0;z-index:999;opacity:1;pointer-events:auto;background:none;backdrop-filter:none;box-shadow:none}
+.assistant-floating-shell{width:100%;height:100%;max-width:none;display:flex;flex-direction:column;border:1px solid rgba(15,23,42,0.08);border-radius:18px;overflow:hidden;box-shadow:0 18px 50px rgba(15,23,42,0.28);background:#fff;position:relative;margin:0}
+.assistant-window-header{display:flex;align-items:center;gap:10px;flex:0 0 auto;padding:12px 14px;background:linear-gradient(135deg,#3b9bff,#1877f2);color:#fff}
+.assistant-window-avatar{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.22);flex:0 0 auto}
+.assistant-window-title{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.2}
+.assistant-window-title strong{font-size:15px}
+.assistant-window-title small{font-size:12px;opacity:.9}
+.assistant-floating-chat{flex:1 1 0;min-height:0;display:flex;flex-direction:column;background:#fff;overflow:hidden}
+.assistant-close-button{width:34px;height:34px;flex:0 0 auto;border:none;border-radius:50%;background:rgba(255,255,255,0.22);cursor:pointer;font-size:22px;line-height:1;color:#fff}
+.assistant-floating-panel .chat-shell{flex:1;display:flex;flex-direction:column;height:auto;max-height:none;min-height:0}
+.assistant-floating-panel [data-chat-body]{height:auto !important;flex:1 1 0;min-height:0 !important;max-height:none !important}
+.assistant-input-form input{border-radius:999px;padding:10px 16px;border:1px solid #d0d7de;background:#f0f2f5}
 .assistant-chat-shell{background:#fff}
 @media (max-width:640px){
-  .assistant-floating-panel{box-sizing:border-box;width:100%;padding:8px;align-items:center;overflow:hidden}
+  .assistant-floating-panel{left:8px;right:8px;bottom:8px;width:auto;height:min(78dvh,680px);box-sizing:border-box}
   .assistant-floating-shell{box-sizing:border-box;width:100%;max-width:100%;min-width:0;border-radius:16px;overflow:hidden}
-  .assistant-floating-panel .chat-shell{box-sizing:border-box;width:100%;min-width:0;height:min(78dvh,680px);max-height:min(78dvh,680px);padding:12px!important;overflow:hidden}
+  .assistant-floating-panel .chat-shell{box-sizing:border-box;width:100%;min-width:0;padding:12px!important;overflow:hidden}
   .assistant-floating-panel [data-chat-body]{box-sizing:border-box;width:100%;min-width:0;overflow-x:hidden;padding:6px!important}
   .assistant-message-row{display:block!important;min-width:0;max-width:100%;overflow-wrap:anywhere}
   .assistant-message-role{display:block;width:auto!important;margin:0 0 3px!important}
@@ -92,8 +98,7 @@ table{font-size:14px}
   .assistant-input-form input{box-sizing:border-box;width:0;min-width:0;flex:1;font-size:16px}
 }
 @media (max-width: 900px){
-  .assistant-floating-shell{width:min(760px, 100%);}
-  .assistant-floating-panel .chat-shell{height:min(72vh, 520px)}
+  .assistant-floating-shell{width:100%;}
 }
 .secondary-cta{display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.95);color:#0f1724;padding:10px 18px;border-radius:999px;font-weight:700;border:none;text-decoration:none;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease}
 .modal .secondary-cta,.qr-card .secondary-cta,.main .secondary-cta{border:1px solid rgba(15,23,36,0.12);box-shadow:0 6px 18px rgba(15,23,36,0.08)}

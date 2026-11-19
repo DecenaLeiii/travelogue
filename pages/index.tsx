@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom';
 import { useEffect, useMemo, useState } from 'react';
 import { useDestinationTranslations, DestinationTranslation } from '../lib/useDestinationTranslation';
 import Link from 'next/link';
@@ -213,7 +214,14 @@ export default function Home({ initialDestinations, initialFeaturedCategories = 
           aria-label={assistantOpen ? 'Hide assistant' : 'Open assistant'}
           title={assistantOpen ? 'Hide assistant' : 'Open assistant'}
         >
-          <span className="assistant-bubble">AI</span>
+          <span className="assistant-bubble" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24">
+              <path d="M12 3C6.9 3 3 6.6 3 11.1c0 2.4 1.2 4.5 3.1 6V21l3.3-1.9c.8.2 1.7.3 2.6.3 5.1 0 9-3.6 9-8.1S17.1 3 12 3z" fill="#fff" />
+              <circle cx="8" cy="11.2" r="1.2" fill="#1877f2" />
+              <circle cx="12" cy="11.2" r="1.2" fill="#1877f2" />
+              <circle cx="16" cy="11.2" r="1.2" fill="#1877f2" />
+            </svg>
+          </span>
         </button>
 
         {feedbackOpen && (
@@ -228,22 +236,37 @@ export default function Home({ initialDestinations, initialFeaturedCategories = 
           </div>
         )}
 
-        {assistantOpen && (
+        {assistantOpen && createPortal(
           <div className="assistant-panel open assistant-floating-panel" onClick={(e) => e.stopPropagation()}>
             <div className="assistant-floating-shell" style={{ position: 'relative' }}>
-              <button
-                type="button"
-                onClick={() => setAssistantOpen(false)}
-                aria-label="Close assistant"
-                className="assistant-close-button"
-              >
-                ×
-              </button>
+              <div className="assistant-window-header">
+                <span className="assistant-window-avatar" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12 3C6.9 3 3 6.6 3 11.1c0 2.4 1.2 4.5 3.1 6V21l3.3-1.9c.8.2 1.7.3 2.6.3 5.1 0 9-3.6 9-8.1S17.1 3 12 3z" fill="#fff" />
+                    <circle cx="8" cy="11.2" r="1.2" fill="#1877f2" />
+                    <circle cx="12" cy="11.2" r="1.2" fill="#1877f2" />
+                    <circle cx="16" cy="11.2" r="1.2" fill="#1877f2" />
+                  </svg>
+                </span>
+                <span className="assistant-window-title">
+                  <strong>Smart Assistant</strong>
+                  <small>Ask about destinations and contacts</small>
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setAssistantOpen(false)}
+                  aria-label="Close assistant"
+                  className="assistant-close-button"
+                >
+                  ×
+                </button>
+              </div>
               <div className="assistant-floating-chat">
                 <SmartAssistant />
               </div>
             </div>
-          </div>
+          </div>,
+          document.body
         )}
 
         <div className="home-content">
