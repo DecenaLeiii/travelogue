@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import QRCode from 'qrcode';
 import { useEffect, useState } from 'react';
-import { useTranslation } from '../../lib/i18n';
+import { useTranslation, translateCategoryTitle, translateCategoryItemText } from '../../lib/i18n';
 import { useDestinationTranslations } from '../../lib/useDestinationTranslation';
 import { parseContentSections } from '../../lib/content';
 import { Destination } from '../../lib/destinations';
@@ -56,9 +56,11 @@ export default function DestinationPage({ destination, related }: Props) {
     best_time_to_visit?: string;
     overview?: string;
     full?: string;
+    destination_categories?: Array<{ title: string; items: Array<{ name: string; description: string }> }>;
   } | null>(null);
   const [averageRating, setAverageRating] = useState<number | null>(null);
   const [ratingCount, setRatingCount] = useState(0);
+  const [reviews, setReviews] = useState<any[]>([]);
   const [qrPreview, setQrPreview] = useState<string | null>(null);
   const [qrModalOpen, setQrModalOpen] = useState(false);
 
@@ -106,6 +108,7 @@ export default function DestinationPage({ destination, related }: Props) {
           best_time_to_visit: entry.best_time_to_visit,
           overview: sect.overview,
           full: sect.full,
+          destination_categories: entry.destination_categories,
         });
       })
       .catch(() => setTranslated(null));
@@ -119,10 +122,12 @@ export default function DestinationPage({ destination, related }: Props) {
         const data = await res.json();
         setAverageRating(data.averageRating);
         setRatingCount(data.ratingCount || 0);
+        setReviews(Array.isArray(data.reviews) ? data.reviews : []);
       })
       .catch(() => {
         setAverageRating(null);
         setRatingCount(0);
+        setReviews([]);
       });
   }, [destination]);
 
@@ -261,22 +266,41 @@ export default function DestinationPage({ destination, related }: Props) {
           </section>
         )}
 
-        {destinationCategories.map((category, categoryIndex) => (
+        {destinationCategories.map((category, categoryIndex) => {
+          const translatedCategory = translated?.destination_categories?.[categoryIndex];
+          return (
           <section className="dest-section destination-category-section" key={`${category.title}-${categoryIndex}`}>
-            <h2>{category.title}</h2>
+            <h2>{translatedCategory?.title || translateCategoryTitle(category.title, t)}</h2>
             <div className="destination-category-grid">
-              {category.items.map((item, itemIndex) => (
+              {category.items.map((item, itemIndex) => {
+                const translatedItem = translatedCategory?.items?.[itemIndex];
+                const itemName = translatedItem?.name || translateCategoryItemText(item.name, lang);
+                return (
                 <article className="destination-category-card" key={`${item.name}-${itemIndex}`}>
-                  {item.image ? <img src={item.image} alt={item.name} loading="lazy" onError={(event) => { event.currentTarget.src = '/hero.svg'; }} /> : null}
+                  {item.image ? (
+                    <button
+                      type="button"
+                      className="destination-category-image-button"
+                      onClick={() => {
+                        setSelectedImage(item.image as string);
+                        setLightboxOpen(true);
+                      }}
+                      aria-label={`${t('viewImage')} ${itemName}`}
+                    >
+                      <img src={item.image} alt={itemName} loading="lazy" onError={(event) => { event.currentTarget.src = '/hero.svg'; }} />
+                    </button>
+                  ) : null}
                   <div className="destination-category-card-copy">
-                    <h3>{item.name}</h3>
-                    {item.description ? <p>{item.description}</p> : null}
+                    <h3>{itemName}</h3>
+                    {item.description ? <p>{translatedItem?.description || translateCategoryItemText(item.description, lang)}</p> : null}
                   </div>
                 </article>
-              ))}
+                );
+              })}
             </div>
           </section>
-        ))}
+          );
+        })}
 
         <section className="dest-section feedback-panel">
           <h2>{t('ratingHeading')}</h2>
@@ -302,6 +326,29 @@ export default function DestinationPage({ destination, related }: Props) {
               setAverageRating((prev) => (prev ? Math.round(((prev * ratingCount + submitted) / (ratingCount + 1)) * 10) / 10 : submitted));
             }}
           />
+
+          {reviews.length > 0 && (
+            <div className="destination-review-list">
+              <h3>What visitors say</h3>
+              {reviews.map((review) => (
+                <article key={review.id} className="destination-review">
+                  <div className="destination-review-head">
+                    <strong>{review.nickname || 'Anonymous Tourist'}</strong>
+                    <span className="tcard-stars" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}</span>
+                    <span className="tcard-date">{new Date(review.created_at).toLocaleDateString(undefined, { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                  </div>
+                  {review.comment && <p>{review.comment}</p>}
+                  {review.photo_urls.length > 0 && (
+                    <div className="destination-review-photos">
+                      {review.photo_urls.slice(0, 5).map((photo: string, i: number) => (
+                        <img key={`${review.id}-${i}`} src={photo} alt={`${destination.name} visitor photo ${i + 1}`} loading="lazy" />
+                      ))}
+                    </div>
+                  )}
+                </article>
+              ))}
+            </div>
+          )}
         </section>
 
         {related.length > 0 && (

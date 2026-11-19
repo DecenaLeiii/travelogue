@@ -55,6 +55,7 @@ export default function SmartAssistant({ destinationSlug, destinationName }: { d
   const [profile, setProfile] = useState<Profile>({})
   const [planStep, setPlanStep] = useState<number | null>(null)
   const [picked, setPicked] = useState<string[]>([])
+  const [showChips, setShowChips] = useState(false)
   const bottomRef = useRef<HTMLDivElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const userAtBottomRef = useRef(true)
@@ -307,7 +308,16 @@ export default function SmartAssistant({ destinationSlug, destinationName }: { d
       </div>
 
       <div style={{ marginTop: 12 }}>
-        <div className="assistant-suggestions" style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 8 }}>
+        <button
+          type="button"
+          onClick={() => setShowChips(v => !v)}
+          aria-expanded={showChips || !!currentStep}
+          style={{ ...chipStyle(), marginBottom: 6, fontSize: 12, padding: '4px 10px' }}
+        >
+          {showChips || currentStep ? 'Hide suggestions ▾' : 'Show suggestions ▴'}
+        </button>
+        {(showChips || currentStep) && (
+        <div className="assistant-suggestions" style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 8, maxHeight: 110, overflowY: 'auto' }}>
           {chips.map((c) => (
             <button key={c.key} type="button" onClick={() => { if (!loading) c.onClick() }} style={chipStyle(c.active)} disabled={loading} title={c.label}>
               {c.label}
@@ -324,6 +334,7 @@ export default function SmartAssistant({ destinationSlug, destinationName }: { d
             </button>
           )}
         </div>
+        )}
 
         <form onSubmit={onSubmit} className="assistant-input-form" style={{ display: 'flex', gap: 8 }}>
         <input

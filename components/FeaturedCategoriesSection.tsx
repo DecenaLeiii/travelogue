@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import type { DestinationCategoryData } from '../lib/destinationCategoryUtils';
+import { translateCategoryItemText, translateCategoryTitle, useTranslation } from '../lib/i18n';
 
 type FeaturedCategoriesProps = {
   categories: DestinationCategoryData[];
@@ -8,6 +9,7 @@ type FeaturedCategoriesProps = {
 };
 
 export default function FeaturedCategoriesSection({ categories, t }: FeaturedCategoriesProps) {
+  const { lang } = useTranslation();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -33,7 +35,7 @@ export default function FeaturedCategoriesSection({ categories, t }: FeaturedCat
           const itemCount = getItemCount(category);
           return (
           <div key={category.category_name} className="featured-category-item">
-            <h3>{category.display_name}</h3>
+            <h3>{translateCategoryTitle(category.category_name, t, category.display_name)}</h3>
             <div className="featured-category-cards">
               {category.items.slice(0, itemCount).map((item, idx) => (
                 <Link
@@ -45,7 +47,7 @@ export default function FeaturedCategoriesSection({ categories, t }: FeaturedCat
                     <div className="featured-category-card-image">
                       <img
                         src={item.image}
-                        alt={item.name}
+                        alt={translateCategoryItemText(item.name, lang)}
                         onError={(e) => {
                           if (!e.currentTarget.src.endsWith('/hero.svg')) {
                             e.currentTarget.src = '/hero.svg';
@@ -55,8 +57,8 @@ export default function FeaturedCategoriesSection({ categories, t }: FeaturedCat
                     </div>
                   )}
                   <div className="featured-category-card-content">
-                    <h4>{item.name}</h4>
-                    {item.description && <p>{item.description}</p>}
+                    <h4>{translateCategoryItemText(item.name, lang)}</h4>
+                    {item.description && <p>{translateCategoryItemText(item.description, lang)}</p>}
                     <span className="featured-category-destination">{item.destination_name}</span>
                   </div>
                 </Link>

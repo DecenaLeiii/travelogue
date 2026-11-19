@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { parseContentSections } from './content';
 import type { Lang } from './i18n';
+import type { DestinationTranslationEntry } from './destinationTranslations';
 
 export type DestinationTranslation = {
   name?: string;
@@ -13,6 +14,7 @@ export type DestinationTranslation = {
   best_time_to_visit?: string;
   overview?: string;
   full?: string;
+  destination_categories?: DestinationTranslationEntry['destination_categories'];
 };
 
 // Loads every destination translation for the active language so listing cards can localize in one request.
@@ -74,6 +76,7 @@ export function useDestinationTranslation(slug: string | undefined, lang: Lang) 
             best_time_to_visit: entry.best_time_to_visit,
             overview: sect.overview,
             full: sect.full,
+            destination_categories: entry.destination_categories,
           });
         }
       })

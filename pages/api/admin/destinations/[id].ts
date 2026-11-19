@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import getSupabaseAdmin from '../../../../lib/supabaseAdmin';
 import { verifyAdmin } from '../../../../lib/auth';
 import { logAudit } from '../../../../lib/audit';
-import { addTranslationPlaceholder, removeTranslationEntry } from '../../../../lib/translationSync';
+import { geocodeDestination, TRANSLATION_TRIGGER_FIELDS, translateDestinationFields } from '../../../../lib/destinationEnrichment';
 
 function slugify(name: string) {
   return name
@@ -76,7 +76,37 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const { data: beforeRows } = await supabaseAdmin.from('destinations').select('*').eq('id', id).limit(1);
-    const before = beforeRows?.[0] as Record<string, unknown> | undefined;
+    const before = beforeRows?.[0] as Record<string, any> | undefined;
+
+    const changed = (key: string) => key in updates && JSON.stringify(before?.[key]) !== JSON.stringify(updates[key]);
+
+    // Re-geocode when the location moves or the row has no coordinates yet.
+    if (changed('location') || before?.latitude == null) {
+      const mergedLocation = (updates.location ?? before?.location) as string | undefined;
+      const mergedName = (updates.name ?? before?.name) as string | undefined;
+      const coordinates = await geocodeDestination(mergedLocation, mergedName);
+      if (coordinates) {
+        updates.latitude = coordinates.latitude;
+        updates.longitude = coordinates.longitude;
+      }
+    }
+
+    // Re-translate when translatable text changes, or when no translations exist yet.
+    const hasTranslations = before?.translations && Object.keys(before.translations).length > 0;
+    if (TRANSLATION_TRIGGER_FIELDS.some(changed) || !hasTranslations) {
+      const merged = { ...before, ...updates };
+      updates.translations = await translateDestinationFields({
+        name: merged.name,
+        short_description: merged.short_description,
+        content: merged.content,
+        highlights: merged.highlights,
+        travel_tips: merged.travel_tips,
+        region: merged.region,
+        location: merged.location,
+        best_time_to_visit: merged.best_time_to_visit,
+        destination_categories: merged.destination_categories,
+      });
+    }
 
     const { data, error } = await supabaseAdmin
       .from('destinations')
@@ -90,20 +120,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const updatedDestination = data?.[0];
     if (updatedDestination?.id) {
       await ensureQrForDestination(supabaseAdmin, updatedDestination.id, updatedDestination.slug || body.slug || 'destination');
-    }
-
-    // Sync translations for updated destination
-    if (updatedDestination) {
-      addTranslationPlaceholder(updatedDestination.slug, {
-        name: updatedDestination.name,
-        short_description: updatedDestination.short_description,
-        content: updatedDestination.content,
-        highlights: updatedDestination.highlights,
-        travel_tips: updatedDestination.travel_tips,
-        region: updatedDestination.region,
-        location: updatedDestination.location,
-        best_time_to_visit: updatedDestination.best_time_to_visit,
-      });
     }
 
     const updatedFields = Object.keys(updates).filter((key) => key !== 'updated_at' && (!before || JSON.stringify(before[key]) !== JSON.stringify(updates[key])));
@@ -132,7 +148,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const archive = req.query.archive === 'true';
     const { data: nameRows } = await supabaseAdmin.from('destinations').select('name, slug').eq('id', id).limit(1);
     const label = String(nameRows?.[0]?.name || id);
-    const slug = nameRows?.[0]?.slug;
 
     if (archive) {
       const { data, error } = await supabaseAdmin
@@ -158,11 +173,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const { error } = await supabaseAdmin.from('destinations').delete().eq('id', id);
     if (error) return res.status(500).json({ error: error.message });
-
-    // Remove translation entries for deleted destination
-    if (slug) {
-      removeTranslationEntry(slug);
-    }
 
     await logAudit({
       adminId: admin.id,

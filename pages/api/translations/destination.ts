@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { DESCRIPTION_MAP } from '../../../lib/destinations';
-import { TRANSLATION_LANGS, findTranslation, loadTranslationMap } from '../../../lib/destinationTranslations';
+import { TRANSLATION_LANGS, findTranslation, loadTranslationMapWithDb } from '../../../lib/destinationTranslations';
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { slug, lang } = req.query;
   const s = Array.isArray(slug) ? slug[0] : slug;
   const l = (Array.isArray(lang) ? lang[0] : lang) || 'en';
@@ -10,7 +10,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (l !== 'en' && !TRANSLATION_LANGS.includes(l)) return res.status(400).json({ error: 'Unsupported lang' });
 
   try {
-    const map = l === 'en' ? {} : loadTranslationMap(l);
+    const map = l === 'en' ? {} : await loadTranslationMapWithDb(l);
 
     // Without a slug, return every translation for the language (used by listing cards).
     if (!s) {

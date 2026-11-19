@@ -31,9 +31,7 @@
   ],
   "featured_items": {
     "baguio": {
-      "featured_foods": [
-        "Strawberry"
-      ],
+      "featured_foods": [],
       "best_pasalubong_shops": []
     },
     "tagaytay": {
@@ -47,6 +45,17 @@
         "Island Hopping"
       ],
       "local_food": []
+    },
+    "vigan": {
+      "foods": [
+        "Longganisa"
+      ]
+    },
+    "pagsanjan-falls": {
+      "local_food": [
+        "Kesong Puti",
+        "Espasol"
+      ]
     }
   }
 }

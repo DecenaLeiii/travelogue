@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import getSupabaseAdmin from '../../../../lib/supabaseAdmin';
 import { verifyAdmin } from '../../../../lib/auth';
 import { logAudit } from '../../../../lib/audit';
-import { addTranslationPlaceholder, removeTranslationEntry } from '../../../../lib/translationSync';
+import { geocodeDestination, translateDestinationFields } from '../../../../lib/destinationEnrichment';
 
 function slugify(name: string) {
   return name
@@ -74,11 +74,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!name) return res.status(400).json({ error: 'Name is required' });
 
     const slug = body.slug?.trim() || slugify(name);
+    const coordinates = await geocodeDestination(body.location, name);
+    const translations = await translateDestinationFields({
+      name,
+      short_description: body.short_description,
+      content: body.content,
+      highlights: body.highlights,
+      travel_tips: body.travel_tips,
+      region: body.region,
+      location: body.location,
+      best_time_to_visit: body.best_time_to_visit,
+      destination_categories: body.destination_categories,
+    });
     const row = {
       name,
       slug,
       region: body.region || null,
       location: body.location || null,
+      latitude: coordinates?.latitude ?? null,
+      longitude: coordinates?.longitude ?? null,
+      translations,
       short_description: body.short_description || null,
       content: body.content || null,
       best_time_to_visit: body.best_time_to_visit || null,
@@ -98,20 +113,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const createdDestination = data?.[0];
     if (createdDestination?.id) {
       await ensureQrForDestination(supabaseAdmin, createdDestination.id, createdDestination.slug || slug);
-    }
-
-    // Auto-generate placeholder translations for new destination
-    if (createdDestination) {
-      addTranslationPlaceholder(slug, {
-        name: createdDestination.name,
-        short_description: createdDestination.short_description,
-        content: createdDestination.content,
-        highlights: createdDestination.highlights,
-        travel_tips: createdDestination.travel_tips,
-        region: createdDestination.region,
-        location: createdDestination.location,
-        best_time_to_visit: createdDestination.best_time_to_visit,
-      });
     }
 
     await logAudit({

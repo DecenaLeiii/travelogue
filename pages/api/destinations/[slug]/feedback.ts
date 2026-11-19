@@ -16,8 +16,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'GET') {
     const { data, error } = await supabaseAdmin
       .from('destination_feedback')
-      .select('rating')
-      .eq('destination_slug', slug);
+      .select('*')
+      .eq('destination_slug', slug)
+      .order('created_at', { ascending: false });
 
     if (error) {
       console.error('Feedback GET error', error);
@@ -27,8 +28,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const ratings = (data || []).map((row: any) => Number(row.rating) || 0).filter((r: number) => r > 0);
     const ratingCount = ratings.length;
     const averageRating = ratingCount ? ratings.reduce((sum: number, v: number) => sum + v, 0) / ratingCount : null;
+    const reviews = (data || [])
+      .filter((row: any) => row.comment || (Array.isArray(row.photo_urls) && row.photo_urls.length))
+      .slice(0, 20)
+      .map((row: any) => ({
+        id: row.id,
+        rating: Number(row.rating) || 0,
+        comment: row.comment || null,
+        photo_urls: row.photo_urls || [],
+        created_at: row.created_at,
+        nickname: row.nickname || null,
+      }));
 
-    return res.json({ averageRating, ratingCount });
+    return res.json({ averageRating, ratingCount, reviews });
   }
 
   if (req.method === 'POST') {

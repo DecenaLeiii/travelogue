@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import SmartAssistant from './SmartAssistant'
+import { createPortal } from 'react-dom'
+import AssistantWindow, { AssistantBubbleIcon } from './AssistantWindow'
 
 export default function FloatingAssistant({ destinationSlug, destinationName }: { destinationSlug?: string; destinationName?: string }) {
   const [open, setOpen] = useState(false)
@@ -12,17 +13,13 @@ export default function FloatingAssistant({ destinationSlug, destinationName }: 
         aria-label={open ? 'Hide assistant' : 'Open assistant'}
         title={open ? 'Hide assistant' : 'Open assistant'}
       >
-        <span className="assistant-bubble">AI</span>
+        <span className="assistant-bubble" aria-hidden="true">
+          <AssistantBubbleIcon />
+        </span>
       </button>
-      {open && (
-        <div className="assistant-panel open assistant-floating-panel">
-          <div className="assistant-floating-shell" style={{ position: 'relative' }}>
-            <button type="button" onClick={() => setOpen(false)} aria-label="Close assistant" className="assistant-close-button">×</button>
-            <div className="assistant-floating-chat">
-              <SmartAssistant destinationSlug={destinationSlug} destinationName={destinationName} />
-            </div>
-          </div>
-        </div>
+      {open && createPortal(
+        <AssistantWindow onClose={() => setOpen(false)} destinationSlug={destinationSlug} destinationName={destinationName} />,
+        document.body
       )}
     </>
   )

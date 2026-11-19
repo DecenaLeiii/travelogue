@@ -283,6 +283,13 @@ main.dest-detail{max-width:none;margin:0;padding:0}
 .lightbox-content img{display:block;width:auto;max-width:calc(100vw - 80px);max-height:calc(100vh - 80px);border-radius:18px}
 .lightbox-close{position:absolute;top:24px;right:24px;width:44px;height:44px;border:none;border-radius:999px;background:rgba(255,255,255,.9);color:#0f172a;font-size:26px;cursor:pointer;box-shadow:0 18px 40px rgba(15,23,42,.2)}
 .feedback-panel{background:#fff;border:1px solid #e8edf2;border-radius:14px;padding:22px;margin-bottom:32px}
+.destination-review-list{margin-top:22px;display:grid;gap:12px}
+.destination-review-list h3{margin:0 0 4px;font-size:18px}
+.destination-review{border-top:1px solid #eef2f6;padding-top:12px}
+.destination-review-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.destination-review p{margin:6px 0 0;line-height:1.5;white-space:pre-line}
+.destination-review-photos{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.destination-review-photos img{width:88px;height:88px;object-fit:cover;border-radius:10px}
 .feedback-summary{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
 .feedback-rating-summary{display:flex;align-items:center;gap:8px;font-size:14px;color:#334155}
 .feedback-average{font-size:22px;font-weight:700;color:#0f172a}
@@ -515,7 +522,10 @@ main.dest-detail{max-width:none;margin:0;padding:0}
 .destination-category-section>h2{margin-bottom:16px}
 .destination-category-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
 .destination-category-card{overflow:hidden;border:1px solid #e2e8f0;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(15,23,42,.05)}
-.destination-category-card>img{display:block;width:100%;height:180px;object-fit:cover;background:#eef2f6}
+.destination-category-card>img,.destination-category-image-button{display:block;width:100%;height:180px;object-fit:cover;background:#eef2f6}
+.destination-category-image-button{padding:0;border:0;cursor:zoom-in;overflow:hidden}
+.destination-category-image-button img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .2s ease}
+.destination-category-image-button:hover img,.destination-category-image-button:focus-visible img{transform:scale(1.04)}
 .destination-category-card-copy{padding:14px}
 .destination-category-card-copy h3{margin:0;color:#172033;font-size:17px}
 .destination-category-card-copy p{margin:7px 0 0;color:#64748b;font-size:14px;line-height:1.55}

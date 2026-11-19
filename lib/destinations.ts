@@ -94,6 +94,8 @@ export function enrichDestination(dest: Destination): Destination {
       ...full,
       ...dest,
       id: dest.id || full.id || dest.slug,
+      latitude: dest.latitude ?? full.latitude,
+      longitude: dest.longitude ?? full.longitude,
       images: (dest.images && dest.images.length)
         ? dest.images.map(normalizeImagePath)
         : (full.images?.length ? full.images.map(normalizeImagePath) : ['/hero.svg']),
