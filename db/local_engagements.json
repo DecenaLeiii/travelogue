@@ -2924,5 +2924,319 @@
     },
     "scan_id": null,
     "created_at": "2026-10-28T04:24:03.124Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/login",
+      "scan_id": null,
+      "visitor_id": "v_1794746186747_v7aqniy"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-15T12:36:28.564Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/login",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:09:33.764Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/admin/login",
+      "tag": "button",
+      "href": null,
+      "text": "Login",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:09:46.644Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/admin/login",
+      "tag": "button",
+      "href": null,
+      "text": "Login",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:10:02.698Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/admin/login",
+      "tag": "button",
+      "href": null,
+      "text": "Login",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:10:33.781Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/admin/login",
+      "tag": "button",
+      "href": null,
+      "text": "Login",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:10:41.128Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/admin/login",
+      "seconds": 69,
+      "max_scroll": 0,
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:10:41.818Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:10:41.817Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/feedback",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:10:52.783Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/admin/feedback",
+      "tag": "a",
+      "href": "http://localhost:3000/",
+      "text": "Department of Tourism",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:10:53.884Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/admin/feedback",
+      "seconds": 2,
+      "max_scroll": 0,
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:10:53.913Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/admin",
+      "seconds": 17,
+      "max_scroll": 0,
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:10:58.308Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/login",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:10:58.405Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/feedback",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:10:58.309Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/admin",
+      "tag": "a",
+      "href": "http://localhost:3000/admin/feedback",
+      "text": "Tourist feedback",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:10:58.329Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/admin/login",
+      "tag": "button",
+      "href": null,
+      "text": "Login",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:11:07.112Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/admin/login",
+      "seconds": 10,
+      "max_scroll": 0,
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:11:08.071Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:11:08.083Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/admin",
+      "tag": "a",
+      "href": "http://localhost:3000/admin/destinations",
+      "text": "Manage destinations",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:11:10.619Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/destinations",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:11:10.653Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/admin",
+      "seconds": 3,
+      "max_scroll": 0,
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:11:10.618Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/admin/destinations",
+      "seconds": 5,
+      "max_scroll": 0,
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:11:15.375Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/activity",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:11:15.375Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/admin/destinations",
+      "tag": "a",
+      "href": "http://localhost:3000/admin/activity",
+      "text": "Activity",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:11:15.403Z"
+  },
+  {
+    "event_type": "page_view",
+    "payload": {
+      "path": "/admin/feedback",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:11:17.249Z"
+  },
+  {
+    "event_type": "time_spent",
+    "payload": {
+      "path": "/admin/activity",
+      "seconds": 2,
+      "max_scroll": 0,
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:11:17.249Z"
+  },
+  {
+    "event_type": "click",
+    "payload": {
+      "path": "/admin/feedback",
+      "tag": "a",
+      "href": "http://localhost:3000/admin/feedback",
+      "text": "Tourist feedback",
+      "scan_id": null,
+      "visitor_id": "v_1795068573083_vv7xvzt"
+    },
+    "scan_id": null,
+    "created_at": "2026-11-19T06:11:17.279Z"
   }
 ]

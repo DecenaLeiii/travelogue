@@ -363,7 +363,7 @@ export default function Home({ initialDestinations, initialFeaturedCategories = 
                   </section>
                   )}
                   {!cultureContent.culture_hidden.includes('contact') && (
-                  <section className="culture-detail">
+                  <section className="culture-detail culture-contact">
                     <h3>{lang === 'en' && cultureContent.contact_heading ? cultureContent.contact_heading : t('contactHeading')}</h3>
                     <div className="culture-contact-list">
                       <div className="culture-contact-item">
