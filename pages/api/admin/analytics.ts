@@ -59,20 +59,36 @@ async function loadAnalyticsRows(
   dateColumn?: string,
   from?: string,
   to?: string,
+  signal?: AbortSignal,
 ) {
-  const rows: Record<string, any>[] = [];
-  let total: number;
-  do {
-    let query = supabase.from(table).select('*', { count: 'exact' });
+  const fetchPage = async (start: number, end: number, count: boolean) => {
+    let query = supabase.from(table).select('*', count ? { count: 'exact' } : undefined);
     if (dateColumn && from) query = query.gte(dateColumn, `${from}T00:00:00Z`);
     if (dateColumn && to) query = query.lt(dateColumn, new Date(Date.parse(`${to}T00:00:00Z`) + 86400000).toISOString());
-    const result = await query.order('id').range(rows.length, rows.length + 999);
+    query = query.order('id').range(start, end);
+    if (signal) query = query.abortSignal(signal);
+    const result = await query;
     if (result.error) throw new Error(`Failed to load ${table}: ${result.error.message}`);
-    if (result.count === null || !result.data) throw new Error(`Failed to count ${table}.`);
-    total = result.count;
-    if (!result.data.length && rows.length < total) throw new Error(`Incomplete results for ${table}.`);
-    rows.push(...result.data);
-  } while (rows.length < total);
+    if (!result.data) throw new Error(`Incomplete results for ${table}.`);
+    return result;
+  };
+  const first = await fetchPage(0, 999, true);
+  if (first.count === null) throw new Error(`Failed to count ${table}.`);
+  const total = first.count;
+  const rows: Record<string, any>[] = [...first.data];
+  if (rows.length < total && rows.length === 0) throw new Error(`Incomplete results for ${table}.`);
+  const pageSize = rows.length;
+  for (let start = pageSize; start < total; start += pageSize * 6) {
+    const pages = Array.from({ length: Math.min(6, Math.ceil((total - start) / pageSize)) }, (_, index) => {
+      const offset = start + index * pageSize;
+      const end = Math.min(offset + pageSize, total) - 1;
+      return fetchPage(offset, end, false).then((result) => {
+        if (result.data.length !== end - offset + 1) throw new Error(`Incomplete results for ${table}.`);
+        return result.data;
+      });
+    });
+    for (const page of await Promise.all(pages)) rows.push(...page);
+  }
   return rows;
 }
 
@@ -91,6 +107,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
   const destinationSlug = String(req.query.destination || '').trim().toLowerCase() || undefined;
 
+  if (req.query.view === 'activity') {
+    const localScans = readJsonFile<any[]>(LOCAL_SCANS_PATH, []);
+    if (!supabaseAdmin) {
+      return res.json({ recentScans: sortByNewest(localScans, 'scanned_at').slice(0, 50), auditLogs: [] });
+    }
+    const [scansResult, auditResult] = await Promise.all([
+      supabaseAdmin.from('scans').select('*').order('scanned_at', { ascending: false }).order('id').limit(50),
+      supabaseAdmin.from('audit_logs').select('*').order('created_at', { ascending: false }).order('id').limit(50),
+    ]);
+    if (scansResult.error || auditResult.error) {
+      console.error('Failed to load activity:', scansResult.error || auditResult.error);
+      return res.status(500).json({ error: 'Unable to load activity.' });
+    }
+    return res.json({
+      recentScans: sortByNewest([...(scansResult.data || []), ...localScans], 'scanned_at').slice(0, 50),
+      auditLogs: auditResult.data || [],
+    });
+  }
   const fallbackData = toFallbackAnalytics();
   let remoteScans: Record<string, any>[] = [];
   let remoteEngagements: Record<string, any>[] = [];
@@ -99,18 +133,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let remoteAuditLogs: Record<string, any>[] = [];
   let remoteFeedback: Record<string, any>[] = [];
   if (supabaseAdmin) {
+    const controller = new AbortController();
+    const cancelOnClose = () => { if (!res.writableEnded) controller.abort(); };
+    res.once('close', cancelOnClose);
     try {
       [remoteScans, remoteEngagements, remoteDestinations, remoteQrCodes, remoteAuditLogs, remoteFeedback] = await Promise.all([
-        loadAnalyticsRows(supabaseAdmin, 'scans'),
-        loadAnalyticsRows(supabaseAdmin, 'engagements', 'created_at', from, to),
-        loadAnalyticsRows(supabaseAdmin, 'destinations'),
-        loadAnalyticsRows(supabaseAdmin, 'qr_codes'),
-        loadAnalyticsRows(supabaseAdmin, 'audit_logs', 'created_at', from, to),
-        loadAnalyticsRows(supabaseAdmin, 'destination_feedback', 'created_at', from, to),
+        loadAnalyticsRows(supabaseAdmin, 'scans', undefined, undefined, undefined, controller.signal),
+        loadAnalyticsRows(supabaseAdmin, 'engagements', 'created_at', from, to, controller.signal),
+        loadAnalyticsRows(supabaseAdmin, 'destinations', undefined, undefined, undefined, controller.signal),
+        loadAnalyticsRows(supabaseAdmin, 'qr_codes', undefined, undefined, undefined, controller.signal),
+        loadAnalyticsRows(supabaseAdmin, 'audit_logs', 'created_at', from, to, controller.signal),
+        loadAnalyticsRows(supabaseAdmin, 'destination_feedback', 'created_at', from, to, controller.signal),
       ]);
     } catch (error) {
+      if (controller.signal.aborted) return;
+      controller.abort();
       console.error('Failed to load dashboard analytics:', error);
       return res.status(500).json({ error: 'Unable to load dashboard analytics.' });
+    } finally {
+      res.removeListener('close', cancelOnClose);
     }
   }
 

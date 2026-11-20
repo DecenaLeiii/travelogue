@@ -6,7 +6,7 @@ import { useTranslation } from '../../lib/i18n';
 import getSupabaseAdmin from '../../lib/supabaseAdmin';
 import { verifyAdmin } from '../../lib/auth';
 import { buildEngagementChart } from '../../lib/engagementChart';
-import { chartDateBuckets, dailyDestinationViews, dailyPageViews, sumBucket } from '../../lib/dashboardDates';
+import { chartDateBuckets, sumBucket } from '../../lib/dashboardDates';
 
 type Analytics = {
   totals: {
@@ -79,7 +79,7 @@ export default function AdminDashboard({ analytics, error: initialError }: Props
   const [filterVersion, setFilterVersion] = useState(0);
   const [appliedRange, setAppliedRange] = useState({ from: '', to: '' });
   const [error, setError] = useState(initialError || '');
-  const [analyticsLoading, setAnalyticsLoading] = useState(false);
+  const [analyticsLoading, setAnalyticsLoading] = useState(true);
   const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
   const [selectedSegment, setSelectedSegment] = useState<string | null>(null);
   const [hoveredSegment, setHoveredSegment] = useState<string | null>(null);
@@ -375,6 +375,21 @@ export default function AdminDashboard({ analytics, error: initialError }: Props
       )}
 
       {error && <p className="admin-error">{error}</p>}
+      {!data && analyticsLoading && <p className="admin-panel" role="status">Loading dashboard analytics...</p>}
+      <div className="chart-metric-controls">
+        <label>
+          Show charts for
+          <select value={chartMetric} onChange={(event) => {
+            setChartMetric(event.target.value === 'scans' ? 'scans' : 'pageViews');
+            setSelectedSegment(null);
+            setHoveredSegment(null);
+          }}>
+            <option value="scans">QR scans</option>
+            <option value="pageViews">Page views</option>
+          </select>
+        </label>
+        <p>QR scans count recorded QR openings. Page views count tracked page loads and navigation, including repeat visits and admin pages. A destination filter limits page views to that destination.</p>
+      </div>
 
       {data && (
         <>
@@ -435,20 +450,6 @@ export default function AdminDashboard({ analytics, error: initialError }: Props
             </section>
           )}
 
-          <div className="chart-metric-controls">
-            <label>
-              Show charts for
-              <select value={chartMetric} disabled={analyticsLoading || !data.scanSources} onChange={(event) => {
-                setChartMetric(event.target.value === 'scans' ? 'scans' : 'pageViews');
-                setSelectedSegment(null);
-                setHoveredSegment(null);
-              }}>
-                <option value="scans">QR scans</option>
-                <option value="pageViews">Page views</option>
-              </select>
-            </label>
-            <p>QR scans count recorded QR openings. Page views count tracked page loads and navigation, including repeat visits and admin pages. A destination filter limits page views to that destination.</p>
-          </div>
           <section className="admin-visual-grid">
             <article className="admin-panel admin-traffic-panel">
               <div className="panel-header">
@@ -757,94 +758,5 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return { props: { analytics: null, error: 'Server misconfiguration' } };
   }
 
-  const [{ data: scans }, { data: engagements }, { data: destinations }, { data: auditLogs }] =
-    await Promise.all([
-      supabaseAdmin.from('scans').select('*').order('scanned_at', { ascending: false }).limit(5000),
-      supabaseAdmin.from('engagements').select('*').order('created_at', { ascending: false }).limit(10000),
-      supabaseAdmin.from('destinations').select('id,name,slug'),
-      supabaseAdmin.from('audit_logs').select('*').order('created_at', { ascending: false }).limit(200),
-    ]);
-
-  const filteredScans = (scans || []).filter((s) => new Date(s.scanned_at).getTime() >= 0);
-  const filteredEngagements = (engagements || []).filter((e) => new Date(e.created_at).getTime() >= 0);
-
-  const uniqueVisitors = new Set(
-    filteredScans.map((s) => s.visitor_id || s.ip_address || s.id).filter(Boolean)
-  ).size;
-
-  const pageViews = filteredEngagements.filter((e) => e.event_type === 'page_view');
-  const timeEvents = filteredEngagements.filter((e) => e.event_type === 'time_spent');
-  const scrollEvents = filteredEngagements.filter((e) => e.event_type === 'scroll_depth');
-  const clickEvents = filteredEngagements.filter((e) => e.event_type === 'click');
-
-  const totalTimeSeconds = timeEvents.reduce(
-    (sum, e) => sum + (Number(e.payload?.seconds) || 0),
-    0
-  );
-
-  const byDestination: Record<string, { views: number; timeSeconds: number; slug: string }> = {};
-  for (const e of pageViews) {
-    const path = String(e.payload?.path || '');
-    const match = path.match(/\/destination\/([^/?]+)/);
-    if (!match) continue;
-    const slug = match[1];
-    if (!byDestination[slug]) byDestination[slug] = { views: 0, timeSeconds: 0, slug };
-    byDestination[slug].views += 1;
-  }
-  for (const e of timeEvents) {
-    const path = String(e.payload?.path || '');
-    const match = path.match(/\/destination\/([^/?]+)/);
-    if (!match) continue;
-    const slug = match[1];
-    if (!byDestination[slug]) byDestination[slug] = { views: 0, timeSeconds: 0, slug };
-    byDestination[slug].timeSeconds += Number(e.payload?.seconds) || 0;
-  }
-
-  const destMap = Object.fromEntries((destinations || []).map((d) => [d.slug, d.name]));
-  const perDestination = Object.values(byDestination).map((row) => ({
-    ...row,
-    name: destMap[row.slug] || row.slug,
-  }));
-
-  const dailyScans: Record<string, number> = {};
-  for (const s of filteredScans) {
-    const key = new Date(s.scanned_at).toISOString().slice(0, 10);
-    dailyScans[key] = (dailyScans[key] || 0) + 1;
-  }
-
-  return {
-    props: {
-      analytics: {
-        totals: {
-          scans: filteredScans.length,
-          uniqueVisitors,
-          pageViews: pageViews.length,
-          scrollEvents: scrollEvents.length,
-          clickEvents: clickEvents.length,
-          totalTimeSeconds,
-          destinations: (destinations || []).length,
-        },
-        perDestination,
-        dailyPageViews: dailyPageViews(pageViews),
-        dailyDestinationViews: dailyDestinationViews(pageViews),
-        dailyScans,
-        recentScans: filteredScans.slice(0, 50),
-        recentEngagements: filteredEngagements.slice(0, 50),
-        auditLogs: auditLogs || [],
-        assistantFeedback: (() => {
-          const items = filteredEngagements.filter((e: any) => e.event_type === 'assistant_feedback');
-          return {
-            up: items.filter((e: any) => e.payload?.rating === 'up').length,
-            down: items.filter((e: any) => e.payload?.rating === 'down').length,
-            recent: items.slice(0, 10).map((e: any) => ({
-              created_at: e.created_at || null,
-              rating: e.payload?.rating || null,
-              question: e.payload?.question || '',
-              lang: e.payload?.lang || '',
-            })),
-          };
-        })(),
-      },
-    },
-  };
+  return { props: { analytics: null } };
 };

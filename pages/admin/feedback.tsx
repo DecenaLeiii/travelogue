@@ -131,6 +131,7 @@ export default function AdminFeedback() {
         </section>
       )}
       {status && <p className="admin-error">{status}</p>}
+      {loading && <p className="admin-panel" role="status">Loading feedback...</p>}
       {loaded && feedback.length === 0 && <section className="admin-panel"><p>No tourist feedback has been submitted yet.</p></section>}
       <div className="feedback-admin-grid">
         {feedback.map((item) => (

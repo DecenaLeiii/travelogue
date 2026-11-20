@@ -11,17 +11,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { data: destinations, error: destinationsError } = await supabaseAdmin
-    .from('destinations')
-    .select('id,slug,name');
+  const [{ data: destinations, error: destinationsError }, { data: feedbackRows, error: feedbackError }] = await Promise.all([
+    supabaseAdmin.from('destinations').select('id,slug,name'),
+    supabaseAdmin.from('destination_feedback').select('destination_slug,rating'),
+  ]);
 
   if (destinationsError) return res.status(500).json({ error: destinationsError.message });
-
-  const { data: feedbackRows, error: feedbackError } = await supabaseAdmin
-    .from('destination_feedback')
-    .select('*')
-    .order('created_at', { ascending: false });
-
   if (feedbackError) return res.status(500).json({ error: feedbackError.message });
 
   const map: Record<string, { averageRating: number; ratingCount: number }> = {};

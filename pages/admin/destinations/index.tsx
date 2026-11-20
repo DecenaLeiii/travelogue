@@ -25,6 +25,7 @@ export default function AdminDestinations() {
   const [qrLoading, setQrLoading] = useState<Record<string, boolean>>({});
   const [feedbackStats, setFeedbackStats] = useState<Record<string, { averageRating: number; ratingCount: number }>>({});
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
   const [trashAvailable, setTrashAvailable] = useState<boolean | null>(null);
   const [pendingId, setPendingId] = useState<string | null>(null);
   const [now, setNow] = useState(() => Date.now());
@@ -45,7 +46,7 @@ export default function AdminDestinations() {
   const loadQRCodes = async () => {
     const res = await fetch('/api/admin/qrcodes');
     if (res.status === 401) { router.push('/admin/login'); return; }
-    if (!res.ok) { return; }
+    if (!res.ok) throw new Error(t('failedToLoad'));
     const json = await res.json();
     const map: Record<string, string> = {};
     (json.qrcodes || []).forEach((q: any) => {
@@ -57,15 +58,15 @@ export default function AdminDestinations() {
   const loadFeedbackStats = async () => {
     const res = await fetch('/api/admin/destinations/feedback');
     if (res.status === 401) { router.push('/admin/login'); return; }
-    if (!res.ok) { return; }
+    if (!res.ok) throw new Error(t('failedToLoad'));
     const json = await res.json();
     setFeedbackStats(json.feedback || {});
   };
 
   useEffect(() => {
-    load();
-    loadQRCodes();
-    loadFeedbackStats();
+    void load().catch(() => setError(t('failedToLoad'))).finally(() => setLoading(false));
+    void loadQRCodes().catch(() => setError(t('failedToLoad')));
+    void loadFeedbackStats().catch(() => setError(t('failedToLoad')));
   }, []);
 
   useEffect(() => {
@@ -159,17 +160,24 @@ export default function AdminDestinations() {
   };
 
   useEffect(() => {
+    let active = true;
     const updateQrImages = async () => {
-      const entries = Object.entries(qrcodes);
-      for (const [destinationId, code] of entries) {
-        if (qrImages[destinationId]) continue;
+      const entries = Object.entries(qrcodes).filter(([destinationId]) => !qrImages[destinationId]);
+      const images = await Promise.all(entries.map(async ([destinationId, code]) => {
         const targetUrl = `${window.location.origin}/r/${encodeURIComponent(code)}`;
         const dataUrl = await QRCode.toDataURL(targetUrl, { width: 180, margin: 1, errorCorrectionLevel: 'M' });
-        setQrImages((current) => ({ ...current, [destinationId]: dataUrl }));
-      }
+        return [destinationId, dataUrl] as const;
+      }));
+      if (active && images.length) setQrImages((current) => ({ ...current, ...Object.fromEntries(images) }));
     };
 
-    if (Object.keys(qrcodes).length) updateQrImages();
+    if (Object.keys(qrcodes).length) {
+      void updateQrImages().catch((error) => {
+        console.error('Failed to generate QR images:', error);
+        if (active) setError(t('failedToLoad'));
+      });
+    }
+    return () => { active = false; };
   }, [qrcodes]);
 
   return (
@@ -204,6 +212,7 @@ export default function AdminDestinations() {
       </div>
 
       {error && <p className="admin-error">{error}</p>}
+      {loading && <p className="admin-panel" role="status">Loading destinations...</p>}
       {trashAvailable === false && <p className="admin-error">Trash is not set up yet. Apply database migration v10 to enable it.</p>}
 
       <table className="admin-table">

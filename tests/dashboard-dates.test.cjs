@@ -1,5 +1,6 @@
 const assert = require('node:assert/strict');
 const test = require('node:test');
+const { EventEmitter } = require('node:events');
 const loadTypeScript = require('./load-typescript.cjs');
 const dates = loadTypeScript('lib/dashboardDates.ts');
 
@@ -54,12 +55,21 @@ test('analytics date filters include the whole UTC end date', async () => {
   };
   const db = { from(table) {
     let rows = fixtures[table];
+    let start = 0;
+    let end = Infinity;
+    let limited = false;
     const query = {
       select: () => query,
-      order: () => query,
+      order: (column, options) => {
+        if (options?.ascending === false) rows = [...rows].sort((a, b) => String(b[column]).localeCompare(String(a[column])));
+        return query;
+      },
       gte: (column, value) => { rows = rows.filter((row) => Date.parse(row[column]) >= Date.parse(value)); return query; },
       lt: (column, value) => { rows = rows.filter((row) => Date.parse(row[column]) < Date.parse(value)); return query; },
-      range: async (start, end) => ({ data: rows.slice(start, Math.min(end + 1, start + 1)), count: rows.length, error: null }),
+      range: (first, last) => { start = first; end = last; return query; },
+      limit: (size) => { end = size - 1; limited = true; return query; },
+      abortSignal: () => query,
+      then: (resolve, reject) => Promise.resolve({ data: rows.slice(start, limited ? end + 1 : Math.min(end + 1, start + 1)), count: rows.length, error: null }).then(resolve, reject),
     };
     return query;
   } };
@@ -70,7 +80,7 @@ test('analytics date filters include the whole UTC end date', async () => {
     '../../../lib/dashboardDates': dates,
   }).default;
   const invoke = async (query) => {
-    const res = { statusCode: 200, status(code) { this.statusCode = code; return this; }, json(body) { this.body = body; return this; } };
+    const res = Object.assign(new EventEmitter(), { statusCode: 200, status(code) { this.statusCode = code; return this; }, json(body) { this.body = body; return this; } });
     await handler({ method: 'GET', query }, res);
     return res;
   };
@@ -86,6 +96,94 @@ test('analytics date filters include the whole UTC end date', async () => {
   assert.equal(filtered.body.totals.pageViews, 1);
   assert.deepEqual(filtered.body.dailyPageViews, { '2026-09-20': 1 });
   assert.deepEqual(filtered.body.dailyScansBySource, { '2026-09-20': { a: 1 } });
+  const activity = await invoke({ view: 'activity' });
+  assert.deepEqual(activity.body.recentScans.map((scan) => scan.id), ['s4', 's3', 's2', 's1']);
+  assert.deepEqual(activity.body.auditLogs, []);
+  assert.equal(activity.body.totals, undefined);
   assert.equal((await invoke({ from: '2026-09-22', to: '2026-09-21' })).statusCode, 400);
   assert.equal((await invoke({ from: '2026-02-30' })).statusCode, 400);
+});
+
+test('analytics loads all pages with bounded concurrency while activity skips engagements', async () => {
+  const engagements = Array.from({ length: 1250 }, (_, id) => ({
+    id, created_at: '2026-09-20T12:00:00Z', event_type: 'page_view', payload: { path: '/destination/a' },
+  }));
+  const requests = [];
+  let pending = 0;
+  let maxPending = 0;
+  const db = { from(table) {
+    const rows = table === 'engagements' ? engagements : [];
+    let start = 0;
+    let end = 999;
+    let limit = false;
+    const query = {
+      select: () => query,
+      order: () => query,
+      range: (first, last) => { start = first; end = last; return query; },
+      limit: (size) => { end = size - 1; limit = true; return query; },
+      abortSignal: () => query,
+      then: (resolve, reject) => {
+        requests.push(table);
+        if (table === 'engagements') {
+          pending += 1;
+          maxPending = Math.max(maxPending, pending);
+        }
+        return new Promise((done) => setTimeout(() => {
+          if (table === 'engagements') pending -= 1;
+          done({ data: rows.slice(start, Math.min(end + 1, start + (limit ? 50 : 100))), count: rows.length, error: null });
+        }, 2)).then(resolve, reject);
+      },
+    };
+    return query;
+  } };
+  const handler = loadTypeScript('pages/api/admin/analytics.ts', {
+    fs: { __esModule: true, default: { existsSync: () => false } },
+    '../../../lib/auth': { verifyAdmin: async () => ({ id: 'head', email: 'head@example.test' }) },
+    '../../../lib/supabaseAdmin': { __esModule: true, default: () => db },
+    '../../../lib/dashboardDates': dates,
+  }).default;
+  const invoke = async (query) => {
+    const res = Object.assign(new EventEmitter(), { statusCode: 200, status(code) { this.statusCode = code; return this; }, json(body) { this.body = body; return this; } });
+    await handler({ method: 'GET', query }, res);
+    return res;
+  };
+  const analytics = await invoke({});
+  assert.equal(analytics.body.totals.pageViews, 1250);
+  assert.equal(analytics.body.dailyDestinationViews['2026-09-20'].a, 1250);
+  assert.ok(maxPending > 1 && maxPending <= 6);
+  requests.length = 0;
+  const activity = await invoke({ view: 'activity' });
+  assert.equal(activity.statusCode, 200);
+  assert.deepEqual(requests.sort(), ['audit_logs', 'scans']);
+});
+
+test('disconnecting an analytics request aborts its database queries', async () => {
+  const signals = [];
+  const db = { from() {
+    let signal;
+    const query = {
+      select: () => query,
+      order: () => query,
+      range: () => query,
+      abortSignal: (value) => { signal = value; signals.push(value); return query; },
+      then: (resolve, reject) => new Promise((done) => {
+        if (signal.aborted) return done({ error: { message: 'aborted' } });
+        signal.addEventListener('abort', () => done({ error: { message: 'aborted' } }), { once: true });
+      }).then(resolve, reject),
+    };
+    return query;
+  } };
+  const handler = loadTypeScript('pages/api/admin/analytics.ts', {
+    fs: { __esModule: true, default: { existsSync: () => false } },
+    '../../../lib/auth': { verifyAdmin: async () => ({ id: 'head', email: 'head@example.test' }) },
+    '../../../lib/supabaseAdmin': { __esModule: true, default: () => db },
+    '../../../lib/dashboardDates': dates,
+  }).default;
+  const res = Object.assign(new EventEmitter(), { writableEnded: false, json() { throw new Error('Should not respond after disconnect'); } });
+  const pending = handler({ method: 'GET', query: {} }, res);
+  await new Promise((resolve) => setImmediate(resolve));
+  res.emit('close');
+  await pending;
+  assert.equal(signals.length, 6);
+  assert.ok(signals.every((signal) => signal.aborted));
 });

@@ -41,15 +41,17 @@ export default function AdminActivity() {
   const { t } = useTranslation();
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/admin/analytics')
+    fetch('/api/admin/analytics?view=activity')
       .then(async (response) => {
         if (response.status === 401) return router.push('/admin/login');
         if (!response.ok) throw new Error();
         setData(await response.json());
       })
-      .catch(() => setError(t('failedToLoad')));
+      .catch(() => setError(t('failedToLoad')))
+      .finally(() => setLoading(false));
   }, [router, t]);
 
   return (
@@ -66,6 +68,7 @@ export default function AdminActivity() {
         </div>
       </div>
       {error && <p className="admin-error">{error}</p>}
+      {loading && <p className="admin-panel" role="status">Loading activity...</p>}
       {data && <>
         <section className="admin-section admin-panel admin-table-panel">
           <div className="panel-header compact"><div><p className="panel-label">Visitor activity</p><h2>{t('recentScans')}</h2></div><span className="panel-pill">{data.recentScans.length} records</span></div>

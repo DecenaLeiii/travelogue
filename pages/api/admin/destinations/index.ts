@@ -61,12 +61,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!supabaseAdmin) return res.status(500).json({ error: 'Server misconfiguration' });
 
   if (req.method === 'GET') {
-    const { data, error } = await supabaseAdmin
-      .from('destinations')
-      .select('*')
-      .order('name');
+    const [{ data, error }, { error: trashError }] = await Promise.all([
+      supabaseAdmin.from('destinations').select('*').order('name'),
+      supabaseAdmin.from('destinations').select('deleted_at').limit(1),
+    ]);
     if (error) return res.status(500).json({ error: error.message });
-    const { error: trashError } = await supabaseAdmin.from('destinations').select('deleted_at').limit(1);
     if (trashError && trashError.code !== '42703' && trashError.code !== 'PGRST204') {
       return res.status(500).json({ error: trashError.message });
     }
