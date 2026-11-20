@@ -11,7 +11,10 @@ type Destination = {
   region?: string;
   published?: boolean;
   featured?: boolean;
+  deleted_at?: string | null;
 };
+
+const TRASH_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 
 export default function AdminDestinations() {
   const router = useRouter();
@@ -22,6 +25,13 @@ export default function AdminDestinations() {
   const [qrLoading, setQrLoading] = useState<Record<string, boolean>>({});
   const [feedbackStats, setFeedbackStats] = useState<Record<string, { averageRating: number; ratingCount: number }>>({});
   const [error, setError] = useState('');
+  const [trashAvailable, setTrashAvailable] = useState<boolean | null>(null);
+  const [pendingId, setPendingId] = useState<string | null>(null);
+  const [now, setNow] = useState(() => Date.now());
+  const activeDestinations = destinations.filter((destination) => !destination.deleted_at);
+  const trashedDestinations = destinations.filter(
+    (destination): destination is Destination & { deleted_at: string } => typeof destination.deleted_at === 'string',
+  );
 
   const load = async () => {
     const res = await fetch('/api/admin/destinations');
@@ -29,6 +39,7 @@ export default function AdminDestinations() {
     if (!res.ok) { setError(t('failedToLoad')); return; }
     const json = await res.json();
     setDestinations(json.destinations || []);
+    setTrashAvailable(json.trashAvailable === true);
   };
 
   const loadQRCodes = async () => {
@@ -57,28 +68,50 @@ export default function AdminDestinations() {
     loadFeedbackStats();
   }, []);
 
+  useEffect(() => {
+    if (!trashedDestinations.length) return;
+    const timer = window.setInterval(() => setNow(Date.now()), 1000);
+    return () => window.clearInterval(timer);
+  }, [trashedDestinations.length]);
+
+  const updateDestination = async (id: string, method: 'PUT' | 'DELETE' | 'PATCH', body?: object, archive = false) => {
+    setPendingId(id);
+    setError('');
+    try {
+      const res = await fetch(`/api/admin/destinations/${id}${archive ? '?archive=true' : ''}`, {
+        method,
+        ...(body ? { headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}),
+      });
+      if (res.status === 401) { await router.push('/admin/login'); return; }
+      if (!res.ok) {
+        const result = await res.json();
+        throw new Error(result.error || t('saveFailed'));
+      }
+      await Promise.all([load(), loadQRCodes(), loadFeedbackStats()]);
+    } catch (error) {
+      console.error('Failed to update destination:', error);
+      setError(error instanceof Error ? error.message : t('saveFailed'));
+    } finally {
+      setPendingId(null);
+    }
+  };
+
   const archive = async (id: string) => {
     if (!confirm(t('archiveConfirmation'))) return;
-    await fetch(`/api/admin/destinations/${id}?archive=true`, { method: 'DELETE' });
-    load();
-    loadQRCodes();
-    loadFeedbackStats();
+    await updateDestination(id, 'DELETE', undefined, true);
   };
 
   const publish = async (id: string) => {
-    const res = await fetch(`/api/admin/destinations/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ published: true }),
-    });
-    if (res.status === 401) { router.push('/admin/login'); return; }
-    if (!res.ok) {
-      setError(t('saveFailed'));
-      return;
-    }
-    load();
-    loadQRCodes();
-    loadFeedbackStats();
+    await updateDestination(id, 'PUT', { published: true });
+  };
+
+  const moveToTrash = async (destination: Destination) => {
+    if (!confirm(`Move "${destination.name}" to Trash? It can be restored for 30 days before it is permanently deleted.`)) return;
+    await updateDestination(destination.id, 'DELETE');
+  };
+
+  const restore = async (id: string) => {
+    await updateDestination(id, 'PATCH', { action: 'restore' });
   };
 
   const generateAllQRCodes = async () => {
@@ -171,6 +204,7 @@ export default function AdminDestinations() {
       </div>
 
       {error && <p className="admin-error">{error}</p>}
+      {trashAvailable === false && <p className="admin-error">Trash is not set up yet. Apply database migration v10 to enable it.</p>}
 
       <table className="admin-table">
         <thead>
@@ -185,7 +219,7 @@ export default function AdminDestinations() {
           </tr>
         </thead>
         <tbody>
-          {destinations.map((d) => (
+          {activeDestinations.map((d) => (
             <tr key={d.id}>
               <td>{d.name}</td>
               <td><a href={`/destination/${d.slug}`} target="_blank" rel="noreferrer">{d.slug}</a></td>
@@ -228,19 +262,49 @@ export default function AdminDestinations() {
                 )}
               </td>
               <td>{d.published !== false ? t('publishedStatus') : t('draftStatus')}</td>
-              <td>
+              <td className="destination-actions">
                 <Link href={`/admin/destinations/${d.id}`}>{t('editLabel')}</Link>
-                {' · '}
                 {d.published === false ? (
-                  <button type="button" className="link-btn" onClick={() => publish(d.id)}>Publish</button>
+                  <button type="button" className="link-btn publish-button" disabled={pendingId !== null} onClick={() => publish(d.id)}>Publish</button>
                 ) : (
-                  <button type="button" className="link-btn" onClick={() => archive(d.id)}>{t('archiveLabel')}</button>
+                  <button type="button" className="link-btn" disabled={pendingId !== null} onClick={() => archive(d.id)}>{t('archiveLabel')}</button>
                 )}
+                <button type="button" className="link-btn danger-button" disabled={pendingId !== null || trashAvailable !== true} onClick={() => moveToTrash(d)}>Delete</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      <section className="destination-trash" aria-labelledby="destination-trash-heading">
+        <h2 id="destination-trash-heading">Trash</h2>
+        <p>Deleted destinations can be restored for 30 days. Afterwards they are permanently deleted.</p>
+        {trashedDestinations.length === 0 ? (
+          <p>Trash is empty.</p>
+        ) : (
+          <table className="admin-table">
+            <thead>
+              <tr><th>{t('nameLabel')}</th><th>{t('slugLabel')}</th><th>Restore before</th><th>{t('actions')}</th></tr>
+            </thead>
+            <tbody>
+              {trashedDestinations.map((destination) => {
+                const deadline = new Date(destination.deleted_at).getTime() + TRASH_RETENTION_MS;
+                const expired = now >= deadline;
+                return (
+                  <tr key={destination.id}>
+                    <td>{destination.name}</td>
+                    <td>{destination.slug}</td>
+                    <td>{new Date(deadline).toLocaleString()}{expired ? ' (expired)' : ''}</td>
+                    <td>
+                      <button type="button" disabled={pendingId !== null || expired || trashAvailable !== true} onClick={() => restore(destination.id)}>Restore</button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+      </section>
     </main>
   );
 }

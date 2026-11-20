@@ -369,6 +369,16 @@ export default function AdminPhotoStrip() {
           <button type="button" onClick={save}>Save photos</button>
         </div>
       </div>
+      <section className="admin-panel" style={{ marginBottom: 18 }}>
+        <div className="panel-header compact">
+          <div>
+            <p className="panel-label">Homepage Media</p>
+            <h2>Featured Categories & Experiences</h2>
+          </div>
+        </div>
+        <p style={{ margin: '0 0 15px 0', color: '#666' }}>Manage the "Discover Destination Experiences" section shown on the homepage with categories like "Local Foods to Try" and "Must-Do Activities".</p>
+        <Link className="details-btn" href="/admin/featured-categories">Manage Featured Categories</Link>
+      </section>
       <section className="admin-panel site-logo-editor">
         <div>
           <p className="panel-label">Public branding</p>

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import type { AppProps } from 'next/app';
 import Link from 'next/link';
+import 'leaflet/dist/leaflet.css';
 import '../styles/globals.css';
 import { I18nProvider, useTranslation, LANG_GROUPS } from '../lib/i18n';
 import { sendEngagement, getScanId } from '../lib/engagement';
@@ -73,6 +74,26 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const startRef = useRef<number | null>(null);
   const maxScrollRef = useRef(0);
   const scrollMilestonesRef = useRef<Set<number>>(new Set());
+
+  useEffect(() => {
+    const entries = new Map<string, boolean>();
+    if (typeof window.history.state?.key === 'string') {
+      entries.set(window.history.state.key, false);
+    }
+    window.history.replaceState({ ...window.history.state, travelogueHasPrevious: false }, '');
+
+    const markNavigation = () => {
+      const state = window.history.state;
+      if (state && typeof state.key === 'string') {
+        const hasPrevious = entries.get(state.key) ?? true;
+        entries.set(state.key, hasPrevious);
+        window.history.replaceState({ ...state, travelogueHasPrevious: hasPrevious }, '');
+      }
+    };
+
+    router.events.on('routeChangeComplete', markNavigation);
+    return () => router.events.off('routeChangeComplete', markNavigation);
+  }, [router.events]);
 
   useEffect(() => {
     const isProtectedAdminRoute = (route: string) => route.startsWith('/admin') && route !== '/admin/login';

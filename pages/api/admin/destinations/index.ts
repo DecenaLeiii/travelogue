@@ -3,6 +3,7 @@ import getSupabaseAdmin from '../../../../lib/supabaseAdmin';
 import { verifyAdmin } from '../../../../lib/auth';
 import { logAudit } from '../../../../lib/audit';
 import { geocodeDestination, translateDestinationFields } from '../../../../lib/destinationEnrichment';
+import { isDestinationCoordinates } from '../../../../lib/destinationCoordinates';
 
 function slugify(name: string) {
   return name
@@ -65,16 +66,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .select('*')
       .order('name');
     if (error) return res.status(500).json({ error: error.message });
-    return res.json({ destinations: data || [] });
+    const { error: trashError } = await supabaseAdmin.from('destinations').select('deleted_at').limit(1);
+    if (trashError && trashError.code !== '42703' && trashError.code !== 'PGRST204') {
+      return res.status(500).json({ error: trashError.message });
+    }
+    return res.json({ destinations: data || [], trashAvailable: !trashError });
   }
 
   if (req.method === 'POST') {
     const body = req.body || {};
     const name = String(body.name || '').trim();
     if (!name) return res.status(400).json({ error: 'Name is required' });
+    if (body.coordinates !== undefined && !isDestinationCoordinates(body.coordinates)) {
+      return res.status(400).json({ error: 'Coordinates must contain a valid latitude and longitude.' });
+    }
 
     const slug = body.slug?.trim() || slugify(name);
-    const coordinates = await geocodeDestination(body.location, name);
+    const coordinates = body.coordinates ?? await geocodeDestination(body.location, name);
     const translations = await translateDestinationFields({
       name,
       short_description: body.short_description,

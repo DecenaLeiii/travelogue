@@ -33,13 +33,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (generate_all) {
       const { data: destinationRows, error: destinationError } = await supabaseAdmin
         .from('destinations')
-        .select('id,slug,name');
+        .select('*');
 
       if (destinationError) return res.status(500).json({ error: destinationError.message });
 
       let generated = 0;
 
       for (const destination of destinationRows || []) {
+        if (destination.deleted_at) continue;
         const { data: existingDestinationQr } = await supabaseAdmin
           .from('qr_codes')
           .select('id')
@@ -87,12 +88,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const { data: destinationRows, error: destinationError } = await supabaseAdmin
       .from('destinations')
-      .select('id,slug,name')
+      .select('*')
       .eq('id', destination_id)
       .limit(1);
 
     if (destinationError) return res.status(500).json({ error: destinationError.message });
-    if (!destinationRows || !destinationRows.length) return res.status(404).json({ error: 'Destination not found' });
+    if (!destinationRows || !destinationRows.length || destinationRows[0].deleted_at) return res.status(404).json({ error: 'Destination not found' });
 
     const destination = destinationRows[0];
     const baseCode = slugify(destination.slug || destination.name || 'destination');

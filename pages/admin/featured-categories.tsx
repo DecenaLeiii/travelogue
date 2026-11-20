@@ -73,13 +73,27 @@ export default function FeaturedCategoriesAdmin({ allDestinations, initialFeatur
     setStatus('');
 
     try {
-      const response = await fetch('/api/admin/site-branding', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ featured_items: featuredItems }),
-      });
+      const saveRequest = () =>
+        fetch('/api/admin/site-branding', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ featured_items: featuredItems }),
+        });
+
+      let response = await saveRequest();
+      if (response.status === 401) {
+        const refreshResponse = await fetch('/api/admin/refresh', { method: 'POST' });
+        if (refreshResponse.ok) {
+          response = await saveRequest();
+        }
+      }
 
       const result = await response.json();
+
+      if (response.status === 401) {
+        await router.push('/admin/login');
+        throw new Error('Your admin session has expired. Please sign in again.');
+      }
 
       if (!response.ok) {
         throw new Error(result.error || 'Failed to save featured items');

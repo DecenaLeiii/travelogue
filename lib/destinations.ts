@@ -133,7 +133,8 @@ export async function getDestinationBySlug(slug: string): Promise<Destination | 
       .select('*')
       .eq('slug', slug)
       .limit(1);
-    if (!error && data?.[0]) {
+    if (error) throw new Error(`Failed to load destination: ${error.message}`);
+    if (data?.[0]) {
       const destination = enrichDestination(data[0]);
       if (destination.id) {
         const { data: qrRows, error: qrError } = await supabaseAdmin
@@ -147,6 +148,7 @@ export async function getDestinationBySlug(slug: string): Promise<Destination | 
       }
       return destination;
     }
+    return null;
   }
   const local = getLocalDestinations().find((d) => d.slug === slug);
   return local ? enrichDestination(local) : null;
@@ -180,12 +182,9 @@ export async function getPublishedDestinations(): Promise<Destination[]> {
       .eq('published', true)
       .order('featured', { ascending: false })
       .order('name');
-    if (!error && data?.length) {
-      const destinations = data.map(enrichDestination);
-      return attachQrCodesToDestinations(destinations);
-    }
-    // Fallback if published column missing or table empty
-    if (error) console.warn('Supabase destinations query failed, using local data:', error.message);
+    if (error) throw new Error(`Failed to load destinations: ${error.message}`);
+    const destinations = (data || []).map(enrichDestination);
+    return attachQrCodesToDestinations(destinations);
   }
   return getLocalDestinations()
     .filter((d) => d.published !== false)
@@ -201,10 +200,9 @@ export async function getRelatedDestinations(slugs: string[]): Promise<Destinati
       .select('*')
       .eq('published', true)
       .in('slug', slugs);
-    if (!error && data?.length) {
-      const found = await attachQrCodesToDestinations(data.map(enrichDestination));
-      return slugs.map((s) => found.find((d) => d.slug === s)).filter(Boolean) as Destination[];
-    }
+    if (error) throw new Error(`Failed to load related destinations: ${error.message}`);
+    const found = await attachQrCodesToDestinations((data || []).map(enrichDestination));
+    return slugs.map((s) => found.find((d) => d.slug === s)).filter(Boolean) as Destination[];
   }
   const all = await getPublishedDestinations();
   return slugs.map((s) => all.find((d) => d.slug === s)).filter(Boolean) as Destination[];

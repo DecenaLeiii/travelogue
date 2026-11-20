@@ -3,6 +3,8 @@ import getSupabaseAdmin from '../../../../lib/supabaseAdmin';
 import { verifyAdmin } from '../../../../lib/auth';
 import { logAudit } from '../../../../lib/audit';
 import { geocodeDestination, TRANSLATION_TRIGGER_FIELDS, translateDestinationFields } from '../../../../lib/destinationEnrichment';
+import { isDestinationCoordinates } from '../../../../lib/destinationCoordinates';
+import { enrichDestination } from '../../../../lib/destinations';
 
 function slugify(name: string) {
   return name
@@ -64,6 +66,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method === 'PUT') {
     const body = req.body || {};
+    if (body.coordinates !== undefined && !isDestinationCoordinates(body.coordinates)) {
+      return res.status(400).json({ error: 'Coordinates must contain a valid latitude and longitude.' });
+    }
     const updates: Record<string, unknown> = { updated_at: new Date().toISOString() };
 
     const fields = [
@@ -75,13 +80,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (body[f] !== undefined) updates[f] = body[f];
     }
 
-    const { data: beforeRows } = await supabaseAdmin.from('destinations').select('*').eq('id', id).limit(1);
+    const { data: beforeRows, error: beforeError } = await supabaseAdmin.from('destinations').select('*').eq('id', id).limit(1);
+    if (beforeError) return res.status(500).json({ error: beforeError.message });
+    if (!beforeRows?.length || beforeRows[0].deleted_at) return res.status(404).json({ error: 'Destination not found or in trash.' });
     const before = beforeRows?.[0] as Record<string, any> | undefined;
 
     const changed = (key: string) => key in updates && JSON.stringify(before?.[key]) !== JSON.stringify(updates[key]);
 
     // Re-geocode when the location moves or the row has no coordinates yet.
-    if (changed('location') || before?.latitude == null) {
+    if (body.coordinates !== undefined) {
+      updates.latitude = body.coordinates.latitude;
+      updates.longitude = body.coordinates.longitude;
+    } else if (changed('location') || before?.latitude == null || before?.longitude == null) {
       const mergedLocation = (updates.location ?? before?.location) as string | undefined;
       const mergedName = (updates.name ?? before?.name) as string | undefined;
       const coordinates = await geocodeDestination(mergedLocation, mergedName);
@@ -108,14 +118,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
-    const { data, error } = await supabaseAdmin
+    let updateQuery = supabaseAdmin
       .from('destinations')
       .update(updates)
-      .eq('id', id)
-      .select('*')
-      .limit(1);
+      .eq('id', id);
+    if (Object.prototype.hasOwnProperty.call(before, 'deleted_at')) {
+      updateQuery = updateQuery.is('deleted_at', null);
+    }
+    const { data, error } = await updateQuery.select('*').limit(1);
 
     if (error) return res.status(500).json({ error: error.message });
+    if (!data?.length) return res.status(409).json({ error: 'Destination was moved to trash.' });
 
     const updatedDestination = data?.[0];
     if (updatedDestination?.id) {
@@ -146,18 +159,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method === 'DELETE') {
     const archive = req.query.archive === 'true';
-    const { data: nameRows } = await supabaseAdmin.from('destinations').select('name, slug').eq('id', id).limit(1);
-    const label = String(nameRows?.[0]?.name || id);
 
     if (archive) {
-      const { data, error } = await supabaseAdmin
+      const { data: beforeRows, error: beforeError } = await supabaseAdmin.from('destinations').select('*').eq('id', id).limit(1);
+      if (beforeError) return res.status(500).json({ error: beforeError.message });
+      if (!beforeRows?.length || beforeRows[0].deleted_at) return res.status(404).json({ error: 'Destination not found or in trash.' });
+      let archiveQuery = supabaseAdmin
         .from('destinations')
         .update({ published: false, updated_at: new Date().toISOString() })
-        .eq('id', id)
-        .select('*')
-        .limit(1);
+        .eq('id', id);
+      if (Object.prototype.hasOwnProperty.call(beforeRows[0], 'deleted_at')) {
+        archiveQuery = archiveQuery.is('deleted_at', null);
+      }
+      const { data, error } = await archiveQuery.select('*').limit(1);
 
       if (error) return res.status(500).json({ error: error.message });
+      if (!data?.length) return res.status(404).json({ error: 'Destination not found or in trash.' });
 
       await logAudit({
         adminId: admin.id,
@@ -165,32 +182,52 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         action: 'archive',
         entityType: 'destination',
         entityId: id,
-        details: { description: `Archived destination "${label}".` },
+        details: { description: `Archived destination "${data[0].name}".` },
       });
 
       return res.json({ destination: data?.[0] });
     }
 
-    const { error } = await supabaseAdmin.from('destinations').delete().eq('id', id);
+    const { data, error } = await supabaseAdmin.rpc('trash_destination', { destination_id: id });
     if (error) return res.status(500).json({ error: error.message });
+    if (!data?.length) return res.status(404).json({ error: 'Destination not found or already in trash.' });
 
     await logAudit({
       adminId: admin.id,
       adminEmail: admin.email,
-      action: 'delete',
+      action: 'trash',
       entityType: 'destination',
       entityId: id,
-      details: { description: `Deleted destination "${label}".` },
+      details: { description: `Moved destination "${data[0].name}" to trash.` },
     });
 
-    return res.json({ ok: true });
+    return res.json({ destination: data[0] });
+  }
+
+  if (req.method === 'PATCH') {
+    if (req.body?.action !== 'restore') return res.status(400).json({ error: 'Invalid action.' });
+    const { data, error } = await supabaseAdmin.rpc('restore_destination', { destination_id: id });
+    if (error) return res.status(500).json({ error: error.message });
+    if (!data?.length) return res.status(409).json({ error: 'Destination is not in trash or its 30-day restore period has expired.' });
+
+    await logAudit({
+      adminId: admin.id,
+      adminEmail: admin.email,
+      action: 'restore',
+      entityType: 'destination',
+      entityId: id,
+      details: { description: `Restored destination "${data[0].name}".` },
+    });
+
+    return res.json({ destination: data[0] });
   }
 
   if (req.method === 'GET') {
     const { data, error } = await supabaseAdmin.from('destinations').select('*').eq('id', id).limit(1);
     if (error) return res.status(500).json({ error: error.message });
-    if (!data?.length) return res.status(404).json({ error: 'Not found' });
-    return res.json({ destination: data[0] });
+    if (!data?.length || data[0].deleted_at) return res.status(404).json({ error: 'Not found' });
+    const destination = enrichDestination(data[0]);
+    return res.json({ destination: { ...data[0], latitude: destination.latitude, longitude: destination.longitude } });
   }
 
   return res.status(405).json({ error: 'Method not allowed' });

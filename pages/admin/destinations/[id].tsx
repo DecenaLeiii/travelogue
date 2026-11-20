@@ -3,12 +3,14 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useTranslation } from '../../../lib/i18n';
 import DestinationForm, { DestinationFormData } from '../../../components/DestinationForm';
+import { isDestinationCoordinates, type DestinationCoordinates } from '../../../lib/destinationCoordinates';
 
 export default function EditDestination() {
   const router = useRouter();
   const { t } = useTranslation();
   const { id } = router.query;
   const [initial, setInitial] = useState<DestinationFormData | null>(null);
+  const [initialCoordinates, setInitialCoordinates] = useState<DestinationCoordinates | null>(null);
   const [feedback, setFeedback] = useState<{ averageRating: number | null; ratingCount: number; comments: { rating: number; comment: string | null; photo_urls?: string[]; featured?: boolean; created_at: string }[] } | null>(null);
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
@@ -21,6 +23,7 @@ export default function EditDestination() {
         if (!res.ok) throw new Error('Not found');
         const json = await res.json();
         const d = json.destination;
+        setInitialCoordinates(isDestinationCoordinates(d) ? { latitude: d.latitude, longitude: d.longitude } : null);
         setInitial({
           name: d.name,
           slug: d.slug,
@@ -90,10 +93,10 @@ export default function EditDestination() {
     <main className="admin-page">
       <div className="admin-header">
         <h1>{t('editDestination')}</h1>
-        <Link href="/admin/destinations">← {t('back')}</Link>
+        <Link className="admin-back-button" href="/admin/destinations">← {t('back')}</Link>
       </div>
       {error && <p className="admin-error">{error}</p>}
-      {initial && <DestinationForm initial={initial} onSubmit={save} saving={saving} />}
+      {initial && <DestinationForm initial={initial} initialCoordinates={initialCoordinates} onSubmit={save} saving={saving} />}
 
       {feedback && (
         <section style={{ marginTop: 32, background: '#fff', border: '1px solid #e2e8f0', borderRadius: 18, padding: 20 }}>

@@ -1,6 +1,8 @@
 import { useState, FormEvent } from 'react';
 import { useTranslation } from '../lib/i18n';
+import { isDestinationCoordinates, type DestinationCoordinates } from '../lib/destinationCoordinates';
 import AdminImageField from './AdminImageField';
+import AdminLocationPicker from './AdminLocationPicker';
 
 export type DestinationFormData = {
   name: string;
@@ -18,6 +20,7 @@ export type DestinationFormData = {
   related_slugs: string;
   featured: boolean;
   published: boolean;
+  coordinates?: DestinationCoordinates;
 };
 
 const empty: DestinationFormData = {
@@ -40,13 +43,19 @@ const empty: DestinationFormData = {
 
 type Props = {
   initial?: DestinationFormData;
+  initialCoordinates?: DestinationCoordinates | null;
   onSubmit: (data: DestinationFormData) => void;
   saving?: boolean;
 };
 
-export default function DestinationForm({ initial, onSubmit, saving }: Props) {
+export default function DestinationForm({ initial, initialCoordinates, onSubmit, saving }: Props) {
   const { t } = useTranslation();
   const [form, setForm] = useState<DestinationFormData>(initial || empty);
+  const [latitude, setLatitude] = useState(initialCoordinates?.latitude.toString() ?? '');
+  const [longitude, setLongitude] = useState(initialCoordinates?.longitude.toString() ?? '');
+  const candidate = { latitude: Number(latitude), longitude: Number(longitude) };
+  const coordinates = latitude !== '' && longitude !== '' && isDestinationCoordinates(candidate) ? candidate : null;
+  const coordinatesRequired = Boolean(initialCoordinates || latitude || longitude);
 
   const set = (key: keyof DestinationFormData, value: string | boolean) => {
     setForm((f) => ({ ...f, [key]: value }));
@@ -62,6 +71,7 @@ export default function DestinationForm({ initial, onSubmit, saving }: Props) {
       gallery_images: form.gallery_images,
       categories: form.categories,
       related_slugs: form.related_slugs,
+      coordinates: coordinates ?? undefined,
     });
   };
 
@@ -89,6 +99,24 @@ export default function DestinationForm({ initial, onSubmit, saving }: Props) {
           <input value={form.location} onChange={(e) => set('location', e.target.value)} />
         </label>
       </div>
+      <section className="admin-location-picker">
+        <h2>Map location</h2>
+        <p>Click the map to place the pin, or enter coordinates below. The saved pin stays in place until you change it. If no pin is selected, the location will be found automatically when possible.</p>
+        <AdminLocationPicker coordinates={coordinates} onChange={(point) => {
+          setLatitude(String(point.latitude));
+          setLongitude(String(point.longitude));
+        }} />
+        <div className="admin-form-row">
+          <label>
+            Latitude
+            <input type="number" step="any" min="-90" max="90" required={coordinatesRequired} value={latitude} onChange={(event) => setLatitude(event.target.value)} />
+          </label>
+          <label>
+            Longitude
+            <input type="number" step="any" min="-180" max="180" required={coordinatesRequired} value={longitude} onChange={(event) => setLongitude(event.target.value)} />
+          </label>
+        </div>
+      </section>
       <label>
         {t('shortOverview')}
         <textarea rows={2} value={form.short_description} onChange={(e) => set('short_description', e.target.value)} />

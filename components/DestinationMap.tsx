@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { isDestinationCoordinates } from '../lib/destinationCoordinates';
 
 interface DestinationMapProps {
   destination: {
@@ -12,7 +13,6 @@ interface DestinationMapProps {
 }
 
 let L: any;
-let leafletLoaded = false;
 
 export default function DestinationMap({ destination }: DestinationMapProps) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -20,19 +20,8 @@ export default function DestinationMap({ destination }: DestinationMapProps) {
   const markerRef = useRef<any>(null);
 
   useEffect(() => {
-    // Load Leaflet CSS once
-    if (!leafletLoaded) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';
-      document.head.appendChild(link);
-      leafletLoaded = true;
-    }
-  }, []);
-
-  useEffect(() => {
     // Don't render if no coordinates
-    if (!destination.latitude || !destination.longitude) {
+    if (!isDestinationCoordinates(destination)) {
       return;
     }
 
@@ -86,7 +75,7 @@ export default function DestinationMap({ destination }: DestinationMapProps) {
     });
   }, [destination.latitude, destination.longitude, destination.name, destination.region]);
 
-  if (!destination.latitude || !destination.longitude) {
+  if (!isDestinationCoordinates(destination)) {
     return null;
   }
 

@@ -34,7 +34,7 @@ npm run dev
 - **QR access flow** — `/r/[code]` logs scans and redirects; invalid codes show `/qr-invalid`
 - **Engagement tracking** — page views, time on page, scroll depth, clicks (linked to scan sessions)
 - **Admin dashboard** — analytics with date/destination filters, activity log, CSV export
-- **Admin CRUD** — create, edit, archive destinations at `/admin/destinations`
+- **Admin CRUD** — create, edit, archive, and delete or restore destinations at `/admin/destinations`
 - **Auth** — Supabase Auth (preferred) or env-based admin fallback
 
 ## API routes
@@ -48,7 +48,7 @@ npm run dev
 | `/api/admin/login` | POST | Admin login |
 | `/api/admin/analytics` | GET | Analytics dashboard data |
 | `/api/admin/destinations` | GET/POST | List/create destinations |
-| `/api/admin/destinations/[id]` | GET/PUT/DELETE | Read/update/archive destination |
+| `/api/admin/destinations/[id]` | GET/PUT/DELETE/PATCH | Read, update, move to Trash, or restore a destination; use `DELETE ?archive=true` to archive |
 
 ## QR flow
 
@@ -62,6 +62,8 @@ npm run dev
 - For production: create a user in Supabase Auth and use those credentials
 - Fallback: set `ADMIN_EMAIL` and `ADMIN_PASSWORD` in `.env.local`
 - Admin image and video uploads use Supabase Storage. Create a public bucket named `travelogue-media` in Supabase, or set `SUPABASE_STORAGE_BUCKET` to another public bucket. Configure `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in Render.
+- In the destination editor, click the map or enter latitude and longitude to set a precise pin. Save the destination to publish it. If no pin is chosen, coordinates are looked up automatically when possible. Existing Supabase projects need `db/migration_v9.sql` for the coordinate columns.
+- Apply `db/migration_v10.sql` in the Supabase SQL editor to enable destination Trash and its `pg_cron` cleanup job. Deleted destinations can be restored to their previous published status for 30 days; after that, the scheduled job permanently deletes the destination within approximately one minute. Check the Supabase Cron job history for cleanup failures. Feedback, uploaded media, and scan history are not deleted by this job; existing QR foreign keys follow the database's `ON DELETE` behavior.
 
 ## CI / Deployment
 

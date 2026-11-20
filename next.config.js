@@ -4,4 +4,7 @@ const isVercel = Boolean(process.env.VERCEL);
 module.exports = {
   // Vercel requires the default ".next" output directory.
   distDir: isProduction && !isVercel ? '.next-production' : '.next',
+  experimental: {
+    scrollRestoration: true,
+  },
 };

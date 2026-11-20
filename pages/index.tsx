@@ -158,7 +158,7 @@ export default function Home({ initialDestinations, initialFeaturedCategories = 
         console.warn('Supabase client not configured; skipping client-side fetch');
         return;
       }
-      const { data, error } = await supabase.from('destinations').select('id,name,slug,short_description,images').order('featured', { ascending: false }).limit(50);
+      const { data, error } = await supabase.from('destinations').select('id,name,slug,short_description,images').eq('published', true).order('featured', { ascending: false }).limit(50);
       if (error) {
         console.error('Failed to load destinations', error);
         return;

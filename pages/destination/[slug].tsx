@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import QRCode from 'qrcode';
 import { useEffect, useState } from 'react';
 import { useTranslation, translateCategoryTitle, translateCategoryItemText } from '../../lib/i18n';
@@ -16,6 +17,7 @@ type Props = {
 };
 
 export default function DestinationPage({ destination, related }: Props) {
+  const router = useRouter();
   const { t, lang } = useTranslation();
   const translations = useDestinationTranslations(lang);
 
@@ -174,7 +176,17 @@ export default function DestinationPage({ destination, related }: Props) {
         <img className="dest-detail-hero-image" src={selectedImage} alt={`${destination.name} cover`} onError={(event) => { event.currentTarget.src = '/hero.svg'; }} />
         <div className="dest-detail-hero-shade" />
         <div className="dest-detail-hero-inner">
-          <Link href="/" className="dest-back">{t('back')}</Link>
+          <Link href="/" className="dest-back" onClick={(event) => {
+            event.stopPropagation();
+            if (
+              !event.defaultPrevented && event.button === 0 &&
+              !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey &&
+              window.history.state?.travelogueHasPrevious === true
+            ) {
+              event.preventDefault();
+              router.back();
+            }
+          }}>{t('back')}</Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
             <div>
               <h1>{translated?.name || destination.name}</h1>

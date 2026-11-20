@@ -43,7 +43,7 @@ export default function NewDestination() {
     <main className="admin-page">
       <div className="admin-header">
         <h1>{t('createNewDestination')}</h1>
-        <Link href="/admin/destinations">← {t('back')}</Link>
+        <Link className="admin-back-button" href="/admin/destinations">← {t('back')}</Link>
       </div>
       {error && <p className="admin-error">{error}</p>}
       <DestinationForm onSubmit={save} saving={saving} />
