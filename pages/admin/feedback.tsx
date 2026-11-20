@@ -20,6 +20,7 @@ export default function AdminFeedback() {
   const [selected, setSelected] = useState<string[]>([]);
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(true);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     fetch('/api/admin/feedback')
@@ -27,15 +28,18 @@ export default function AdminFeedback() {
         if (response.status === 401) return router.push('/admin/login');
         if (!response.ok) throw new Error('Could not load feedback.');
         const result = await response.json();
-        const rows: Feedback[] = result.feedback || [];
+        if (!Array.isArray(result.feedback)) throw new Error('Invalid feedback response. Please refresh and try again.');
+        const rows: Feedback[] = result.feedback;
         setFeedback(rows);
         setSelected(rows.filter((item) => item.featured).map((item) => item.id));
+        setLoaded(true);
       })
-      .catch(() => setStatus('Could not load feedback. Apply database migration v4 if this is a new setup.'))
+      .catch((error) => setStatus(error instanceof Error ? error.message : 'Could not load feedback.'))
       .finally(() => setLoading(false));
   }, [router]);
 
   const save = async () => {
+    if (!loaded) return;
     setStatus('Saving featured reviews...');
     const response = await fetch('/api/admin/feedback', {
       method: 'PUT',
@@ -95,7 +99,7 @@ export default function AdminFeedback() {
         <div className="admin-nav">
           <Link href="/admin">Dashboard</Link>
           <Link href="/admin/destinations">Manage destinations</Link>
-          <button type="button" onClick={save} disabled={loading}>Save featured reviews ({selected.length}/15)</button>
+          <button type="button" onClick={save} disabled={loading || !loaded}>Save featured reviews ({selected.length}/15)</button>
         </div>
       </div>
       {stats.total > 0 && (
@@ -127,7 +131,7 @@ export default function AdminFeedback() {
         </section>
       )}
       {status && <p className="admin-error">{status}</p>}
-      {!loading && feedback.length === 0 && <section className="admin-panel"><p>No tourist feedback has been submitted yet.</p></section>}
+      {loaded && feedback.length === 0 && <section className="admin-panel"><p>No tourist feedback has been submitted yet.</p></section>}
       <div className="feedback-admin-grid">
         {feedback.map((item) => (
           <article className={`admin-panel feedback-admin-card${selected.includes(item.id) ? ' is-featured' : ''}`} key={item.id}>

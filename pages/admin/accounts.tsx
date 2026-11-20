@@ -5,6 +5,7 @@ type AccountSettings = {
   email: string;
   canChangePassword: boolean;
   canManageAccounts: boolean;
+  canRecoverAccounts: boolean;
   accounts: AdminAccount[];
 };
 
@@ -13,6 +14,8 @@ type AdminAccount = {
   email: string;
   created_at: string;
   last_sign_in_at: string | null;
+  disabled: boolean;
+  manageable: boolean;
 };
 
 export default function AdminAccounts() {
@@ -24,6 +27,8 @@ export default function AdminAccounts() {
   const [createPassword, setCreatePassword] = useState('');
   const [createStatus, setCreateStatus] = useState('');
   const [creating, setCreating] = useState(false);
+  const [accountStatus, setAccountStatus] = useState('');
+  const [pendingAccountId, setPendingAccountId] = useState<string | null>(null);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [passwordStatus, setPasswordStatus] = useState('');
@@ -107,6 +112,31 @@ export default function AdminAccounts() {
     }
   };
 
+  const updateAccountAccess = async (item: AdminAccount) => {
+    const action = item.disabled ? 'restore' : 'delete';
+    const message = item.disabled
+      ? `Recover ${item.email}? They will be able to sign in again.`
+      : `Delete ${item.email}? They will lose admin access until you recover the account.`;
+    if (!window.confirm(message)) return;
+    setPendingAccountId(item.id);
+    setAccountStatus('');
+    try {
+      const response = await fetch('/api/admin/accounts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action, accountId: item.id }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Could not update the account.');
+      await loadAccounts();
+      setAccountStatus(`Account ${item.disabled ? 'recovered' : 'deleted'}: ${item.email}.`);
+    } catch (error) {
+      setAccountStatus(error instanceof Error ? error.message : 'Could not update the account.');
+    } finally {
+      setPendingAccountId(null);
+    }
+  };
+
   return (
     <main className="admin-page">
       <div className="admin-header">
@@ -158,7 +188,7 @@ export default function AdminAccounts() {
             <div className="account-list-heading">
               <div>
                 <h2>Admin accounts</h2>
-                <p>Account emails and sign-in activity are shown here. Passwords are never displayed.</p>
+                <p>Sub-admin accounts created here can be deleted and recovered at any time. Deleted accounts cannot sign in. Passwords are never displayed.</p>
               </div>
               <span>{accounts.length} accounts</span>
             </div>
@@ -166,7 +196,7 @@ export default function AdminAccounts() {
               <div className="admin-table-scroll">
                 <table className="admin-table">
                   <thead>
-                    <tr><th>Email address</th><th>Created</th><th>Last sign in</th></tr>
+                    <tr><th>Email address</th><th>Created</th><th>Last sign in</th><th>Status</th><th>Actions</th></tr>
                   </thead>
                   <tbody>
                     {accounts.map((item) => (
@@ -174,6 +204,14 @@ export default function AdminAccounts() {
                         <td>{item.email || 'No email address'}</td>
                         <td>{new Date(item.created_at).toLocaleDateString()}</td>
                         <td>{item.last_sign_in_at ? new Date(item.last_sign_in_at).toLocaleString() : 'Never'}</td>
+                        <td>{item.disabled ? 'Deleted' : 'Active'}</td>
+                        <td>
+                          {item.manageable && account.canRecoverAccounts && (
+                            <button type="button" className={item.disabled ? 'link-btn' : 'link-btn danger-button'} disabled={pendingAccountId !== null} onClick={() => updateAccountAccess(item)}>
+                              {pendingAccountId === item.id ? 'Please wait...' : item.disabled ? 'Recover' : 'Delete'}
+                            </button>
+                          )}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -182,6 +220,8 @@ export default function AdminAccounts() {
             ) : (
               <p>No admin accounts found.</p>
             )}
+            {!account.canRecoverAccounts && <p>Sign in as the head administrator with a verified Supabase Auth account to delete or recover sub-admin accounts.</p>}
+            {accountStatus && <p className={`account-status${/^Account (deleted|recovered):/.test(accountStatus) ? ' success' : ''}`} role="status">{accountStatus}</p>}
           </section>
         </>
       )}

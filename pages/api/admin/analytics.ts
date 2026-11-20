@@ -1,8 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import getSupabaseAdmin from '../../../lib/supabaseAdmin';
 import { verifyAdmin } from '../../../lib/auth';
+import { dailyDestinationViews, dailyPageViews, isDashboardDate } from '../../../lib/dashboardDates';
 
 const LOCAL_SCANS_PATH = path.join(process.cwd(), 'db', 'local_scans.json');
 const LOCAL_ENGAGEMENTS_PATH = path.join(process.cwd(), 'db', 'local_engagements.json');
@@ -23,8 +25,8 @@ function inRange(dateStr: string | undefined, from?: string, to?: string) {
   if (!dateStr) return false;
   const d = new Date(dateStr).getTime();
   if (Number.isNaN(d)) return false;
-  if (from && d < new Date(from).getTime()) return false;
-  if (to && d > new Date(to + 'T23:59:59').getTime()) return false;
+  if (from && d < new Date(`${from}T00:00:00Z`).getTime()) return false;
+  if (to && d >= new Date(`${to}T00:00:00Z`).getTime() + 86400000) return false;
   return true;
 }
 
@@ -51,6 +53,29 @@ function toFallbackAnalytics() {
   };
 }
 
+async function loadAnalyticsRows(
+  supabase: SupabaseClient,
+  table: string,
+  dateColumn?: string,
+  from?: string,
+  to?: string,
+) {
+  const rows: Record<string, any>[] = [];
+  let total: number;
+  do {
+    let query = supabase.from(table).select('*', { count: 'exact' });
+    if (dateColumn && from) query = query.gte(dateColumn, `${from}T00:00:00Z`);
+    if (dateColumn && to) query = query.lt(dateColumn, new Date(Date.parse(`${to}T00:00:00Z`) + 86400000).toISOString());
+    const result = await query.order('id').range(rows.length, rows.length + 999);
+    if (result.error) throw new Error(`Failed to load ${table}: ${result.error.message}`);
+    if (result.count === null || !result.data) throw new Error(`Failed to count ${table}.`);
+    total = result.count;
+    if (!result.data.length && rows.length < total) throw new Error(`Incomplete results for ${table}.`);
+    rows.push(...result.data);
+  } while (rows.length < total);
+  return rows;
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
 
@@ -58,28 +83,36 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!admin) return res.status(401).json({ error: 'Unauthorized' });
 
   const supabaseAdmin = getSupabaseAdmin();
-  const from = req.query.from as string | undefined;
-  const to = req.query.to as string | undefined;
+  const { from, to } = req.query;
+  if ((from !== undefined && (typeof from !== 'string' || !isDashboardDate(from)))
+    || (to !== undefined && (typeof to !== 'string' || !isDashboardDate(to)))
+    || (typeof from === 'string' && typeof to === 'string' && from > to)) {
+    return res.status(400).json({ error: 'Enter a valid start and end date in order.' });
+  }
   const destinationSlug = String(req.query.destination || '').trim().toLowerCase() || undefined;
 
   const fallbackData = toFallbackAnalytics();
-  const queries = supabaseAdmin
-    ? await Promise.allSettled([
-        supabaseAdmin.from('scans').select('*').order('scanned_at', { ascending: false }).limit(5000),
-        supabaseAdmin.from('engagements').select('*').order('created_at', { ascending: false }).limit(10000),
-        supabaseAdmin.from('destinations').select('id,name,slug'),
-        supabaseAdmin.from('qr_codes').select('id,destination_id'),
-        supabaseAdmin.from('audit_logs').select('*').order('created_at', { ascending: false }).limit(200),
-        supabaseAdmin.from('destination_feedback').select('*').order('created_at', { ascending: false }).limit(200),
-      ])
-    : [];
-
-  const remoteScans = queries[0]?.status === 'fulfilled' ? (queries[0].value?.data || []) : [];
-  const remoteEngagements = queries[1]?.status === 'fulfilled' ? (queries[1].value?.data || []) : [];
-  const remoteDestinations = queries[2]?.status === 'fulfilled' ? (queries[2].value?.data || []) : [];
-  const remoteQrCodes = queries[3]?.status === 'fulfilled' ? (queries[3].value?.data || []) : [];
-  const remoteAuditLogs = queries[4]?.status === 'fulfilled' ? (queries[4].value?.data || []) : [];
-  const remoteFeedback = queries[5]?.status === 'fulfilled' ? (queries[5].value?.data || []) : [];
+  let remoteScans: Record<string, any>[] = [];
+  let remoteEngagements: Record<string, any>[] = [];
+  let remoteDestinations: Record<string, any>[] = [];
+  let remoteQrCodes: Record<string, any>[] = [];
+  let remoteAuditLogs: Record<string, any>[] = [];
+  let remoteFeedback: Record<string, any>[] = [];
+  if (supabaseAdmin) {
+    try {
+      [remoteScans, remoteEngagements, remoteDestinations, remoteQrCodes, remoteAuditLogs, remoteFeedback] = await Promise.all([
+        loadAnalyticsRows(supabaseAdmin, 'scans'),
+        loadAnalyticsRows(supabaseAdmin, 'engagements', 'created_at', from, to),
+        loadAnalyticsRows(supabaseAdmin, 'destinations'),
+        loadAnalyticsRows(supabaseAdmin, 'qr_codes'),
+        loadAnalyticsRows(supabaseAdmin, 'audit_logs', 'created_at', from, to),
+        loadAnalyticsRows(supabaseAdmin, 'destination_feedback', 'created_at', from, to),
+      ]);
+    } catch (error) {
+      console.error('Failed to load dashboard analytics:', error);
+      return res.status(500).json({ error: 'Unable to load dashboard analytics.' });
+    }
+  }
 
   const scans = sortByNewest<any>([...(remoteScans || []), ...(fallbackData.scans || [])], 'scanned_at');
   const engagements = sortByNewest<any>([...(remoteEngagements || []), ...(fallbackData.engagements || [])], 'created_at');
@@ -107,12 +140,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!inRange(e.created_at, from, to)) return false;
     if (!destinationSlug) return true;
 
+    const path = String(e.payload?.path || '');
+    const pathSlug = path.match(/\/destination\/([^/?]+)/)?.[1]?.toLowerCase();
+    if (e.event_type === 'page_view') return pathSlug === destinationSlug;
+
     const scanId = e.scan_id || e.payload?.scan_id;
     const scanDestination = scanId ? destinationByScanId.get(String(scanId)) : '';
     if (scanDestination) return scanDestination === destinationSlug;
 
-    const path = String(e.payload?.path || '');
-    return path.match(/\/destination\/([^/?]+)/)?.[1]?.toLowerCase() === destinationSlug;
+    return pathSlug === destinationSlug;
   });
   const filteredFeedback = feedbackEntries.filter((entry) => {
     if (!inRange(entry.created_at, from, to)) return false;
@@ -152,10 +188,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     byDestination[slug].timeSeconds += Number(e.payload?.seconds) || 0;
   }
 
-  const destMap = Object.fromEntries((destinations || []).map((d: any) => [d.slug, d.name]));
+  const destMap = Object.fromEntries((destinations || []).map((d: any) => [String(d.slug || '').toLowerCase(), d.name]));
   const perDestination = Object.values(byDestination).map((row) => ({
     ...row,
-    name: destMap[row.slug] || row.slug,
+    name: destMap[row.slug.toLowerCase()] || row.slug,
   }));
 
   type Breakdown = {
@@ -215,10 +251,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }));
 
   const dailyScans: Record<string, number> = {};
+  const dailyScansBySource: Record<string, Record<string, number>> = {};
+  const scanSources = new Map<string, { slug: string; name: string; views: number }>();
   for (const s of filteredScans) {
     const key = new Date(s.scanned_at || s.created_at).toISOString().slice(0, 10);
     if (!key || Number.isNaN(new Date(key).getTime())) continue;
     dailyScans[key] = (dailyScans[key] || 0) + 1;
+    const slug = destinationByQrId.get(String(s.qr_id)) || '__unassigned__';
+    const source = scanSources.get(slug) || {
+      slug,
+      name: slug === '__unassigned__' ? 'Main / unassigned QR' : destMap[slug] || slug,
+      views: 0,
+    };
+    source.views += 1;
+    scanSources.set(slug, source);
+    if (!dailyScansBySource[key]) dailyScansBySource[key] = {};
+    dailyScansBySource[key][slug] = (dailyScansBySource[key][slug] || 0) + 1;
   }
 
   return res.json({
@@ -233,6 +281,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       feedbackCount: filteredFeedback.length,
     },
     perDestination,
+    scanSources: Array.from(scanSources.values()),
+    dailyScansBySource,
+    dailyPageViews: dailyPageViews(pageViews),
+    dailyDestinationViews: dailyDestinationViews(pageViews),
     destinationBreakdown,
     dailyScans,
     recentScans: filteredScans.slice(0, 50),

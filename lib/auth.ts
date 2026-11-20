@@ -1,12 +1,18 @@
 import type { NextApiRequest } from 'next';
+import type { User } from '@supabase/supabase-js';
 import getSupabaseAdmin from './supabaseAdmin';
 
 export type AdminUser = {
   id: string | null;
   email: string;
+  emailConfirmed?: boolean;
 };
 
 type ReqWithCookies = NextApiRequest | { headers: { cookie?: string } };
+
+export function isAdminAccountDisabled(user: User): boolean {
+  return user.app_metadata?.admin_access_disabled === true;
+}
 
 function getCookie(req: ReqWithCookies, name: string): string | null {
   const cookie = req.headers.cookie || '';
@@ -21,8 +27,10 @@ export async function verifyAdmin(req: ReqWithCookies): Promise<AdminUser | null
   if (accessToken && supabaseAdmin) {
     const { data, error } = await supabaseAdmin.auth.getUser(accessToken);
     if (!error && data.user?.email) {
-      return { id: data.user.id, email: data.user.email };
+      if (isAdminAccountDisabled(data.user)) return null;
+      return { id: data.user.id, email: data.user.email, emailConfirmed: Boolean(data.user.email_confirmed_at) };
     }
+    return null;
   }
 
   const legacy = getCookie(req, 'admin_token');
@@ -46,6 +54,7 @@ export function setAdminSessionCookie(
   const secure = process.env.NODE_ENV === 'production' ? '; Secure' : '';
   const cookies = [
     `sb-access-token=${accessToken}; HttpOnly; Path=/; Max-Age=604800; SameSite=Lax${secure}`,
+    `admin_token=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax${secure}`,
   ];
   if (refreshToken) {
     cookies.push(`sb-refresh-token=${refreshToken}; HttpOnly; Path=/; Max-Age=2592000; SameSite=Lax${secure}`);

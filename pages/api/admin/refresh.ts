@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import getSupabaseAdmin from '../../../lib/supabaseAdmin';
-import { setAdminSessionCookie } from '../../../lib/auth';
+import { clearAdminSessionCookie, isAdminAccountDisabled, setAdminSessionCookie } from '../../../lib/auth';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).end();
@@ -11,6 +11,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const { data, error } = await supabaseAdmin.auth.refreshSession({ refresh_token: decodeURIComponent(match[1]) });
   if (error || !data.session) return res.status(401).json({ error: 'Session expired' });
+  if (isAdminAccountDisabled(data.session.user)) {
+    clearAdminSessionCookie(res);
+    return res.status(401).json({ error: 'This admin account has been deleted.' });
+  }
 
   setAdminSessionCookie(res, data.session.access_token, data.session.refresh_token);
   return res.json({ ok: true });

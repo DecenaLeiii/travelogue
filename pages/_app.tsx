@@ -339,8 +339,7 @@ function AppContent({ Component, pageProps }: Pick<AppProps, 'Component' | 'page
 
     const adminContent = (
       <>
-      <div className="admin-band admin-band-top" aria-hidden="true" />
-      <div className="admin-band admin-band-bottom" aria-hidden="true" />
+      <div className="admin-background" aria-hidden="true" />
       <div className="admin-shell">
         <aside className="admin-sidebar" aria-label="Admin menu">
           <Link href="/admin" className="admin-sidebar-brand">Travelogue Admin</Link>

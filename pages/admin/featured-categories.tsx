@@ -386,7 +386,8 @@ export default function FeaturedCategoriesAdmin({ allDestinations, initialFeatur
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
   try {
-    await verifyAdmin(context.req);
+    const admin = await verifyAdmin(context.req);
+    if (!admin) return { redirect: { destination: '/admin/login', permanent: false } };
 
     const destinations = await getPublishedDestinations();
     
